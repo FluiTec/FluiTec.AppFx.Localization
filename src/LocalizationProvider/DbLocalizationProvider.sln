@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbLocalizationProvider.Abstractions", "src\DbLocalizationProvider.Abstractions\DbLocalizationProvider.Abstractions.csproj", "{5453BED3-0A29-414C-9535-57264C1F37E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbLocalizationProvider", "src\DbLocalizationProvider\DbLocalizationProvider.csproj", "{B121E3D1-F850-4581-80E9-1C65665A8428}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DF259C87-9633-46AF-B6E5-AA44E34878AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbLocalizationProvider.Tests", "Tests\DbLocalizationProvider.Tests\DbLocalizationProvider.Tests.csproj", "{0075E83B-79A1-4957-818C-CF9FDCAE80E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C79C0F5F-7C56-42C8-84EB-31342C7609F7}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		_config.yml = _config.yml
+		build-packages.ps1 = build-packages.ps1
+		global.json = global.json
+		LICENSE = LICENSE
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{EAB35BEA-94DE-4894-ABC3-5F306C5995F6}"
+	ProjectSection(SolutionItems) = preProject
+		docs\cache-events.md = docs\cache-events.md
+		docs\foreign-resources.md = docs\foreign-resources.md
+		docs\hidden-resources.md = docs\hidden-resources.md
+		docs\migr.md = docs\migr.md
+		docs\ref-resources.md = docs\ref-resources.md
+		docs\required-fields.md = docs\required-fields.md
+		docs\resource-types.md = docs\resource-types.md
+		docs\translate-enum-net.md = docs\translate-enum-net.md
+		docs\working-with-resources-net.md = docs\working-with-resources-net.md
+		docs\xliff.md = docs\xliff.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5453BED3-0A29-414C-9535-57264C1F37E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5453BED3-0A29-414C-9535-57264C1F37E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5453BED3-0A29-414C-9535-57264C1F37E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5453BED3-0A29-414C-9535-57264C1F37E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B121E3D1-F850-4581-80E9-1C65665A8428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B121E3D1-F850-4581-80E9-1C65665A8428}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B121E3D1-F850-4581-80E9-1C65665A8428}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B121E3D1-F850-4581-80E9-1C65665A8428}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0075E83B-79A1-4957-818C-CF9FDCAE80E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0075E83B-79A1-4957-818C-CF9FDCAE80E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0075E83B-79A1-4957-818C-CF9FDCAE80E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0075E83B-79A1-4957-818C-CF9FDCAE80E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0075E83B-79A1-4957-818C-CF9FDCAE80E5} = {DF259C87-9633-46AF-B6E5-AA44E34878AB}
+		{EAB35BEA-94DE-4894-ABC3-5F306C5995F6} = {C79C0F5F-7C56-42C8-84EB-31342C7609F7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3132F4CD-7EB0-41DD-B326-F4C39FF97FD0}
+	EndGlobalSection
+EndGlobal
