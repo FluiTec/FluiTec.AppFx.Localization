@@ -6,7 +6,7 @@ stages:
 
 variables:
     srcDir: "src"
-    projectName: "FluiTec.AppFx.Identity"
+    projectName: "FluiTec.AppFx.Localization"
     GIT_SUBMODULE_STRATEGY: recursive
     
 before_script:
