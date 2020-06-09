@@ -23,4 +23,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.LiteDb\FluiTec.AppFx.Data.LiteDb.csproj" />
+    <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
+  </ItemGroup>
+
 </Project>

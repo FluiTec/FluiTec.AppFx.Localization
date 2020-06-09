@@ -1,13 +1,14 @@
 ﻿using System;
 using FluiTec.AppFx.Data.Entities;
 using FluiTec.AppFx.Data.EntityNameServices;
+using FluiTec.AppFx.Localization.Schema;
 
 namespace FluiTec.AppFx.Localization.Entities
 {
     /// <summary>
     ///     A resource entity.
     /// </summary>
-    [EntityName("AppFxLocalization","Resource")]
+    [EntityName(SchemaGlobals.Schema,SchemaGlobals.ResourceTable)]
     public class ResourceEntity : IKeyEntity<int>
     {
         /// <summary>Gets or sets the key.</summary>

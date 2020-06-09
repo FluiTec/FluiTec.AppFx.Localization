@@ -23,4 +23,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dapper\FluiTec.AppFx.Data.Dapper.csproj" />
+    <ProjectReference Include="..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data\FluiTec.AppFx.Data.csproj" />
+    <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper\FluiTec.AppFx.Localization.Dapper.csproj" />
+  </ItemGroup>
+
 </Project>
