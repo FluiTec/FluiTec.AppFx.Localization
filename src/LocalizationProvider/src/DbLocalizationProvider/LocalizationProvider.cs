@@ -117,7 +117,7 @@ namespace FluiTec.DbLocalizationProvider
         public virtual string GetStringByCulture(Expression<Func<object>> resource, CultureInfo culture,
             params object[] formatArguments)
         {
-            if(resource == null)
+            if (resource == null)
                 throw new ArgumentNullException(nameof(resource));
 
             var resourceKey = ExpressionHelper.GetFullMemberName(resource);
@@ -140,23 +140,23 @@ namespace FluiTec.DbLocalizationProvider
         public virtual string GetStringByCulture(string resourceKey, CultureInfo culture,
             params object[] formatArguments)
         {
-            if(string.IsNullOrWhiteSpace(resourceKey))
+            if (string.IsNullOrWhiteSpace(resourceKey))
                 throw new ArgumentNullException(nameof(resourceKey));
 
-            if(culture == null)
+            if (culture == null)
                 throw new ArgumentNullException(nameof(culture));
 
             var q = new GetTranslation.Query(resourceKey, culture, _fallbackEnabled);
             var resourceValue = q.Execute();
 
-            if(resourceValue == null)
+            if (resourceValue == null)
                 return null;
 
             try
             {
                 return Format(resourceValue, formatArguments);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 // TODO: log
             }
@@ -166,7 +166,7 @@ namespace FluiTec.DbLocalizationProvider
 
         internal static string Format(string message, params object[] formatArguments)
         {
-            if(formatArguments == null || !formatArguments.Any())
+            if (formatArguments == null || !formatArguments.Any())
                 return message;
 
             // check if first element is not scalar - format with named placeholders
@@ -179,24 +179,24 @@ namespace FluiTec.DbLocalizationProvider
         private static string FormatWithAnonymousObject(string message, object model)
         {
             var type = model.GetType();
-            if(type == typeof(string))
+            if (type == typeof(string))
                 return string.Format(message, model);
 
             var placeHolders = Regex.Matches(message, "{.*?}").Cast<Match>().Select(m => m.Value).ToList();
 
-            if(!placeHolders.Any())
+            if (!placeHolders.Any())
                 return message;
 
             var placeholderMap = new Dictionary<string, object>();
             var properties = type.GetProperties();
 
-            foreach(var placeHolder in placeHolders)
+            foreach (var placeHolder in placeHolders)
             {
                 var propertyInfo = properties.FirstOrDefault(p => p.Name == placeHolder.Trim('{', '}'));
 
                 // property found - extract value and add to the map
                 var val = propertyInfo?.GetValue(model);
-                if(val != null)
+                if (val != null)
                     placeholderMap.Add(placeHolder, val);
             }
 

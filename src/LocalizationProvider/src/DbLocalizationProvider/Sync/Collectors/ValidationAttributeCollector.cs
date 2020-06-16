@@ -29,16 +29,16 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
             var keyAttributes = mi.GetCustomAttributes<ResourceKeyAttribute>().ToList();
             var validationAttributes = mi.GetCustomAttributes<ValidationAttribute>().ToList();
 
-            if(keyAttributes.Count > 1 && validationAttributes.Any())
+            if (keyAttributes.Count > 1 && validationAttributes.Any())
                 throw new InvalidOperationException(
                     "Model with data annotation attributes cannot have more than one `[ResourceKey]` attribute.");
 
-            foreach(var validationAttribute in validationAttributes)
+            foreach (var validationAttribute in validationAttributes)
             {
-                if(validationAttribute.GetType() == typeof(DataTypeAttribute))
+                if (validationAttribute.GetType() == typeof(DataTypeAttribute))
                     continue;
 
-                if(keyAttributes.Any())
+                if (keyAttributes.Any())
                     resourceKey = keyAttributes.First().Key;
 
                 var validationResourceKey = ResourceKeyBuilder.BuildResourceKey(resourceKey, validationAttribute);
@@ -54,18 +54,16 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
                         : validationAttribute.ErrorMessage));
 
                 var validationTranslations = mi.GetCustomAttributes<ValidationTranslationForCultureAttribute>();
-                foreach(var validationTranslationAttribute in validationTranslations)
+                foreach (var validationTranslationAttribute in validationTranslations)
                 {
                     var validationAttributeName = validationAttribute.GetType().Name;
-                    if(validationAttributeName.EndsWith("Attribute"))
+                    if (validationAttributeName.EndsWith("Attribute"))
                         validationAttributeName =
                             validationAttributeName.Substring(0,
                                 validationAttributeName.LastIndexOf("Attribute", StringComparison.Ordinal));
-                    if(validationTranslationAttribute.Validation == validationAttributeName)
-                    {
+                    if (validationTranslationAttribute.Validation == validationAttributeName)
                         translations.Add(new DiscoveredTranslation(validationTranslationAttribute.Translation,
                             validationTranslationAttribute.Culture));
-                    }
                 }
 
                 yield return new DiscoveredResource(mi,

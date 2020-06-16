@@ -39,10 +39,10 @@ namespace FluiTec.DbLocalizationProvider
         /// </param>
         public CustomAttributeDescriptor(Type target, bool generateTranslation = true)
         {
-            if(target == null)
+            if (target == null)
                 throw new ArgumentNullException(nameof(target));
 
-            if(!typeof(Attribute).IsAssignableFrom(target))
+            if (!typeof(Attribute).IsAssignableFrom(target))
                 throw new ArgumentException($"Given type `{target.FullName}` is not of type `System.Attribute`");
 
             CustomAttribute = target;

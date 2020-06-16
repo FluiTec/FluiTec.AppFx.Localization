@@ -26,12 +26,12 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
         {
             // check if there are [ResourceKey] attributes
             var keyAttributes = mi.GetCustomAttributes<ResourceKeyAttribute>().ToList();
-            if(keyAttributes.Any())
+            if (keyAttributes.Any())
                 yield break;
 
             // check if there are [UseResource] attributes
             var useAttribute = mi.GetCustomAttribute<UseResourceAttribute>();
-            if(useAttribute != null)
+            if (useAttribute != null)
                 yield break;
 
             var isResourceHidden = isHidden || mi.GetCustomAttribute<HiddenAttribute>() != null;
@@ -39,7 +39,7 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
 
             var additionalTranslationsAttributes = mi.GetCustomAttributes<TranslationForCultureAttribute>().ToArray();
 
-            if(additionalTranslationsAttributes != null && additionalTranslationsAttributes.Any())
+            if (additionalTranslationsAttributes != null && additionalTranslationsAttributes.Any())
                 translations.AddRange(additionalTranslationsAttributes.Select(a =>
                     new DiscoveredTranslation(a.Translation, a.Culture)));
 

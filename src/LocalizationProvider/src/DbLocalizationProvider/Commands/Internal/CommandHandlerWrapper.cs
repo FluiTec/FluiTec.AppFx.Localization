@@ -38,7 +38,7 @@ namespace FluiTec.DbLocalizationProvider.Commands.Internal
 
         public override void Execute(ICommand command)
         {
-            _inner.Execute((TCommand)command);
+            _inner.Execute((TCommand) command);
         }
     }
 }

@@ -14,7 +14,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql
         /// <summary>   Constructor. </summary>
         /// <param name="dataService">  The data service. </param>
         /// <param name="logger">       The logger. </param>
-        public MssqlLocalizationUnitOfWork(IDapperDataService dataService, ILogger<IUnitOfWork> logger) : base(dataService, logger)
+        public MssqlLocalizationUnitOfWork(IDapperDataService dataService, ILogger<IUnitOfWork> logger) : base(
+            dataService, logger)
         {
         }
 
@@ -22,15 +23,18 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql
         /// <param name="parentUnitOfWork"> The parent unit of work. </param>
         /// <param name="dataService">      The data service. </param>
         /// <param name="logger">           The logger. </param>
-        public MssqlLocalizationUnitOfWork(DapperUnitOfWork parentUnitOfWork, IDataService dataService, ILogger<IUnitOfWork> logger) : base(parentUnitOfWork, dataService, logger)
+        public MssqlLocalizationUnitOfWork(DapperUnitOfWork parentUnitOfWork, IDataService dataService,
+            ILogger<IUnitOfWork> logger) : base(parentUnitOfWork, dataService, logger)
         {
         }
 
         /// <summary>   Registers the repositories. </summary>
         protected override void RegisterRepositories()
         {
-            RepositoryProviders.Add(typeof(IResourceRepository), (uow, log) => new MssqlResourceRepository((DapperLocalizationUnitOfWork)uow, log));
-            RepositoryProviders.Add(typeof(ITranslationRepository), (uow, log) => new MssqlTranslationRepository((DapperLocalizationUnitOfWork)uow, log));
+            RepositoryProviders.Add(typeof(IResourceRepository),
+                (uow, log) => new MssqlResourceRepository((DapperLocalizationUnitOfWork) uow, log));
+            RepositoryProviders.Add(typeof(ITranslationRepository),
+                (uow, log) => new MssqlTranslationRepository((DapperLocalizationUnitOfWork) uow, log));
         }
     }
 }

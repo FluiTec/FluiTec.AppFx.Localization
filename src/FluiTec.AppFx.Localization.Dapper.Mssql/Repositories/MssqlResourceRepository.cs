@@ -13,7 +13,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql.Repositories
         /// <summary>   Constructor. </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public MssqlResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public MssqlResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
@@ -32,7 +33,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql.Repositories
         {
             var command =
                 $"UPDATE {TableName} SET {nameof(ResourceEntity.ResourceKey)} @NewKey WHERE {nameof(ResourceEntity.ResourceKey)} = @OldKey";
-            return UnitOfWork.Connection.Execute(command, new {NewKey = newKey, OldKey = oldKey}, UnitOfWork.Transaction) > 0;
+            return UnitOfWork.Connection.Execute(command, new {NewKey = newKey, OldKey = oldKey},
+                UnitOfWork.Transaction) > 0;
         }
     }
 }

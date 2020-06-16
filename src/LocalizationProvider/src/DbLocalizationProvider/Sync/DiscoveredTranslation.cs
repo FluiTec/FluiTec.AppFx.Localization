@@ -48,7 +48,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
             };
 
             // regsiter additional culture if default is not set to invariant
-            if(defaultCulture != string.Empty)
+            if (defaultCulture != string.Empty)
                 result.Add(new DiscoveredTranslation(translation, defaultCulture));
 
             return result;

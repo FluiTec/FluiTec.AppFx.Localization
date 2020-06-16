@@ -30,23 +30,23 @@ namespace FluiTec.DbLocalizationProvider.Internal
             TArg arg,
             Func<TKey, TArg, TValue> valueFactory)
         {
-            if(dictionary == null)
+            if (dictionary == null)
                 throw new ArgumentNullException(nameof(dictionary));
 
-            if(key == null)
+            if (key == null)
                 throw new ArgumentNullException(nameof(key));
 
-            if(valueFactory == null)
+            if (valueFactory == null)
                 throw new ArgumentNullException(nameof(valueFactory));
 
-            while(true)
+            while (true)
             {
-                if(dictionary.TryGetValue(key, out var value))
+                if (dictionary.TryGetValue(key, out var value))
                     return value;
 
                 value = valueFactory(key, arg);
 
-                if(dictionary.TryAdd(key, value))
+                if (dictionary.TryAdd(key, value))
                     return value;
             }
         }

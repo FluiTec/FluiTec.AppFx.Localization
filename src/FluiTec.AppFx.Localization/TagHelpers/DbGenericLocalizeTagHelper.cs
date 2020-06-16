@@ -74,10 +74,7 @@ namespace FluiTec.AppFx.Localization.TagHelpers
                         throw new ArgumentNullException(
                             nameof(Localizer)); //localizerFactory.ResolveLocalizer(ViewContext, applicationName, Type, Name);
 
-            if (!SupportsParameters)
-            {
-                return;
-            }
+            if (!SupportsParameters) return;
 
             Stack<List<object>> currentStack;
 
@@ -98,34 +95,25 @@ namespace FluiTec.AppFx.Localization.TagHelpers
         {
             if (output.Attributes.ContainsName("localize"))
             {
-                int index = output.Attributes.IndexOfName("localize");
+                var index = output.Attributes.IndexOfName("localize");
                 output.Attributes.RemoveAt(index);
             }
 
             var content = await GetContentAsync(context, output);
 
-            if (TrimWhitespace || TrimEachLine)
-            {
-                content = content?.Trim();
-            }
+            if (TrimWhitespace || TrimEachLine) content = content?.Trim();
 
             if (NewLineHandling != NewLineHandling.None || TrimEachLine)
-            {
                 content = HandleNormalization(content, NewLineHandling, TrimEachLine);
-            }
 
             var parameters = GetParameters(context).ToList();
             if (IsHtml)
             {
                 LocalizedHtmlString locString;
                 if (parameters.Any())
-                {
                     locString = Localizer[content, parameters.ToArray()];
-                }
                 else
-                {
                     locString = Localizer[content];
-                }
 
                 SetHtmlContent(context, output.Content, locString);
             }
@@ -133,13 +121,9 @@ namespace FluiTec.AppFx.Localization.TagHelpers
             {
                 LocalizedString locString;
                 if (parameters.Any())
-                {
                     locString = Localizer.GetString(content, parameters.ToArray());
-                }
                 else
-                {
                     locString = Localizer.GetString(content);
-                }
 
                 SetContent(context, output.Content, locString);
             }
@@ -148,20 +132,14 @@ namespace FluiTec.AppFx.Localization.TagHelpers
         protected virtual async Task<string> GetContentAsync(TagHelperContext context, TagHelperOutput output)
         {
             var content = await output.GetChildContentAsync(true);
-            if (output.IsContentModified)
-            {
-                return output.Content.GetContent(NullHtmlEncoder.Default);
-            }
+            if (output.IsContentModified) return output.Content.GetContent(NullHtmlEncoder.Default);
 
             return content.GetContent(NullHtmlEncoder.Default);
         }
 
         protected virtual IEnumerable<object> GetParameters(TagHelperContext context)
         {
-            if (!context.Items.ContainsKey(typeof(DbGenericLocalizeTagHelper)))
-            {
-                return new object[0];
-            }
+            if (!context.Items.ContainsKey(typeof(DbGenericLocalizeTagHelper))) return new object[0];
 
             var stack = (Stack<List<object>>) context.Items[typeof(DbGenericLocalizeTagHelper)];
 
@@ -184,13 +162,9 @@ namespace FluiTec.AppFx.Localization.TagHelpers
         {
             var substring = content.Substring(lastIndex, index - lastIndex);
             if (trimEachLine)
-            {
                 newContent.Append(substring.Trim());
-            }
             else
-            {
                 newContent.Append(substring.TrimEnd('\r'));
-            }
         }
 
         private static void AppendNewLine(string content, bool trimEachLine, StringBuilder newContent, int index,
@@ -199,13 +173,9 @@ namespace FluiTec.AppFx.Localization.TagHelpers
             if (newLine == null)
             {
                 if (trimEachLine && index > 0 && content[index - 1] == '\r')
-                {
                     newContent.Append("\r\n");
-                }
                 else
-                {
                     newContent.Append('\n');
-                }
             }
             else
             {
@@ -236,20 +206,14 @@ namespace FluiTec.AppFx.Localization.TagHelpers
 
         private static string HandleNormalization(string content, NewLineHandling newLineHandling, bool trimEachLine)
         {
-            if (string.IsNullOrEmpty(content))
-            {
-                return content;
-            }
+            if (string.IsNullOrEmpty(content)) return content;
 
-            if (trimEachLine)
-            {
-                content = content.Trim();
-            }
+            if (trimEachLine) content = content.Trim();
 
-            StringBuilder newContent = new StringBuilder();
-            int lastIndex = 0;
+            var newContent = new StringBuilder();
+            var lastIndex = 0;
             int index;
-            string newLine = GetDefaultNewLine(newLineHandling);
+            var newLine = GetDefaultNewLine(newLineHandling);
 
             while ((index = content.IndexOf('\n', lastIndex)) >= 0)
             {

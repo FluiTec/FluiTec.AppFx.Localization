@@ -29,7 +29,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
 
         public bool ShouldScan(Type target)
         {
-            if(target.BaseType == typeof(Enum))
+            if (target.BaseType == typeof(Enum))
                 _actualScanner = new LocalizedEnumTypeScanner();
             else
                 _actualScanner = new LocalizedResourceTypeScanner();

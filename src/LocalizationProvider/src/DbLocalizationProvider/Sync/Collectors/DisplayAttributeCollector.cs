@@ -26,7 +26,7 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
         {
             // try to fetch also [Display()] attribute to generate new "...-Description" resource => usually used for help text labels
             var displayAttribute = mi.GetCustomAttribute<DisplayAttribute>();
-            if(displayAttribute?.Description == null) yield break;
+            if (displayAttribute?.Description == null) yield break;
             var propertyName = $"{mi.Name}-Description";
             var oldResourceKeys = OldResourceKeyBuilder.GenerateOldResourceKey(target, propertyName, mi,
                 resourceKeyPrefix, typeOldName, typeOldNamespace);
@@ -34,10 +34,10 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
             var translations = new List<DiscoveredTranslation>();
             translations.AddRange(DiscoveredTranslation.FromSingle(displayAttribute.Description));
             var validationTranslations = mi.GetCustomAttributes<DisplayTranslationForCultureAttribute>();
-            foreach(var validationTranslationAttribute in validationTranslations)
+            foreach (var validationTranslationAttribute in validationTranslations)
             {
                 var validationAttributeName = displayAttribute.GetType().Name;
-                if(validationAttributeName.EndsWith("Attribute"))
+                if (validationAttributeName.EndsWith("Attribute"))
                     validationAttributeName =
                         validationAttributeName.Substring(0,
                             validationAttributeName.LastIndexOf("Attribute", StringComparison.Ordinal));

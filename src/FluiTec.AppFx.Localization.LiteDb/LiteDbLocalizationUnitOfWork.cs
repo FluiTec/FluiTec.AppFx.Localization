@@ -13,7 +13,8 @@ namespace FluiTec.AppFx.Localization.LiteDb
         /// <summary>   Constructor. </summary>
         /// <param name="dataService">  The data service. </param>
         /// <param name="logger">       The logger. </param>
-        public LiteDbLocalizationUnitOfWork(ILiteDbDataService dataService, ILogger<IUnitOfWork> logger) : base(dataService, logger)
+        public LiteDbLocalizationUnitOfWork(ILiteDbDataService dataService, ILogger<IUnitOfWork> logger) : base(
+            dataService, logger)
         {
             RegisterRepositories();
         }
@@ -22,16 +23,10 @@ namespace FluiTec.AppFx.Localization.LiteDb
         /// <param name="dataService">      The data service. </param>
         /// <param name="parentUnitOfWork"> The parent unit of work. </param>
         /// <param name="logger">           The logger. </param>
-        public LiteDbLocalizationUnitOfWork(ILiteDbDataService dataService, LiteDbUnitOfWork parentUnitOfWork, ILogger<IUnitOfWork> logger) : base(dataService, parentUnitOfWork, logger)
+        public LiteDbLocalizationUnitOfWork(ILiteDbDataService dataService, LiteDbUnitOfWork parentUnitOfWork,
+            ILogger<IUnitOfWork> logger) : base(dataService, parentUnitOfWork, logger)
         {
             RegisterRepositories();
-        }
-
-        /// <summary>   Registers the repositories. </summary>
-        private void RegisterRepositories()
-        {
-            RepositoryProviders.Add(typeof(IResourceRepository), (uow, logger) => new LiteDbResourceRepository((LiteDbUnitOfWork)uow, logger));
-            RepositoryProviders.Add(typeof(ITranslationRepository), (uow, logger) => new LiteDbTranslationRepository((LiteDbUnitOfWork)uow, logger));
         }
 
         /// <summary>   Gets the resource repository. </summary>
@@ -41,5 +36,14 @@ namespace FluiTec.AppFx.Localization.LiteDb
         /// <summary>   Gets the translation repository. </summary>
         /// <value> The translation repository. </value>
         public ITranslationRepository TranslationRepository => GetRepository<ITranslationRepository>();
+
+        /// <summary>   Registers the repositories. </summary>
+        private void RegisterRepositories()
+        {
+            RepositoryProviders.Add(typeof(IResourceRepository),
+                (uow, logger) => new LiteDbResourceRepository((LiteDbUnitOfWork) uow, logger));
+            RepositoryProviders.Add(typeof(ITranslationRepository),
+                (uow, logger) => new LiteDbTranslationRepository((LiteDbUnitOfWork) uow, logger));
+        }
     }
 }

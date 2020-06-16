@@ -38,7 +38,7 @@ namespace FluiTec.DbLocalizationProvider.Queries.Internal
 
         public override TResult Execute(IQuery<TResult> message)
         {
-            return _inner.Execute((TQuery)message);
+            return _inner.Execute((TQuery) message);
         }
     }
 }

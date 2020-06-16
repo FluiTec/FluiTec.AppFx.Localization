@@ -12,14 +12,16 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
     /// <summary>   A lite database translation repository. </summary>
-    public class LiteDbTranslationRepository : LiteDbWritableIntegerKeyTableDataRepository<TranslationEntity>, ITranslationRepository
+    public class LiteDbTranslationRepository : LiteDbWritableIntegerKeyTableDataRepository<TranslationEntity>,
+        ITranslationRepository
     {
         #region Constructors
 
         /// <summary>   Constructor. </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public LiteDbTranslationRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public LiteDbTranslationRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
@@ -53,15 +55,15 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         public override void AddRange(IEnumerable<TranslationEntity> entities)
         {
             foreach (var entity in entities)
-            {
                 if (GetByResourceIdAndCulture(entity.ResourceId, entity.Language) == null)
                     Collection.Insert(entity);
-            }
         }
 
         /// <summary>   Updates the given entity. </summary>
-        /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-        ///                                                 invalid. </exception>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown when the requested operation is
+        ///     invalid.
+        /// </exception>
         /// <param name="entity">   The entity to add. </param>
         /// <returns>   A TEntity. </returns>
         public override TranslationEntity Update(TranslationEntity entity)

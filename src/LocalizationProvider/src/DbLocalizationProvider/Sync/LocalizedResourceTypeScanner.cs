@@ -40,7 +40,9 @@ namespace FluiTec.DbLocalizationProvider.Sync
 
             return !string.IsNullOrEmpty(resourceAttribute?.KeyPrefix)
                 ? resourceAttribute?.KeyPrefix
-                : (string.IsNullOrEmpty(keyPrefix) ? target.FullName : keyPrefix);
+                : string.IsNullOrEmpty(keyPrefix)
+                    ? target.FullName
+                    : keyPrefix;
         }
 
         public ICollection<DiscoveredResource> GetResources(Type target, string resourceKeyPrefix)
@@ -63,12 +65,12 @@ namespace FluiTec.DbLocalizationProvider.Sync
         private static ICollection<MemberInfo> GetResourceSources(Type target)
         {
             var attr = target.GetCustomAttribute<LocalizedResourceAttribute>();
-            if(attr == null)
+            if (attr == null)
                 return new List<MemberInfo>();
 
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
 
-            if(!attr.Inherited)
+            if (!attr.Inherited)
                 flags = flags | BindingFlags.DeclaredOnly;
 
             return target.GetProperties(flags | BindingFlags.GetProperty)

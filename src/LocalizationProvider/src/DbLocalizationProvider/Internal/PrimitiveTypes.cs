@@ -62,10 +62,7 @@ namespace FluiTec.DbLocalizationProvider.Internal
 
         public static bool IsSimpleType(this Type type)
         {
-            if(List.Any(x => x.IsAssignableFrom(type)))
-            {
-                return true;
-            }
+            if (List.Any(x => x.IsAssignableFrom(type))) return true;
 
             var nut = Nullable.GetUnderlyingType(type);
             return nut != null && nut.IsEnum;

@@ -40,7 +40,7 @@ namespace FluiTec.DbLocalizationProvider.Abstractions.Refactoring
         /// <param name="oldNamespace"> The old namespace. </param>
         public RenamedResourceAttribute(string oldName, string oldNamespace)
         {
-            if(string.IsNullOrWhiteSpace(oldName))
+            if (string.IsNullOrWhiteSpace(oldName))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(oldName));
 
             OldName = oldName;

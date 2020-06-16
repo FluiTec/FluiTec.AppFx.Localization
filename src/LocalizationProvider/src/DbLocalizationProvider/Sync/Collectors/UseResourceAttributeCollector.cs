@@ -26,7 +26,7 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
         {
             // try to understand if there is resource "redirect" - [UseResource(..)]
             var resourceRef = mi.GetCustomAttribute<UseResourceAttribute>();
-            if(resourceRef != null)
+            if (resourceRef != null)
                 TypeDiscoveryHelper.UseResourceAttributeCache.TryAdd(resourceKey,
                     ResourceKeyBuilder.BuildResourceKey(resourceRef.TargetContainer, resourceRef.PropertyName));
 

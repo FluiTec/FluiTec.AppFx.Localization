@@ -65,7 +65,7 @@ namespace FluiTec.DbLocalizationProvider
                 (command, wrapper) => wrapper.MakeGenericType(command));
             var handler = GetHandler(commandType);
 
-            return (TWrapper)Activator.CreateInstance(genericWrapperType, handler);
+            return (TWrapper) Activator.CreateInstance(genericWrapperType, handler);
         }
 
         private TWrapper GetQueryHandler<TWrapper, TResponse>(object request, Type wrapperType)
@@ -75,7 +75,7 @@ namespace FluiTec.DbLocalizationProvider
                 (query, wrapper) => wrapper.MakeGenericType(query, typeof(TResponse)));
             var handler = GetHandler(requestType);
 
-            return (TWrapper)Activator.CreateInstance(genericWrapperType, handler);
+            return (TWrapper) Activator.CreateInstance(genericWrapperType, handler);
         }
 
         private object GetHandler(Type queryType)

@@ -62,7 +62,7 @@ namespace FluiTec.DbLocalizationProvider.Cache
 
         private void VerifyInstance()
         {
-            if(_inner == null)
+            if (_inner == null)
                 throw new InvalidOperationException(
                     "Cache implementation is not set. Use `ConfigurationContext.Current.CacheManager` setter.");
         }

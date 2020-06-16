@@ -39,9 +39,7 @@ namespace FluiTec.AppFx.Localization.Sync
             var discoveredModels = discoveredTypes[1];
             var foreignResources = ConfigurationContext.Current.ForeignResources;
             if (foreignResources != null && foreignResources.Any())
-            {
                 discoveredResources.AddRange(foreignResources.Select(x => x.ResourceType));
-            }
 
             ResetSyncStatus();
             var allResources = new GetAllResources.Query().Execute().ToList();
@@ -90,24 +88,19 @@ namespace FluiTec.AppFx.Localization.Sync
 
             // loop through all groups
             foreach (var group in groupedProperties)
-            {
                 using (var uow = _dataService.BeginUnitOfWork())
                 {
                     var resourceRepository = uow.ResourceRepository;
                     var translationRepository = uow.TranslationRepository;
 
                     // enumerate beforehand
-                    var properties = group.ToList();
+                    var properties = @group.ToList();
 
                     // loop through all refactored properties and change their key
                     foreach (var refactoredResource in properties.Where(r => !string.IsNullOrEmpty(r.OldResourceKey)))
-                    {
                         if (resourceRepository.RefactorKey(refactoredResource.OldResourceKey, refactoredResource.Key))
-                        {
                             allResources.Single(r => r.ResourceKey == refactoredResource.OldResourceKey).ResourceKey =
                                 refactoredResource.Key;
-                        }
-                    }
 
                     // loop through all properties
                     foreach (var property in properties)
@@ -146,7 +139,6 @@ namespace FluiTec.AppFx.Localization.Sync
                             var byResource = translationRepository.ByResource(resourceEntity);
                             var existingTranslations = byResource.ToDictionary(t => t.Language ?? string.Empty);
                             foreach (var translation in property.Translations)
-                            {
                                 // if it exists - update it if it was modified or the invariant translations
                                 if (existingTranslations.ContainsKey(translation.Culture))
                                 {
@@ -169,13 +161,11 @@ namespace FluiTec.AppFx.Localization.Sync
                                         Value = translation.Translation
                                     });
                                 }
-                            }
                         }
                     }
 
                     uow.Commit();
                 }
-            }
         }
     }
 }

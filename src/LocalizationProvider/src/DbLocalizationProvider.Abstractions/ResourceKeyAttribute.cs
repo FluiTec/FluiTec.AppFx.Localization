@@ -44,7 +44,7 @@ namespace FluiTec.DbLocalizationProvider.Abstractions
         /// <param name="value">This is the default translation for the resource</param>
         public ResourceKeyAttribute(string key, string value)
         {
-            if(string.IsNullOrWhiteSpace(key))
+            if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
 
             Key = key;

@@ -27,7 +27,7 @@ namespace FluiTec.DbLocalizationProvider.Internal
     {
         internal static string JoinNonEmpty(this string target, string separator, params string[] args)
         {
-            if(target == null)
+            if (target == null)
                 throw new ArgumentNullException(nameof(target));
 
             return string.Join(separator, new[] {target}.Union(args.Where(s => !string.IsNullOrEmpty(s)).ToArray()));

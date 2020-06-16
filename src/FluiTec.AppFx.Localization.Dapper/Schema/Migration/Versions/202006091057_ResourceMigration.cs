@@ -4,7 +4,7 @@ using FluiTec.AppFx.Localization.Schema;
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migration.Versions
 {
     /// <summary>   A resource migration. </summary>
-    [DapperMigration(2020,06,09,10,57, "Achim Schnell")]
+    [DapperMigration(2020, 06, 09, 10, 57, "Achim Schnell")]
     public class _202006091057_ResourceMigration : FluentMigrator.Migration
     {
         /// <summary>   Collect the UP migration expressions. </summary>

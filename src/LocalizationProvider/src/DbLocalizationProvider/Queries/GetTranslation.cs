@@ -50,7 +50,7 @@ namespace FluiTec.DbLocalizationProvider.Queries
                 bool queryUseFallback)
             {
                 var foundTranslation = translations?.FindByLanguage(language);
-                if(foundTranslation == null && queryUseFallback)
+                if (foundTranslation == null && queryUseFallback)
                     return translations?.FindByLanguage(CultureInfo.InvariantCulture);
 
                 return foundTranslation;

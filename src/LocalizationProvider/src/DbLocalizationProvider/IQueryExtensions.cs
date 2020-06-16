@@ -27,7 +27,7 @@ namespace FluiTec.DbLocalizationProvider
     {
         public static TResult Execute<TResult>(this IQuery<TResult> query)
         {
-            if(query == null)
+            if (query == null)
                 throw new ArgumentNullException(nameof(query));
 
             var handler = ConfigurationContext.Current.TypeFactory.GetQueryHandler(query);

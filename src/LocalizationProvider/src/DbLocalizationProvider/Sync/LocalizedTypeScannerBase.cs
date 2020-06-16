@@ -46,11 +46,10 @@ namespace FluiTec.DbLocalizationProvider.Sync
         {
             var result = new List<DiscoveredResource>();
             var resourceAttributesOnModelClass = target.GetCustomAttributes<ResourceKeyAttribute>().ToList();
-            if(!resourceAttributesOnModelClass.Any())
+            if (!resourceAttributesOnModelClass.Any())
                 return result;
 
-            foreach(var resourceKeyAttribute in resourceAttributesOnModelClass)
-            {
+            foreach (var resourceKeyAttribute in resourceAttributesOnModelClass)
                 result.Add(new DiscoveredResource(null,
                     ResourceKeyBuilder.BuildResourceKey(resourceKeyPrefix, resourceKeyAttribute.Key, string.Empty),
                     DiscoveredTranslation.FromSingle(resourceKeyAttribute.Value),
@@ -58,7 +57,6 @@ namespace FluiTec.DbLocalizationProvider.Sync
                     target,
                     typeof(string),
                     true));
-            }
 
             return result;
         }
@@ -78,7 +76,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
             {
                 typeInstance = Activator.CreateInstance(target);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 // ignored
             }
@@ -110,7 +108,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
             Type returnType = null;
             var isSimpleType = false;
 
-            switch(mi)
+            switch (mi)
             {
                 case PropertyInfo propertyInfo:
                     declaringType = propertyInfo.PropertyType;
@@ -126,7 +124,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
 
             var result = new List<DiscoveredResource>();
 
-            foreach(var collector in _collectors)
+            foreach (var collector in _collectors)
                 result.AddRange(collector.GetDiscoveredResources(target,
                     instance,
                     mi,
@@ -148,39 +146,41 @@ namespace FluiTec.DbLocalizationProvider.Sync
         {
             var result = mi.Name;
 
-            switch(mi)
+            switch (mi)
             {
                 case PropertyInfo info1:
                     // try to extract resource value from property
                     var methodInfo = info1.GetGetMethod();
-                    if(IsStringProperty(methodInfo.ReturnType))
-                    {
+                    if (IsStringProperty(methodInfo.ReturnType))
                         try
                         {
-                            if(!methodInfo.IsStatic)
+                            if (!methodInfo.IsStatic)
                             {
-                                if(mi.DeclaringType != null && instance != null)
-                                    if(methodInfo.Invoke(instance, null) is string propertyValue)
+                                if (mi.DeclaringType != null && instance != null)
+                                    if (methodInfo.Invoke(instance, null) is string propertyValue)
                                         result = propertyValue;
                             }
                             else
+                            {
                                 result = methodInfo.Invoke(null, null) as string ?? result;
+                            }
                         }
                         catch
                         {
                             // if we fail to retrieve value for the resource - fair enough
                         }
-                    }
 
                     break;
                 case FieldInfo fieldInfo:
                     // try to extract resource value from field
-                    if(fieldInfo.IsStatic)
+                    if (fieldInfo.IsStatic)
+                    {
                         result = fieldInfo.GetValue(null) as string ?? result;
+                    }
                     else
                     {
-                        if(instance != null)
-                            if(fieldInfo.GetValue(instance) is string fieldValue)
+                        if (instance != null)
+                            if (fieldInfo.GetValue(instance) is string fieldValue)
                                 result = fieldValue;
                     }
 
@@ -190,11 +190,11 @@ namespace FluiTec.DbLocalizationProvider.Sync
             var attributes = mi.GetCustomAttributes(true);
             var displayAttribute = attributes.OfType<DisplayAttribute>().FirstOrDefault();
 
-            if(!string.IsNullOrEmpty(displayAttribute?.GetName()))
+            if (!string.IsNullOrEmpty(displayAttribute?.GetName()))
                 result = displayAttribute?.GetName();
 
             var displayNameAttribute = attributes.OfType<DisplayNameAttribute>().FirstOrDefault();
-            if(!string.IsNullOrEmpty(displayNameAttribute?.DisplayName))
+            if (!string.IsNullOrEmpty(displayNameAttribute?.DisplayName))
                 result = displayNameAttribute?.DisplayName;
 
             return result;

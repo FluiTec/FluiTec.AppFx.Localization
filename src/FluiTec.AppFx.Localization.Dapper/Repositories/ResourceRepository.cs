@@ -9,12 +9,14 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.Dapper.Repositories
 {
     /// <summary>A resource repository.</summary>
-    public abstract class ResourceRepository : DapperWritableKeyTableDataRepository<ResourceEntity, int>, IResourceRepository
+    public abstract class ResourceRepository : DapperWritableKeyTableDataRepository<ResourceEntity, int>,
+        IResourceRepository
     {
         /// <summary>   Specialized constructor for use only by derived class. </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        protected ResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        protected ResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 

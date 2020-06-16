@@ -28,14 +28,14 @@ namespace FluiTec.DbLocalizationProvider.Internal
         public static Type GetUnderlyingType(this MemberInfo member)
         {
             // ReSharper disable once SwitchStatementMissingSomeCases
-            switch(member.MemberType)
+            switch (member.MemberType)
             {
                 case MemberTypes.TypeInfo:
-                    return (TypeInfo)member;
+                    return (TypeInfo) member;
                 case MemberTypes.Field:
-                    return ((FieldInfo)member).FieldType;
+                    return ((FieldInfo) member).FieldType;
                 case MemberTypes.Property:
-                    return ((PropertyInfo)member).DeclaringType;
+                    return ((PropertyInfo) member).DeclaringType;
                 default:
                     throw new ArgumentException("Input MemberInfo must be of type FieldInfo or PropertyInfo");
             }

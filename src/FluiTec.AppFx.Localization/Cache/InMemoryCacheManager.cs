@@ -57,7 +57,7 @@ namespace FluiTec.AppFx.Localization.Cache
         public void Remove(string key)
         {
             _memCache.Remove(key);
-            Entries.TryRemove(key, out var _);
+            Entries.TryRemove(key, out _);
         }
 
         #endregion

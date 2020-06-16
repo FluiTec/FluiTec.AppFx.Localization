@@ -13,7 +13,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Pgsql.Repositories
         /// <summary>   Constructor. </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public PgsqlResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public PgsqlResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
@@ -30,8 +31,10 @@ namespace FluiTec.AppFx.Localization.Dapper.Pgsql.Repositories
         /// <returns>   True if it succeeds, false if it fails. </returns>
         public override bool RefactorKey(string oldKey, string newKey)
         {
-            var command = $"UPDATE {TableName} SET {nameof(ResourceEntity.ResourceKey)} @NewKey WHERE {nameof(ResourceEntity.ResourceKey)} = @OldKey";
-            return UnitOfWork.Connection.Execute(command, new {NewKey = newKey, OldKey = oldKey}, UnitOfWork.Transaction) > 0;
+            var command =
+                $"UPDATE {TableName} SET {nameof(ResourceEntity.ResourceKey)} @NewKey WHERE {nameof(ResourceEntity.ResourceKey)} = @OldKey";
+            return UnitOfWork.Connection.Execute(command, new {NewKey = newKey, OldKey = oldKey},
+                UnitOfWork.Transaction) > 0;
         }
     }
 }

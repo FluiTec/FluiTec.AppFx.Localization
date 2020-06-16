@@ -8,7 +8,7 @@ namespace FluiTec.AppFx.Localization.Entities
     /// <summary>
     ///     A resource entity.
     /// </summary>
-    [EntityName(SchemaGlobals.Schema,SchemaGlobals.ResourceTable)]
+    [EntityName(SchemaGlobals.Schema, SchemaGlobals.ResourceTable)]
     public class ResourceEntity : IKeyEntity<int>
     {
         /// <summary>Gets or sets the key.</summary>

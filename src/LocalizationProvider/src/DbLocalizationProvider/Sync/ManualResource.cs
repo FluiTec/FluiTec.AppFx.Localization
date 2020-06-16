@@ -26,7 +26,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
     {
         public ManualResource(string key, string translation)
         {
-            if(string.IsNullOrWhiteSpace(key))
+            if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
 
             Key = key;

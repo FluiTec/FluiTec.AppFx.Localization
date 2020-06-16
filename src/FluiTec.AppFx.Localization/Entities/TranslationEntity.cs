@@ -7,7 +7,7 @@ namespace FluiTec.AppFx.Localization.Entities
     /// <summary>
     ///     A translation.
     /// </summary>
-    [EntityName(SchemaGlobals.Schema,SchemaGlobals.TranslationTable)]
+    [EntityName(SchemaGlobals.Schema, SchemaGlobals.TranslationTable)]
     public class TranslationEntity : IKeyEntity<int>
     {
         /// <summary>Gets or sets the language.</summary>

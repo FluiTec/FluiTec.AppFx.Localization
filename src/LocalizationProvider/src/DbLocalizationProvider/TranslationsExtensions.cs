@@ -43,9 +43,9 @@ namespace FluiTec.DbLocalizationProvider
             this ICollection<LocalizationResourceTranslation> translations, string language)
         {
             var translation = translations.FirstOrDefault(t => t.Language == language);
-            if(translation != null)
+            if (translation != null)
                 return translation;
-            if(language.Length == 5)
+            if (language.Length == 5)
                 translation = translations.FirstOrDefault(t => t.Language == language.Substring(0, 2));
             return translation;
             //return translations.FirstOrDefault(t => t.Language == language);
@@ -54,10 +54,10 @@ namespace FluiTec.DbLocalizationProvider
         public static string ByLanguage(this ICollection<LocalizationResourceTranslation> translations, string language,
             bool invariantCultureFallback)
         {
-            if(translations == null)
+            if (translations == null)
                 return string.Empty;
 
-            if(string.IsNullOrEmpty(language))
+            if (string.IsNullOrEmpty(language))
                 throw new ArgumentNullException(nameof(language));
 
             var translation = translations.FindByLanguage(language);
@@ -73,7 +73,7 @@ namespace FluiTec.DbLocalizationProvider
         public static bool ExistsLanguage(this ICollection<LocalizationResourceTranslation> translations,
             string language)
         {
-            if(string.IsNullOrEmpty(language))
+            if (string.IsNullOrEmpty(language))
                 throw new ArgumentNullException(nameof(language));
 
             return translations?.FirstOrDefault(t => t.Language == language) != null;

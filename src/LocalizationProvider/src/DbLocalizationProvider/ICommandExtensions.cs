@@ -27,7 +27,7 @@ namespace FluiTec.DbLocalizationProvider
     {
         public static void Execute(this ICommand command)
         {
-            if(command == null)
+            if (command == null)
                 throw new ArgumentNullException(nameof(command));
 
             var handler = ConfigurationContext.Current.TypeFactory.GetCommandHandler(command);

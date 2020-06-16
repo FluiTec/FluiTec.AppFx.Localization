@@ -11,12 +11,14 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.Dapper.Repositories
 {
     /// <summary>A translation repository.</summary>
-    public abstract class TranslationRepository : DapperWritableKeyTableDataRepository<TranslationEntity, int>, ITranslationRepository
+    public abstract class TranslationRepository : DapperWritableKeyTableDataRepository<TranslationEntity, int>,
+        ITranslationRepository
     {
         /// <summary>   Specialized constructor for use only by derived class. </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        protected TranslationRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        protected TranslationRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
@@ -31,10 +33,6 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
             return UnitOfWork.Connection.Query<TranslationEntity>(command, new {ResourceId = resource.Id},
                 UnitOfWork.Transaction);
         }
-
-        /// <summary>   Creates get all compound query command. </summary>
-        /// <returns>   The new get all compound query command. </returns>
-        protected abstract string CreateGetAllCompoundQueryCommand();
 
         /// <summary>   Gets all compounds in this collection. </summary>
         /// <returns>
@@ -70,5 +68,9 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
                     }, null, UnitOfWork.Transaction);
             return lookup.Values;
         }
+
+        /// <summary>   Creates get all compound query command. </summary>
+        /// <returns>   The new get all compound query command. </returns>
+        protected abstract string CreateGetAllCompoundQueryCommand();
     }
 }

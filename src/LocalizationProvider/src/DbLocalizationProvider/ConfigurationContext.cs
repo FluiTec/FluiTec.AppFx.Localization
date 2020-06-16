@@ -111,7 +111,7 @@ namespace FluiTec.DbLocalizationProvider
             get => _cacheManager;
             set
             {
-                if(value != null)
+                if (value != null)
                     _cacheManager.SetInnerManager(value);
             }
         }

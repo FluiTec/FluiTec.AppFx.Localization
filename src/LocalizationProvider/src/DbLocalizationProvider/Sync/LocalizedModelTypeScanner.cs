@@ -61,12 +61,12 @@ namespace FluiTec.DbLocalizationProvider.Sync
         private static ICollection<MemberInfo> GetResourceSources(Type target)
         {
             var modelAttribute = target.GetCustomAttribute<LocalizedModelAttribute>();
-            if(modelAttribute == null)
+            if (modelAttribute == null)
                 return new List<MemberInfo>();
 
             var flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static;
 
-            if(!modelAttribute.Inherited)
+            if (!modelAttribute.Inherited)
                 flags = flags | BindingFlags.DeclaredOnly;
 
             return target.GetProperties(flags | BindingFlags.GetProperty)

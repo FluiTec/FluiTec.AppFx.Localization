@@ -11,14 +11,16 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
     /// <summary>   A lite database resource repository. </summary>
-    public class LiteDbResourceRepository : LiteDbWritableIntegerKeyTableDataRepository<ResourceEntity>, IResourceRepository
+    public class LiteDbResourceRepository : LiteDbWritableIntegerKeyTableDataRepository<ResourceEntity>,
+        IResourceRepository
     {
         #region Constructors
 
         /// <summary>   Constructor. </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public LiteDbResourceRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public LiteDbResourceRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
@@ -39,15 +41,15 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         public override void AddRange(IEnumerable<ResourceEntity> entities)
         {
             foreach (var entity in entities)
-            {
                 if (GetByKey(entity?.ResourceKey) == null)
                     Collection.Insert(entity);
-            }
         }
 
         /// <summary>   Updates the given entity. </summary>
-        /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-        ///                                                 invalid. </exception>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown when the requested operation is
+        ///     invalid.
+        /// </exception>
         /// <param name="entity">   The entity to add. </param>
         /// <returns>   A TEntity. </returns>
         public override ResourceEntity Update(ResourceEntity entity)

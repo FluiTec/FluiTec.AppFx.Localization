@@ -26,7 +26,7 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
             // check if there are [ResourceKey] attributes
             var keyAttributes = mi.GetCustomAttributes<ResourceKeyAttribute>().ToList();
 
-            foreach(var resourceKeyAttribute in keyAttributes)
+            foreach (var resourceKeyAttribute in keyAttributes)
                 yield return new DiscoveredResource(mi,
                     ResourceKeyBuilder.BuildResourceKey(typeKeyPrefixSpecified ? resourceKeyPrefix : null,
                         resourceKeyAttribute.Key, string.Empty),

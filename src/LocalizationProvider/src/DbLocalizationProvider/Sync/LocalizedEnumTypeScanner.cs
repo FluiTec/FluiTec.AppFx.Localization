@@ -41,7 +41,9 @@ namespace FluiTec.DbLocalizationProvider.Sync
 
             return !string.IsNullOrEmpty(resourceAttribute?.KeyPrefix)
                 ? resourceAttribute?.KeyPrefix
-                : (string.IsNullOrEmpty(keyPrefix) ? target.FullName : keyPrefix);
+                : string.IsNullOrEmpty(keyPrefix)
+                    ? target.FullName
+                    : keyPrefix;
         }
 
         public ICollection<DiscoveredResource> GetClassLevelResources(Type target, string resourceKeyPrefix)
@@ -58,7 +60,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
             {
                 var result = mi.Name;
                 var displayAttribute = mi.GetCustomAttribute<DisplayAttribute>();
-                if(displayAttribute != null)
+                if (displayAttribute != null)
                     result = displayAttribute.Name;
 
                 return result;
@@ -72,7 +74,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
                     var translations = DiscoveredTranslation.FromSingle(GetEnumTranslation(mi));
                     var additionalTranslationsAttributes =
                         mi.GetCustomAttributes<TranslationForCultureAttribute>().ToList();
-                    if(additionalTranslationsAttributes.Any())
+                    if (additionalTranslationsAttributes.Any())
                         translations.AddRange(additionalTranslationsAttributes.Select(_ =>
                             new DiscoveredTranslation(_.Translation, _.Culture)));
 

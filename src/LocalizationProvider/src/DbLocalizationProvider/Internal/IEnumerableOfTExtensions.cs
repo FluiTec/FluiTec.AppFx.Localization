@@ -28,7 +28,7 @@ namespace FluiTec.DbLocalizationProvider.Internal
     {
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
-            foreach(var item in source)
+            foreach (var item in source)
             {
                 action(item);
                 yield return item;
@@ -39,13 +39,9 @@ namespace FluiTec.DbLocalizationProvider.Internal
             Func<TSource, TKey> keySelector)
         {
             var seenKeys = new HashSet<TKey>();
-            foreach(var element in source)
-            {
-                if(seenKeys.Add(keySelector(element)))
-                {
+            foreach (var element in source)
+                if (seenKeys.Add(keySelector(element)))
                     yield return element;
-                }
-            }
         }
 
         public static IEnumerable<IEnumerable<T>> SplitByCount<T>(this IEnumerable<T> list, int count)
@@ -64,21 +60,17 @@ namespace FluiTec.DbLocalizationProvider.Internal
             IEqualityComparer<T> comparer)
         {
             var cnt = new Dictionary<T, int>(comparer);
-            foreach(var s in list1)
-            {
-                if(cnt.ContainsKey(s))
+            foreach (var s in list1)
+                if (cnt.ContainsKey(s))
                     cnt[s]++;
                 else
                     cnt.Add(s, 1);
-            }
 
-            foreach(var s in list2)
-            {
-                if(cnt.ContainsKey(s))
+            foreach (var s in list2)
+                if (cnt.ContainsKey(s))
                     cnt[s]--;
                 else
                     return false;
-            }
 
             return cnt.Values.All(c => c == 0);
         }

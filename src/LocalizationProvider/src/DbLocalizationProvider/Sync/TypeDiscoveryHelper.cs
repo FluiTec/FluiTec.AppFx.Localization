@@ -45,7 +45,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
         /// <summary>   Default constructor. </summary>
         public TypeDiscoveryHelper()
         {
-            if(ConfigurationContext.Current.TypeScanners != null && ConfigurationContext.Current.TypeScanners.Any())
+            if (ConfigurationContext.Current.TypeScanners != null && ConfigurationContext.Current.TypeScanners.Any())
             {
                 _scanners.AddRange(ConfigurationContext.Current.TypeScanners);
             }
@@ -79,13 +79,13 @@ namespace FluiTec.DbLocalizationProvider.Sync
         {
             var typeScanner = scanner;
 
-            if(scanner == null)
+            if (scanner == null)
                 typeScanner = _scanners.FirstOrDefault(s => s.ShouldScan(target));
 
-            if(typeScanner == null)
+            if (typeScanner == null)
                 return Enumerable.Empty<DiscoveredResource>();
 
-            if(target.IsGenericParameter)
+            if (target.IsGenericParameter)
                 return Enumerable.Empty<DiscoveredResource>();
 
             var resourceKeyPrefix = typeScanner.GetResourceKeyPrefix(target, keyPrefix);
@@ -98,23 +98,21 @@ namespace FluiTec.DbLocalizationProvider.Sync
                     t.IsSimpleType || t.Info == null || t.Info.GetCustomAttribute<IncludeAttribute>() != null)
                 .ToList();
 
-            foreach(var property in buffer.Where(t => !t.IsSimpleType))
-            {
-                if(!property.IsSimpleType)
+            foreach (var property in buffer.Where(t => !t.IsSimpleType))
+                if (!property.IsSimpleType)
                     result.AddRange(ScanResources(property.DeclaringType, property.Key, typeScanner));
-            }
 
             // throw up if there are any duplicate resources manually registered
             var duplicateKeys = result.Where(r => r.FromResourceKeyAttribute).GroupBy(r => r.Key)
                 .Where(g => g.Count() > 1).ToList();
-            if(duplicateKeys.Any())
+            if (duplicateKeys.Any())
                 throw new DuplicateResourceKeyException(
                     $"Duplicate keys: [{string.Join(", ", duplicateKeys.Select(g => g.Key))}]");
 
             // throw up if there are multiple translations for the same culture (might come from misuse of [TranslationForCulture] attribute)
             var duplicateTranslations =
                 result.Where(r => r.Translations.GroupBy(t => t.Culture).Any(g => g.Count() > 1)).ToList();
-            if(duplicateTranslations.Any())
+            if (duplicateTranslations.Any())
                 throw new
                     DuplicateResourceTranslationsException(
                         $"Duplicate translations for the same culture for following resources: [{string.Join(", ", duplicateTranslations.Select(g => g.Key))}]");
@@ -140,29 +138,24 @@ namespace FluiTec.DbLocalizationProvider.Sync
         /// <returns>   The types. </returns>
         public static List<List<Type>> GetTypes(params Func<Type, bool>[] filters)
         {
-            if(filters == null)
+            if (filters == null)
                 throw new ArgumentNullException(nameof(filters));
 
             var result = new List<List<Type>>();
-            for(var i = 0; i < filters.Length; i++)
+            for (var i = 0; i < filters.Length; i++)
                 result.Add(new List<Type>());
 
             var assemblies = GetAssemblies(ConfigurationContext.Current.AssemblyScanningFilter);
-            foreach(var assembly in assemblies)
-            {
+            foreach (var assembly in assemblies)
                 try
                 {
                     var types = assembly.GetTypes();
-                    for(var i = 0; i < filters.Length; i++)
-                    {
-                        result[i].AddRange(types.Where(filters[i]));
-                    }
+                    for (var i = 0; i < filters.Length; i++) result[i].AddRange(types.Where(filters[i]));
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     // ignored
                 }
-            }
 
             return result;
         }
@@ -187,10 +180,8 @@ namespace FluiTec.DbLocalizationProvider.Sync
         internal static IEnumerable<Type> GetTypesChildOf<T>()
         {
             var allTypes = new List<Type>();
-            foreach(var assembly in GetAssemblies(ConfigurationContext.Current.AssemblyScanningFilter))
-            {
+            foreach (var assembly in GetAssemblies(ConfigurationContext.Current.AssemblyScanningFilter))
                 allTypes.AddRange(GetTypesChildOfInAssembly(typeof(T), assembly));
-            }
 
             return allTypes;
         }
@@ -233,7 +224,7 @@ namespace FluiTec.DbLocalizationProvider.Sync
             {
                 return assembly.GetTypes().Where(filter);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 // there could be situations when type could not be loaded
                 // this may happen if we are visiting *all* loaded assemblies in application domain

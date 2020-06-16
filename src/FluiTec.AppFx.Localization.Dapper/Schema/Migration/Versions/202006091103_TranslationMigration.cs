@@ -4,7 +4,7 @@ using FluiTec.AppFx.Localization.Schema;
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migration.Versions
 {
     /// <summary>   A translation migration. </summary>
-    [DapperMigration(2020,06,09,11,03, "Achim Schnell")]
+    [DapperMigration(2020, 06, 09, 11, 03, "Achim Schnell")]
     public class _202006091103_TranslationMigration : FluentMigrator.Migration
     {
         /// <summary>   Name of the foreign key. </summary>

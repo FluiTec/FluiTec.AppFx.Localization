@@ -25,10 +25,10 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
             bool isSimpleType)
         {
             // scan custom registered attributes (if any)
-            foreach(var descriptor in ConfigurationContext.Current.CustomAttributes.ToList())
+            foreach (var descriptor in ConfigurationContext.Current.CustomAttributes.ToList())
             {
                 var customAttributes = mi.GetCustomAttributes(descriptor.CustomAttribute);
-                foreach(var customAttribute in customAttributes)
+                foreach (var customAttribute in customAttributes)
                 {
                     var customAttributeKey = ResourceKeyBuilder.BuildResourceKey(resourceKey, customAttribute);
                     var propertyName = customAttributeKey.Split('.').Last();
@@ -39,7 +39,7 @@ namespace FluiTec.DbLocalizationProvider.Sync.Collectors
                         typeOldName,
                         typeOldNamespace);
                     var foreignTranslation = string.Empty;
-                    if(descriptor.GenerateTranslation)
+                    if (descriptor.GenerateTranslation)
                     {
                         var z1 = customAttribute.GetType().ToString();
                         var z2 = customAttribute.ToString();

@@ -66,12 +66,12 @@ namespace FluiTec.DbLocalizationProvider.Internal
         /// <returns>   A string. </returns>
         internal static string BuildResourceKey(string keyPrefix, Attribute attribute)
         {
-            if(attribute == null)
+            if (attribute == null)
                 throw new ArgumentNullException(nameof(attribute));
 
             var result = BuildResourceKey(keyPrefix, attribute.GetType());
-            if(attribute.GetType().IsAssignableFrom(typeof(DataTypeAttribute)))
-                result += ((DataTypeAttribute)attribute).DataType;
+            if (attribute.GetType().IsAssignableFrom(typeof(DataTypeAttribute)))
+                result += ((DataTypeAttribute) attribute).DataType;
 
             return result;
         }
@@ -90,10 +90,10 @@ namespace FluiTec.DbLocalizationProvider.Internal
         /// <returns>   A string. </returns>
         internal static string BuildResourceKey(string keyPrefix, Type attributeType)
         {
-            if(attributeType == null)
+            if (attributeType == null)
                 throw new ArgumentNullException(nameof(attributeType));
 
-            if(!typeof(Attribute).IsAssignableFrom(attributeType))
+            if (!typeof(Attribute).IsAssignableFrom(attributeType))
                 throw new ArgumentException($"Given type `{attributeType.FullName}` is not of type `System.Attribute`");
 
             return $"{keyPrefix}-{attributeType.Name.Replace("Attribute", string.Empty)}";
@@ -131,33 +131,33 @@ namespace FluiTec.DbLocalizationProvider.Internal
 
             var prefix = string.Empty;
 
-            if(!string.IsNullOrEmpty(modelAttribute?.KeyPrefix))
+            if (!string.IsNullOrEmpty(modelAttribute?.KeyPrefix))
                 prefix = modelAttribute?.KeyPrefix;
 
             var resourceAttributeOnClass = containerType.GetCustomAttribute<LocalizedResourceAttribute>();
-            if(!string.IsNullOrEmpty(resourceAttributeOnClass?.KeyPrefix))
+            if (!string.IsNullOrEmpty(resourceAttributeOnClass?.KeyPrefix))
                 prefix = resourceAttributeOnClass?.KeyPrefix;
 
-            if(mi != null)
+            if (mi != null)
             {
                 var resourceKeyAttribute = mi.GetCustomAttribute<ResourceKeyAttribute>();
-                if(resourceKeyAttribute != null)
+                if (resourceKeyAttribute != null)
                     return prefix.JoinNonEmpty(string.Empty, resourceKeyAttribute.Key);
             }
 
-            if(!string.IsNullOrEmpty(prefix))
+            if (!string.IsNullOrEmpty(prefix))
                 return prefix.JoinNonEmpty(separator, memberName);
 
             // ##### we need to understand where to look for the property
             var potentialResourceKey = containerType.FullName.JoinNonEmpty(separator, memberName);
 
             // 1. maybe property has [UseResource] attribute, if so - then we need to look for "redirects"
-            if(TypeDiscoveryHelper.UseResourceAttributeCache.TryGetValue(potentialResourceKey,
-                out string redirectedResourceKey))
+            if (TypeDiscoveryHelper.UseResourceAttributeCache.TryGetValue(potentialResourceKey,
+                out var redirectedResourceKey))
                 return redirectedResourceKey;
 
             // 2. verify that property is declared on given container type
-            if(modelAttribute == null || modelAttribute.Inherited)
+            if (modelAttribute == null || modelAttribute.Inherited)
                 return potentialResourceKey;
 
             // 3. if not - then we scan through discovered and cached properties during initial scanning process and try to find on which type that property is declared
@@ -179,7 +179,7 @@ namespace FluiTec.DbLocalizationProvider.Internal
             var modelAttribute = containerType.GetCustomAttribute<LocalizedModelAttribute>();
             var resourceAttribute = containerType.GetCustomAttribute<LocalizedResourceAttribute>();
 
-            if(modelAttribute == null && resourceAttribute == null)
+            if (modelAttribute == null && resourceAttribute == null)
                 throw new ArgumentException(
                     $"Type `{containerType.FullName}` is not decorated with localizable attributes ([LocalizedModelAttribute] or [LocalizedResourceAttribute])",
                     nameof(containerType));
@@ -196,22 +196,20 @@ namespace FluiTec.DbLocalizationProvider.Internal
             // make private copy
             var currentContainerType = containerType;
 
-            while(true)
+            while (true)
             {
-                if(currentContainerType == null)
+                if (currentContainerType == null)
                     return null;
 
                 var fullName = currentContainerType.FullName;
 
-                if(currentContainerType.IsGenericType && !currentContainerType.IsGenericTypeDefinition)
+                if (currentContainerType.IsGenericType && !currentContainerType.IsGenericTypeDefinition)
                     fullName = currentContainerType.GetGenericTypeDefinition().FullName;
 
-                if(TypeDiscoveryHelper.DiscoveredResourceCache.TryGetValue(fullName, out var properties))
-                {
+                if (TypeDiscoveryHelper.DiscoveredResourceCache.TryGetValue(fullName, out var properties))
                     // property was found in the container
-                    if(properties.Contains(memberName))
+                    if (properties.Contains(memberName))
                         return fullName;
-                }
 
                 currentContainerType = currentContainerType.BaseType;
             }

@@ -28,7 +28,7 @@ namespace FluiTec.DbLocalizationProvider.Export
     {
         public static IResourceExporter FindById(this ICollection<IResourceExporter> list, string id)
         {
-            if(string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
                 throw new ArgumentNullException(nameof(id));
 
             return list.Single(p => p.ProviderId == id);
