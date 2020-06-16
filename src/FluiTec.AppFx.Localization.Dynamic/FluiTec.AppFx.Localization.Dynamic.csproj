@@ -24,7 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dynamic\FluiTec.AppFx.Data.Dynamic.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Mysql\FluiTec.AppFx.Localization.Dapper.Mysql.csproj" />
