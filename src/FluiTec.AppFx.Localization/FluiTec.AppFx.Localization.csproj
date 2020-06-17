@@ -30,9 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data\FluiTec.AppFx.Data.csproj" />
     <ProjectReference Include="..\LocalizationProvider\src\DbLocalizationProvider.Abstractions\FluiTec.DbLocalizationProvider.Abstractions.csproj" />
     <ProjectReference Include="..\LocalizationProvider\src\DbLocalizationProvider\FluiTec.DbLocalizationProvider.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
+    <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data\FluiTec.AppFx.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <PackageReference Include="FluiTec.AppFx.Data" Version="1.0.18"></PackageReference>
   </ItemGroup>
 
 </Project>

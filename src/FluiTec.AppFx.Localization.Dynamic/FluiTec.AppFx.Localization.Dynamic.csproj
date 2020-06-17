@@ -28,13 +28,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dynamic\FluiTec.AppFx.Data.Dynamic.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Mysql\FluiTec.AppFx.Localization.Dapper.Mysql.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Pgsql\FluiTec.AppFx.Localization.Dapper.Pgsql.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Sqlite\FluiTec.AppFx.Localization.Dapper.Sqlite.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.LiteDb\FluiTec.AppFx.Localization.LiteDb.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
+    <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dynamic\FluiTec.AppFx.Data.Dynamic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <PackageReference Include="FluiTec.AppFx.Data.Dynamic" Version="1.0.18"></PackageReference>
   </ItemGroup>
 
 </Project>
