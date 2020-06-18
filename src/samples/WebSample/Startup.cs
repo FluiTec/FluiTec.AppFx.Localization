@@ -1,8 +1,6 @@
 using System;
-using System.Security.Policy;
 using FluiTec.AppFx.Data.Dapper.Mssql;
 using FluiTec.AppFx.Data.Dynamic.Configuration;
-using FluiTec.AppFx.Data.LiteDb;
 using FluiTec.AppFx.Localization;
 using FluiTec.AppFx.Localization.Dapper.Mssql;
 using FluiTec.AppFx.Options.Managers;
@@ -19,18 +17,6 @@ namespace WebSample
     /// <summary>   A startup. </summary>
     public class Startup
     {
-        #region Properties
-
-        /// <summary>	Gets the configuration. </summary>
-        /// <value>	The configuration. </value>
-        public IConfigurationRoot Configuration { get; }
-
-        /// <summary>Gets the environment.</summary>
-        /// <value>The environment.</value>
-        public IWebHostEnvironment Environment { get; }
-
-        #endregion
-
         #region Constructors
 
         /// <summary>   Constructor. </summary>
@@ -47,6 +33,18 @@ namespace WebSample
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>	Gets the configuration. </summary>
+        /// <value>	The configuration. </value>
+        public IConfigurationRoot Configuration { get; }
+
+        /// <summary>Gets the environment.</summary>
+        /// <value>The environment.</value>
+        public IWebHostEnvironment Environment { get; }
 
         #endregion
 
@@ -80,10 +78,7 @@ namespace WebSample
         /// <param name="env">  The environment. </param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
             // this line finds all resources and models in code and config-files
