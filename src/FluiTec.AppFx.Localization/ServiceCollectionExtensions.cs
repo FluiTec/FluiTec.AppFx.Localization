@@ -1,6 +1,8 @@
 ﻿using System;
 using FluiTec.AppFx.Localization.Cache;
+using FluiTec.AppFx.Localization.Configuration;
 using FluiTec.AppFx.Localization.Handlers;
+using FluiTec.AppFx.Options.Managers;
 using FluiTec.DbLocalizationProvider;
 using FluiTec.DbLocalizationProvider.Cache;
 using FluiTec.DbLocalizationProvider.Queries;
@@ -18,12 +20,14 @@ namespace FluiTec.AppFx.Localization
         ///     An IServiceCollection extension method that adds a database localization provider to
         ///     'setup'.
         /// </summary>
-        /// <param name="services"> The services to act on. </param>
-        /// <param name="setup">    (Optional) The setup. </param>
+        /// <param name="services">             The services to act on. </param>
+        /// <param name="configurationManager"> The setup. </param>
         /// <returns>   An IServiceCollection. </returns>
-        public static IServiceCollection AddDbLocalizationProvider(this IServiceCollection services,
-            Action<ConfigurationContext> setup = null)
+        public static IServiceCollection AddDbLocalizationProvider(this IServiceCollection services, ConfigurationManager configurationManager)
         {
+            // resources found in json-config-files
+            services.Configure<LocalizationResourcesOptions>(configurationManager);
+
             // build serviceProvider to initialize localization
             var serviceProvider = services.BuildServiceProvider();
 
@@ -39,9 +43,6 @@ namespace FluiTec.AppFx.Localization
             var cache = serviceProvider.GetService<IMemoryCache>();
             if (cache != null)
                 ConfigurationContext.Current.CacheManager = new InMemoryCacheManager(cache);
-
-            // run custom configuration setup (if any)
-            setup?.Invoke(ConfigurationContext.Current);
 
             // setup model metadata providers
             if (ConfigurationContext.Current.ModelMetadataProviders.ReplaceProviders)

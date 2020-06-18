@@ -30,6 +30,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection ConfigureDynamicLocalizationDataProvider(this IServiceCollection services,
             ConfigurationManager configurationManager)
         {
+            services.AddDbLocalizationProvider(configurationManager);
+
             services.ConfigureDynamicDataProvider(configurationManager,
                 new Func<DynamicDataOptions, IServiceProvider, ILocalizationDataService>((options, provider) =>
                     {

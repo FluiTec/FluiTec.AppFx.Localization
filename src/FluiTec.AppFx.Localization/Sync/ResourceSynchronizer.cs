@@ -88,6 +88,7 @@ namespace FluiTec.AppFx.Localization.Sync
 
             // loop through all groups
             foreach (var group in groupedProperties)
+            {
                 using (var uow = _dataService.BeginUnitOfWork())
                 {
                     var resourceRepository = uow.ResourceRepository;
@@ -166,6 +167,7 @@ namespace FluiTec.AppFx.Localization.Sync
 
                     uow.Commit();
                 }
+            }
         }
     }
 }
