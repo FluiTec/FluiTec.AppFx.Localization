@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using FluiTec.AppFx.Localization.Configuration;
 using FluiTec.AppFx.Localization.Entities;
@@ -20,7 +19,7 @@ namespace FluiTec.AppFx.Localization
         /// <returns>   An IApplicationBuilder. </returns>
         public static IApplicationBuilder UseDbLocalizationProvider(this IApplicationBuilder builder)
         {
-            var synchronizer = new ResourceSynchronizer(builder.ApplicationServices.CreateScope().ServiceProvider.GetService<ILocalizationDataService>());
+            var synchronizer = new ResourceSynchronizer(builder.ApplicationServices.GetService<ILocalizationDataService>());
             synchronizer.DiscoverAndRegister();
 
             var resourceOptions = builder.ApplicationServices.GetService<LocalizationResourcesOptions>();
