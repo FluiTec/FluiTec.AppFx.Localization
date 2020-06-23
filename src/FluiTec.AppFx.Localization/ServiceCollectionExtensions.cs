@@ -1,5 +1,4 @@
-﻿using System;
-using FluiTec.AppFx.Localization.Cache;
+﻿using FluiTec.AppFx.Localization.Cache;
 using FluiTec.AppFx.Localization.Configuration;
 using FluiTec.AppFx.Localization.Handlers;
 using FluiTec.AppFx.Options.Managers;

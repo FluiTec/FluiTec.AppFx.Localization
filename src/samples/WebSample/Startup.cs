@@ -10,7 +10,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using WebSample.Models;
 
 namespace WebSample
 {
@@ -71,6 +73,9 @@ namespace WebSample
             );
 
             services.ConfigureDynamicLocalizationDataProvider(configManager);
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         /// <summary>   Configures. </summary>
@@ -81,20 +86,17 @@ namespace WebSample
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
-            // this line finds all resources and models in code and config-files
+            // this line finds all resources and models in code and config-files+
             // adds/updates them in the database - and initializes a cache
             app.UseDbLocalizationProvider();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    var service = app.ApplicationServices.CreateScope().ServiceProvider
-                        .GetRequiredService<ILocalizationDataService>();
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-
         #endregion
+
     }
 }

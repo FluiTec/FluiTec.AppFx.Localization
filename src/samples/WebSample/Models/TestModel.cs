@@ -7,7 +7,7 @@ namespace WebSample.Models
     public class TestModel
     {
         [Display(Description = "Test-ENG")]
-        [DisplayTranslationForCulture("Test", "Test-DE", "de")]
+        [DisplayTranslationForCulture("Test-DE", "de")]
         public string Test { get; set; }
     }
 }

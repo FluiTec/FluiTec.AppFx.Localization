@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace FluiTec.DbLocalizationProvider.Abstractions
 {
@@ -14,11 +15,11 @@ namespace FluiTec.DbLocalizationProvider.Abstractions
         ///     Language for the additional translation (will be used as argument
         ///     for <see cref="CultureInfo" />).
         /// </param>
-        public DisplayTranslationForCultureAttribute(string display, string translation, string culture)
+        public DisplayTranslationForCultureAttribute(string translation, string culture, [CallerMemberName] string display = null)
         {
-            Display = display;
             Translation = translation;
             Culture = culture;
+            Display = display ?? throw new ArgumentNullException();
         }
 
         /// <summary>Gets the display.</summary>
