@@ -57,21 +57,6 @@ namespace WebSample
         public void ConfigureServices(IServiceCollection services)
         {
             var configManager = new ConsoleReportingConfigurationManager(Configuration);
-
-            services.ConfigureDynamicDataProvider(configManager,
-                new Func<DynamicDataOptions, IServiceProvider, ILocalizationDataService>((options, provider) =>
-                    {
-                        return options.Provider switch
-                        {
-                            DataProvider.Mssql => new MssqlLocalizationDataService(
-                                provider.GetRequiredService<MssqlDapperServiceOptions>(),
-                                provider.GetService<ILoggerFactory>()),
-                            _ => throw new NotImplementedException()
-                        };
-                    }
-                )
-            );
-
             services.ConfigureDynamicLocalizationDataProvider(configManager);
 
             services.AddControllersWithViews();
@@ -86,8 +71,6 @@ namespace WebSample
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
-            // this line finds all resources and models in code and config-files+
-            // adds/updates them in the database - and initializes a cache
             app.UseDbLocalizationProvider();
             app.UseEndpoints(endpoints =>
             {

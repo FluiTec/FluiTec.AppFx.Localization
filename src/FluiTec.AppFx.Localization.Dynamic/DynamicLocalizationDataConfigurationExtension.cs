@@ -30,39 +30,34 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection ConfigureDynamicLocalizationDataProvider(this IServiceCollection services,
             ConfigurationManager configurationManager)
         {
-            services.AddDbLocalizationProvider(configurationManager);
-
             services.ConfigureDynamicDataProvider(configurationManager,
                 new Func<DynamicDataOptions, IServiceProvider, ILocalizationDataService>((options, provider) =>
                     {
-                        switch (options.Provider)
+                        return options.Provider switch
                         {
-                            case DataProvider.LiteDb:
-                                return new LiteDbLocalizationDataService(
-                                    provider.GetRequiredService<LiteDbServiceOptions>(),
-                                    provider.GetService<ILoggerFactory>());
-                            case DataProvider.Mssql:
-                                return new MssqlLocalizationDataService(
-                                    provider.GetRequiredService<MssqlDapperServiceOptions>(),
-                                    provider.GetService<ILoggerFactory>());
-                            case DataProvider.Mysql:
-                                return new MysqlLocalizationDataService(
-                                    provider.GetRequiredService<MysqlDapperServiceOptions>(),
-                                    provider.GetService<ILoggerFactory>());
-                            case DataProvider.Pgsql:
-                                return new PgsqlLocalizationDataService(
-                                    provider.GetRequiredService<PgsqlDapperServiceOptions>(),
-                                    provider.GetService<ILoggerFactory>());
-                            case DataProvider.Sqlite:
-                                return new SqliteLocalizationDataService(
-                                    provider.GetRequiredService<SqliteDapperServiceOptions>(),
-                                    provider.GetService<ILoggerFactory>());
-                            default:
-                                throw new NotImplementedException();
-                        }
+                            DataProvider.LiteDb => new LiteDbLocalizationDataService(
+                                provider.GetRequiredService<LiteDbServiceOptions>(),
+                                provider.GetService<ILoggerFactory>()),
+                            DataProvider.Mssql => new MssqlLocalizationDataService(
+                                provider.GetRequiredService<MssqlDapperServiceOptions>(),
+                                provider.GetService<ILoggerFactory>()),
+                            DataProvider.Mysql => new MysqlLocalizationDataService(
+                                provider.GetRequiredService<MysqlDapperServiceOptions>(),
+                                provider.GetService<ILoggerFactory>()),
+                            DataProvider.Pgsql => new PgsqlLocalizationDataService(
+                                provider.GetRequiredService<PgsqlDapperServiceOptions>(),
+                                provider.GetService<ILoggerFactory>()),
+                            DataProvider.Sqlite => new SqliteLocalizationDataService(
+                                provider.GetRequiredService<SqliteDapperServiceOptions>(),
+                                provider.GetService<ILoggerFactory>()),
+                            _ => throw new NotImplementedException()
+                        };
                     }
                 )
             );
+
+            services.AddDbLocalizationProvider(configurationManager);
+
             return services;
         }
     }
