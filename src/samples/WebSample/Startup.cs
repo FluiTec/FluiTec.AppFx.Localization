@@ -1,18 +1,10 @@
-using System;
-using FluiTec.AppFx.Data.Dapper.Mssql;
-using FluiTec.AppFx.Data.Dynamic.Configuration;
 using FluiTec.AppFx.Localization;
-using FluiTec.AppFx.Localization.Dapper.Mssql;
 using FluiTec.AppFx.Options.Managers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
-using WebSample.Models;
 
 namespace WebSample
 {
@@ -57,7 +49,10 @@ namespace WebSample
         public void ConfigureServices(IServiceCollection services)
         {
             var configManager = new ConsoleReportingConfigurationManager(Configuration);
-            services.ConfigureDynamicLocalizationDataProvider(configManager);
+
+            services
+                .ConfigureLocalization(configManager)
+                .ConfigureDynamicLocalizationDataProvider(configManager);
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -75,11 +70,11 @@ namespace WebSample
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
-        #endregion
 
+        #endregion
     }
 }

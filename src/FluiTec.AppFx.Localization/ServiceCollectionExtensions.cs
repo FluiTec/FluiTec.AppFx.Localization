@@ -1,10 +1,14 @@
-﻿using FluiTec.AppFx.Localization.Cache;
+﻿using System.Globalization;
+using System.Linq;
+using FluiTec.AppFx.Localization.Cache;
 using FluiTec.AppFx.Localization.Configuration;
 using FluiTec.AppFx.Localization.Handlers;
 using FluiTec.AppFx.Options.Managers;
 using FluiTec.DbLocalizationProvider;
 using FluiTec.DbLocalizationProvider.Cache;
 using FluiTec.DbLocalizationProvider.Queries;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +19,26 @@ namespace FluiTec.AppFx.Localization
     /// <summary>   A service collection extensions. </summary>
     public static class ServiceCollectionExtensions
     {
+        /// <summary>   An IServiceCollection extension method that configure localization. </summary>
+        /// <param name="services">             The services to act on. </param>
+        /// <param name="configurationManager"> The setup. </param>
+        /// <returns>   An IServiceCollection. </returns>
+        public static IServiceCollection ConfigureLocalization(this IServiceCollection services, ConfigurationManager configurationManager)
+        {
+            services.AddLocalization();
+            var cultureOptions = services.Configure<CultureOptions>(configurationManager, true);
+            
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = cultureOptions.SupportedCultures.Select(e => new CultureInfo(e)).ToList();
+                options.DefaultRequestCulture = new RequestCulture(cultureOptions.DefaultCulture);
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
+            return services;
+        }
+
         /// <summary>
         ///     An IServiceCollection extension method that adds a database localization provider to
         ///     'setup'.
