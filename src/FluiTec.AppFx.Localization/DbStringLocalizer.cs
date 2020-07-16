@@ -7,10 +7,28 @@ using Microsoft.Extensions.Localization;
 namespace FluiTec.AppFx.Localization
 {
     /// <summary>   A database string localizer. </summary>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    public class DbStringLocalizer<T> : DbStringLocalizer, IStringLocalizer<T> 
+    {
+        /// <summary>   Gets all string resources. </summary>
+        /// <param name="includeParentCultures">    A <see cref="T:System.Boolean" /> indicating whether
+        ///                                         to include strings from parent cultures. </param>
+        /// <returns>   The strings. </returns>
+        public override IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
+        {
+            var resourceType = typeof(T);
+            var resourceName = resourceType.FullName;
+
+            var values = LocalizationProvider.Current.GetStringsByCulture(resourceName, _culture);
+            return values.Select(v => new LocalizedString(v.Key, v.Value ?? v.Key, v.Value == null));
+        }
+    }
+
+    /// <summary>   A database string localizer. </summary>
     public class DbStringLocalizer : IStringLocalizer
     {
         /// <summary>   The culture. </summary>
-        private readonly CultureInfo _culture;
+        protected readonly CultureInfo _culture;
 
         /// <summary>   Default constructor. </summary>
         public DbStringLocalizer()
@@ -31,7 +49,7 @@ namespace FluiTec.AppFx.Localization
         ///     to include strings from parent cultures.
         /// </param>
         /// <returns>   The strings. </returns>
-        public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
+        public virtual IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
             return Enumerable.Empty<LocalizedString>();
         }

@@ -15,9 +15,11 @@ namespace FluiTec.AppFx.Localization
         /// <summary>
         ///     An IApplicationBuilder extension method that use database localization provider.
         /// </summary>
-        /// <param name="builder">  The builder to act on. </param>
+        /// <param name="builder">              The builder to act on. </param>
+        /// <param name="cultureOptions">       Options for controlling the operation. </param>
+        /// <param name="localizationOptions">  Options for controlling the localization. </param>
         /// <returns>   An IApplicationBuilder. </returns>
-        public static IApplicationBuilder UseDbLocalizationProvider(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseDbLocalizationProvider(this IApplicationBuilder builder, CultureOptions cultureOptions, RequestLocalizationOptions localizationOptions)
         {
             var synchronizer = new ResourceSynchronizer(builder.ApplicationServices.GetService<ILocalizationDataService>());
             synchronizer.DiscoverAndRegister();
@@ -29,6 +31,12 @@ namespace FluiTec.AppFx.Localization
             // in cases when there has been already a call to LoclaizationProvider.Current (some static weird things)
             // and only then setup configuration is ran - here we need to reset instance once again with new settings
             LocalizationProvider.Initialize();
+
+            localizationOptions
+                .SetDefaultCulture(cultureOptions.DefaultCulture)
+                .AddSupportedCultures(cultureOptions.SupportedCultures.ToArray())
+                .AddSupportedUICultures(cultureOptions.SupportedCultures.ToArray());
+            builder.UseRequestLocalization(localizationOptions);
 
             return builder;
         }

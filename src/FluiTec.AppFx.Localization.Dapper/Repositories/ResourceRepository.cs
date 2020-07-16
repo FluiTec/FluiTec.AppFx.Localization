@@ -5,6 +5,7 @@ using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace FluiTec.AppFx.Localization.Dapper.Repositories
 {
@@ -38,5 +39,13 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// <param name="newKey">   The new key. </param>
         /// <returns>   True if it succeeds, false if it fails. </returns>
         public abstract bool RefactorKey(string oldKey, string newKey);
+
+        /// <summary>   Gets the key begins withs in this collection. </summary>
+        /// <param name="key">  The key. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the key begins withs in this
+        ///     collection.
+        /// </returns>
+        public abstract IEnumerable<ResourceEntity> GetByKeyBeginsWith(string key);
     }
 }

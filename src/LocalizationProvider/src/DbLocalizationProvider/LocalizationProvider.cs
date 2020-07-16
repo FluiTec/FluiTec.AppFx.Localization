@@ -72,6 +72,13 @@ namespace FluiTec.DbLocalizationProvider
             return GetString(resourceKey, CultureInfo.CurrentUICulture);
         }
 
+        /// <summary>   Constructor. </summary>
+        /// <param name="resourceKey">  The resource key. </param>
+        public virtual IEnumerable<KeyValuePair<string, string>> GetStrings(string resourceKey)
+        {
+            return GetStrings(resourceKey, CultureInfo.CurrentUICulture);
+        }
+
         /// <summary>
         ///     Gets translation for the resource with specific key.
         /// </summary>
@@ -84,6 +91,19 @@ namespace FluiTec.DbLocalizationProvider
         public virtual string GetString(string resourceKey, CultureInfo culture)
         {
             return GetStringByCulture(resourceKey, culture);
+        }
+
+        /// <summary>   Constructor. </summary>
+        /// <param name="resourceKey">  The resource key. </param>
+        /// <param name="culture">      If you want to get translation for other language as
+        ///                             <see cref="CultureInfo.CurrentUICulture" />, then specifiy that
+        ///                             language here. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the strings in this collection.
+        /// </returns>
+        public virtual IEnumerable<KeyValuePair<string, string>> GetStrings(string resourceKey, CultureInfo culture)
+        {
+            return GetStringsByCulture(resourceKey, culture);
         }
 
         /// <summary>
@@ -99,6 +119,18 @@ namespace FluiTec.DbLocalizationProvider
         public virtual string GetString(Expression<Func<object>> resource, params object[] formatArguments)
         {
             return GetStringByCulture(resource, CultureInfo.CurrentUICulture, formatArguments);
+        }
+
+        /// <summary>   Constructor. </summary>
+        /// <param name="resource">         Lambda expression for the resource. </param>
+        /// <param name="formatArguments">  If you have placeholders in translation to replace to - use
+        ///                                 this argument to specify those. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the strings in this collection.
+        /// </returns>
+        public virtual IEnumerable<KeyValuePair<string, string>> GetStrings(Expression<Func<object>> resource, params object[] formatArguments)
+        {
+            return GetStringsByCulture(resource, CultureInfo.CurrentUICulture, formatArguments);
         }
 
         /// <summary>
@@ -122,6 +154,29 @@ namespace FluiTec.DbLocalizationProvider
 
             var resourceKey = ExpressionHelper.GetFullMemberName(resource);
             return GetStringByCulture(resourceKey, culture, formatArguments);
+        }
+
+        /// <summary>   Gets the strings by cultures in this collection. </summary>
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        /// <param name="resource">         Lambda expression for the resource. </param>
+        /// <param name="culture">          If you want to get translation for other language as
+        ///                                 <see cref="CultureInfo.CurrentUICulture" />, then
+        ///                                 specifiy that language here. </param>
+        /// <param name="formatArguments">  If you have placeholders in translation to replace to - use
+        ///                                 this argument to specify those. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the strings by cultures in this
+        ///     collection.
+        /// </returns>
+        public virtual IEnumerable<KeyValuePair<string, string>> GetStringsByCulture(Expression<Func<object>> resource, CultureInfo culture,
+            params object[] formatArguments)
+        {
+            if (resource == null)
+                throw new ArgumentNullException(nameof(resource));
+
+            var resourceKey = ExpressionHelper.GetFullMemberName(resource);
+            return GetStringsByCulture(resourceKey, culture, formatArguments);
         }
 
         /// <summary>
@@ -162,6 +217,49 @@ namespace FluiTec.DbLocalizationProvider
             }
 
             return resourceValue;
+        }
+
+        /// <summary>   Gets the strings by cultures in this collection. </summary>
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        /// <param name="resourceKey">              The resource key. </param>
+        /// <param name="culture">                  If you want to get translation for other language as
+        ///                                         <see cref="CultureInfo.CurrentUICulture" />, then
+        ///                                         specifiy that
+        ///                                         language here. </param>
+        /// <param name="object[]formatArguments">  If you have placeholders in translation to replace to
+        ///                                         - use this argument to specify those. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the strings by cultures in this
+        ///     collection.
+        /// </returns>
+        public virtual IEnumerable<KeyValuePair<string, string>> GetStringsByCulture(string resourceKey, CultureInfo culture, params object[]formatArguments)
+        {
+            if (string.IsNullOrWhiteSpace(resourceKey))
+                throw new ArgumentNullException(nameof(resourceKey));
+
+            if (culture == null)
+                throw new ArgumentNullException(nameof(culture));
+
+            var q = new GetTranslation.MultiQuery(resourceKey, culture, _fallbackEnabled);
+            var queryResult = q.Execute();
+
+            if (!queryResult.Any())
+                return Enumerable.Empty<KeyValuePair<string, string>>();
+
+            try
+            {
+                var formattedValues = new List<KeyValuePair<string, string>>();
+                foreach(var resourceValue in queryResult)
+                    formattedValues.Add(new KeyValuePair<string, string>(resourceValue.Key, Format(resourceValue.Value, formatArguments)));
+                return formattedValues;
+            }
+            catch (Exception)
+            {
+                // TODO: log
+            }
+
+            return queryResult;
         }
 
         internal static string Format(string message, params object[] formatArguments)

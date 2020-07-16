@@ -4,6 +4,7 @@ using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Dapper.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace FluiTec.AppFx.Localization.Dapper.Mysql.Repositories
 {
@@ -35,6 +36,18 @@ namespace FluiTec.AppFx.Localization.Dapper.Mysql.Repositories
                 $"UPDATE {TableName} SET {nameof(ResourceEntity.ResourceKey)} @NewKey WHERE {nameof(ResourceEntity.ResourceKey)} = @OldKey";
             return UnitOfWork.Connection.Execute(command, new {NewKey = newKey, OldKey = oldKey},
                 UnitOfWork.Transaction) > 0;
+        }
+
+        /// <summary>   Gets the key begins withs in this collection. </summary>
+        /// <param name="key">  The key. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the key begins withs in this
+        ///     collection.
+        /// </returns>
+        public override IEnumerable<ResourceEntity> GetByKeyBeginsWith(string key)
+        {
+            var command = $"SELECT * FROM {TableName} WHERE {nameof(ResourceEntity.ResourceKey)} LIKE @key + '%'";
+            return UnitOfWork.Connection.Query<ResourceEntity>(command, new {key}, UnitOfWork.Transaction);
         }
     }
 }

@@ -1,10 +1,13 @@
 using FluiTec.AppFx.Localization;
+using FluiTec.AppFx.Localization.Configuration;
 using FluiTec.AppFx.Options.Managers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Localization;
+using WebSample.Models;
 
 namespace WebSample
 {
@@ -51,9 +54,9 @@ namespace WebSample
             var configManager = new ConsoleReportingConfigurationManager(Configuration);
 
             services
-                .ConfigureLocalization(configManager)
-                .ConfigureDynamicLocalizationDataProvider(configManager);
-
+                .ConfigureDynamicLocalizationDataProvider(configManager)
+                .ConfigureLocalization(configManager);
+                
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -63,10 +66,14 @@ namespace WebSample
         /// <param name="env">  The environment. </param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var fact = app.ApplicationServices.GetRequiredService<IStringLocalizerFactory>();
+            var localizer = fact.Create(typeof(TestModel));
+            var strings = localizer.GetAllStrings();
+
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
-            app.UseDbLocalizationProvider();
+            app.UseDbLocalizationProvider(app.ApplicationServices.GetRequiredService<CultureOptions>(), new RequestLocalizationOptions());
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

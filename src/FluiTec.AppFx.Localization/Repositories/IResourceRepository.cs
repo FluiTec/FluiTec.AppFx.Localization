@@ -1,5 +1,6 @@
 ﻿using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
+using System.Collections.Generic;
 
 namespace FluiTec.AppFx.Localization.Repositories
 {
@@ -10,6 +11,14 @@ namespace FluiTec.AppFx.Localization.Repositories
         /// <param name="key">  The key. </param>
         /// <returns>   The by key. </returns>
         ResourceEntity GetByKey(string key);
+
+        /// <summary>   Gets the key begins withs in this collection. </summary>
+        /// <param name="key">  The key. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the key begins withs in this
+        ///     collection.
+        /// </returns>
+        IEnumerable<ResourceEntity> GetByKeyBeginsWith(string key);
 
         /// <summary>   Resets the synchronise status. </summary>
         void ResetSyncStatus();

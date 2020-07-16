@@ -25,7 +25,6 @@ namespace FluiTec.AppFx.Localization
         /// <returns>   An IServiceCollection. </returns>
         public static IServiceCollection ConfigureLocalization(this IServiceCollection services, ConfigurationManager configurationManager)
         {
-            services.AddLocalization();
             var cultureOptions = services.Configure<CultureOptions>(configurationManager, true);
             
             services.Configure<RequestLocalizationOptions>(options =>
@@ -56,6 +55,8 @@ namespace FluiTec.AppFx.Localization
 
             ConfigurationContext.Current.TypeFactory.ForQuery<GetTranslation.Query>().SetHandler(() =>
                 new GetTranslationHandler(serviceProvider.GetService<ILocalizationDataService>()));
+            ConfigurationContext.Current.TypeFactory.ForQuery<GetTranslation.MultiQuery>().SetHandler(() => 
+                new GetTranslationsHandler(serviceProvider.GetService<ILocalizationDataService>()));
             ConfigurationContext.Current.TypeFactory.ForQuery<GetAllResources.Query>().SetHandler(() =>
                 new GetAllResourcesHandler(serviceProvider.GetService<ILocalizationDataService>()));
             ConfigurationContext.Current.TypeFactory.ForQuery<DetermineDefaultCulture.Query>()
@@ -75,8 +76,13 @@ namespace FluiTec.AppFx.Localization
                     //_.ModelValidatorProviders.Add(new LocalizedValidationMetadataProvider());
                 });
 
+            services.AddLocalization();
+            // remove base implementation, because we'll provide one ourself
+            services.Remove(services.Single(s => s.ServiceType == typeof(IStringLocalizer<>)));
+
             services.AddSingleton<IStringLocalizerFactory, DbStringLocalizerFactory>();
             services.AddSingleton(_ => LocalizationProvider.Current);
+            services.AddTransient(typeof(IStringLocalizer<>), typeof(DbStringLocalizer<>));
 
             return services;
         }

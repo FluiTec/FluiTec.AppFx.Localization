@@ -9,5 +9,9 @@ namespace WebSample.Models
         [Display(Description = "Test-ENG")]
         [DisplayTranslationForCulture("Test-DE", "de")]
         public string Test { get; set; }
+
+        [Display(Description = "Test2-ENG")]
+        [DisplayTranslationForCulture("Test2-DE", "de")]
+        public string Test2 {get;set;}
     }
 }

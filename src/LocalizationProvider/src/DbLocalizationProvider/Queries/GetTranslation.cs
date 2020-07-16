@@ -42,6 +42,22 @@ namespace FluiTec.DbLocalizationProvider.Queries
             public bool UseFallback { get; }
         }
 
+        public class MultiQuery : IQuery<IEnumerable<KeyValuePair<string, string>>>
+        {
+            public MultiQuery(string key, CultureInfo language, bool useFallback)
+            {
+                Key = key;
+                Language = language;
+                UseFallback = useFallback;
+            }
+
+            public string Key { get; }
+
+            public CultureInfo Language { get; }
+
+            public bool UseFallback { get; }
+        }
+
         public abstract class GetTranslationHandlerBase
         {
             protected virtual LocalizationResourceTranslation GetTranslationFromAvailableList(

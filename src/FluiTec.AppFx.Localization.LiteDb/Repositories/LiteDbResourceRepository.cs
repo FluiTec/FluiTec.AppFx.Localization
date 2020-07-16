@@ -97,6 +97,17 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
             return true;
         }
 
+        /// <summary>   Gets the key begins withs in this collection. </summary>
+        /// <param name="key">  The key. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the key begins withs in this
+        ///     collection.
+        /// </returns>
+        public IEnumerable<ResourceEntity> GetByKeyBeginsWith(string key)
+        {
+            return Collection.Find(r => r.ResourceKey.StartsWith(key));
+        }
+
         #endregion
     }
 }
