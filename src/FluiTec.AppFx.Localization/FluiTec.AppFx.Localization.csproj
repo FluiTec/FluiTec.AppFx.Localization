@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageProjectUrl>https://www.nuget.org/packages/FluiTec.AppFx.Localization/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/FluiTec/FluiTec.AppFx.Localization</RepositoryUrl>
@@ -31,8 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj" />
-    <ProjectReference Include="..\LocalizationProvider\src\DbLocalizationProvider.Abstractions\FluiTec.DbLocalizationProvider.Abstractions.csproj" />
-    <ProjectReference Include="..\LocalizationProvider\src\DbLocalizationProvider\FluiTec.DbLocalizationProvider.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
