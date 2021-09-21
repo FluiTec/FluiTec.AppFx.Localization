@@ -101,6 +101,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{356A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicSample", "..\fluitec.appfx.data\src\samples\DynamicSample\DynamicSample.csproj", "{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module.fluitec.appfx.console", "module.fluitec.appfx.console", "{2C79F201-A5C2-4521-AB65-8BFED07733DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Console", "..\fluitec.appfx.console\src\FluiTec.AppFx.Console\FluiTec.AppFx.Console.csproj", "{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -251,6 +255,10 @@ Global
 		{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -289,6 +297,8 @@ Global
 		{B41BC938-17A4-4437-8A25-8EC9AFACF690} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
 		{356A780C-19A4-4181-B03A-732D99B6CEE7} = {47EF2A62-8580-4481-AFBC-30EE697D9C84}
 		{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC} = {356A780C-19A4-4181-B03A-732D99B6CEE7}
+		{2C79F201-A5C2-4521-AB65-8BFED07733DC} = {93E2F780-BC18-4066-95E1-760581C9F55E}
+		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66} = {2C79F201-A5C2-4521-AB65-8BFED07733DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A753A15-6AF0-46FB-8836-048F64C384D6}
