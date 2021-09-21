@@ -6,4 +6,4 @@
 	url = ../../fluitec/fluitec.appfx.data.git
 [submodule "fluitec.appfx.console"]
 	path = fluitec.appfx.console
-	url = https://gitlab.fluitech.org/fluitec/fluitec.appfx.console.git
+	url = ../../fluitec/fluitec.appfx.console.git
