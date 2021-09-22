@@ -41,4 +41,8 @@
     <PackageReference Include="FluiTec.AppFx.Data" Version="1.0.18"></PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Repositories\" />
+  </ItemGroup>
+
 </Project>
