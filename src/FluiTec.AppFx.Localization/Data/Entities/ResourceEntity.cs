@@ -21,13 +21,13 @@ namespace FluiTec.AppFx.Localization.Entities
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource key.
+        /// Gets or sets the key.
         /// </summary>
         ///
         /// <value>
-        /// The resource key.
+        /// The key.
         /// </value>
-        public string ResourceKey { get; set; }
+        public string Key { get; set; }
 
         /// <summary>
         /// Gets or sets the modification date.
@@ -60,7 +60,7 @@ namespace FluiTec.AppFx.Localization.Entities
         public bool Equals(ResourceEntity other)
         {
             return Id.Equals(other?.Id) && 
-                   ResourceKey.Equals(other?.ResourceKey) &&
+                   Key.Equals(other?.Key) &&
                    ModificationDate.Equals(other?.ModificationDate) && 
                    AuthorId.Equals(other?.AuthorId);
         }
