@@ -16,6 +16,11 @@
         public const string AuthorTable = "Author";
 
         /// <summary>
+        /// (Immutable) the language table.
+        /// </summary>
+        public const string LanguageTable = "Language";
+
+        /// <summary>
         /// (Immutable) the resource table.
         /// </summary>
         public const string ResourceTable = "Resources";

@@ -1,11 +1,14 @@
 ﻿using System;
 using FluiTec.AppFx.Data.Entities;
+using FluiTec.AppFx.Data.EntityNameServices;
+using FluiTec.AppFx.Localization.Schema;
 
 namespace FluiTec.AppFx.Localization.Entities
 {
     /// <summary>
     /// An author entity.
     /// </summary>
+    [EntityName(SchemaGlobals.Schema, SchemaGlobals.AuthorTable)]
     public class AuthorEntity : IKeyEntity<int>, IEquatable<AuthorEntity>
     {
         /// <summary>

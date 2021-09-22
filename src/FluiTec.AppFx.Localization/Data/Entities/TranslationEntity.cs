@@ -1,11 +1,14 @@
 ﻿using System;
 using FluiTec.AppFx.Data.Entities;
+using FluiTec.AppFx.Data.EntityNameServices;
+using FluiTec.AppFx.Localization.Schema;
 
 namespace FluiTec.AppFx.Localization.Entities
 {
     /// <summary>
     /// A translation entity.
     /// </summary>
+    [EntityName(SchemaGlobals.Schema, SchemaGlobals.TranslationTable)]
     public class TranslationEntity : IKeyEntity<int>, IEquatable<TranslationEntity>
     {
         /// <summary>

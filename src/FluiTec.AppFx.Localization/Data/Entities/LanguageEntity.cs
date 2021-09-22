@@ -1,11 +1,14 @@
 ﻿using System;
 using FluiTec.AppFx.Data.Entities;
+using FluiTec.AppFx.Data.EntityNameServices;
+using FluiTec.AppFx.Localization.Schema;
 
 namespace FluiTec.AppFx.Localization.Entities
 {
     /// <summary>
     /// A language entity.
     /// </summary>
+    [EntityName(SchemaGlobals.Schema, SchemaGlobals.LanguageTable)]
     public class LanguageEntity : IKeyEntity<int>, IEquatable<LanguageEntity>
     {
         /// <summary>
@@ -16,7 +19,7 @@ namespace FluiTec.AppFx.Localization.Entities
         /// The identifier.
         /// </value>
         public int Id { get; set; }
-
+        
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -25,6 +28,15 @@ namespace FluiTec.AppFx.Localization.Entities
         /// The name.
         /// </value>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the ISO.
+        /// </summary>
+        ///
+        /// <value>
+        /// The name of the ISO.
+        /// </value>
+        public string IsoName { get; set; }
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -39,7 +51,8 @@ namespace FluiTec.AppFx.Localization.Entities
         public bool Equals(LanguageEntity other)
         {
             return Id.Equals(other?.Id) &&
-                   Name.Equals(other?.Name);
+                   Name.Equals(other?.Name) &&
+                   IsoName.Equals(other?.IsoName);
         }
     }
 }
