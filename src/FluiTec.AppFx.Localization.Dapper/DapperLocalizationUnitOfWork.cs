@@ -1,7 +1,9 @@
 ﻿using FluiTec.AppFx.Data.Dapper.DataServices;
 using FluiTec.AppFx.Data.Dapper.UnitsOfWork;
 using FluiTec.AppFx.Data.DataServices;
+using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Data.UnitsOfWork;
+using FluiTec.AppFx.Localization.Dapper.Repositories;
 using FluiTec.AppFx.Localization.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -76,6 +78,29 @@ namespace FluiTec.AppFx.Localization.Dapper
         /// <summary>
         /// Registers the repositories.
         /// </summary>
-        protected abstract void RegisterRepositories();
+        protected virtual void RegisterRepositories()
+        {
+            RepositoryProviders.Add(typeof(IAuthorRepository), (uow, log) 
+                => new DapperAuthorRepository((DapperLocalizationUnitOfWork)uow, log));
+            RepositoryProviders.Add(typeof(ILanguageRepository), (uow, log) 
+                => new DapperLanguageRepository((DapperLocalizationUnitOfWork)uow, log));
+            RepositoryProviders.Add(typeof(IResourceRepository), (uow, log) 
+                => CreateResourceRepository((DapperLocalizationUnitOfWork)uow, log));
+            RepositoryProviders.Add(typeof(ITranslationRepository), (uow, log) 
+                => new DapperTranslationRepository((DapperLocalizationUnitOfWork)uow, log));
+        }
+
+        /// <summary>
+        /// Creates resource repository.
+        /// </summary>
+        ///
+        /// <param name="uow">  The uow. </param>
+        /// <param name="log">  The log. </param>
+        ///
+        /// <returns>
+        /// The new resource repository.
+        /// </returns>
+        protected abstract IResourceRepository CreateResourceRepository(DapperLocalizationUnitOfWork uow,
+            ILogger<IRepository> log);
     }
 }
