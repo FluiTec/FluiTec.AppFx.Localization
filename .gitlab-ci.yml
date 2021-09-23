@@ -1,26 +1,54 @@
-image: mcr.microsoft.com/dotnet/core/sdk:3.1
+image: mcr.microsoft.com/dotnet/sdk:5.0
 
 stages:
     - build
-    - test
+    - unittest
+    - integrationtest
+
+# alias = hostname
+services:
+    - name: postgres:latest
+      alias: postgres
+    - name: mcr.microsoft.com/mssql/server:latest
+      alias: mssql
+    - name: mysql:latest
+      alias: mysql
 
 variables:
     srcDir: "src"
     projectName: "FluiTec.AppFx.Localization"
+    testfilter: "FullyQualifiedName~FluiTec.AppFx.Localization&FullyQualifiedName~.Tests"
+    integrationfilter: "FullyQualifiedName~FluiTec.AppFx.Localization&FullyQualifiedName~.IntegrationTests"
     GIT_SUBMODULE_STRATEGY: recursive
+    # PGSQL-Service
+    POSTGRES_DB: appfxlocalization
+    POSTGRES_USER: appfx
+    POSTGRES_PASSWORD: ""
+    POSTGRES_HOST_AUTH_METHOD: trust
+    # MSSQL-Service
+    ACCEPT_EULA: Y
+    SA_PASSWORD: "[[e(/?5$UcaWF[(X"
+    # MYSQL-Service
+    MYSQL_DATABASE: appfxlocalization
+    MYSQL_ROOT_PASSWORD: "[[e(/?5$UcaWF[(X"
     
 before_script:
     - git submodule sync --recursive
     - git submodule update --init --recursive
-    - "cd $srcDir"
-    - "dotnet restore"
+    - cd $srcDir
+    - dotnet restore --verbosity minimal
 
 build:
     stage: build
     script:
-        - "dotnet build --no-restore"
+        - dotnet build --no-restore
         
-test:
-    stage: test
+unittest:
+    stage: unittest
     script:
-        - "dotnet test --no-restore --filter $projectName"
+        - dotnet test --no-restore --verbosity minimal --filter $testfilter
+
+integrationtest:
+    stage: integrationtest
+    script:
+        - dotnet test --no-restore --verbosity minimal --filter $integrationfilter

@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dapper;
-using FluiTec.AppFx.Data.Dapper.Repositories;
-using FluiTec.AppFx.Data.Dapper.UnitsOfWork;
+using FluiTec.AppFx.Data.LiteDb.Repositories;
+using FluiTec.AppFx.Data.LiteDb.UnitsOfWork;
 using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace FluiTec.AppFx.Localization.Dapper.Repositories
+namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
     /// <summary>
-    /// A dapper translation repository.
+    /// A lite database translation repository.
     /// </summary>
-    public class DapperTranslationRepository : DapperWritableKeyTableDataRepository<TranslationEntity, int>, ITranslationRepository
+    public class LiteDbTranslationRepository : LiteDbWritableIntegerKeyTableDataRepository<TranslationEntity>, ITranslationRepository
     {
         /// <summary>
         /// Constructor.
@@ -21,7 +20,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public DapperTranslationRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public LiteDbTranslationRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
         {
         }
 
@@ -58,11 +57,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public IEnumerable<TranslationEntity> GetByResource(int resourceId)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(TranslationEntity), nameof(TranslationEntity.ResourceId)),
-                nameof(GetByResource), nameof(resourceId));
-
-            return UnitOfWork.Connection.Query<TranslationEntity>(command, new {ResourceId = resourceId}, UnitOfWork.Transaction);
+            return Collection.Find(entity => entity.ResourceId == resourceId);
         }
 
         /// <summary>
@@ -76,11 +71,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(int resourceId)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(TranslationEntity), nameof(TranslationEntity.ResourceId)),
-                nameof(GetByResource), nameof(resourceId));
-
-            return UnitOfWork.Connection.QueryAsync<TranslationEntity>(command, new {ResourceId = resourceId}, UnitOfWork.Transaction);
+            return Task.FromResult(GetByResource(resourceId));
         }
 
         /// <summary>
@@ -95,7 +86,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         public IEnumerable<TranslationEntity> GetByResource(string resourceKey)
         {
             var resource = UnitOfWork.GetRepository<IResourceRepository>().Get(resourceKey);
-            return GetByResource(resource.Id);
+            return Collection.Find(entity => entity.ResourceId == resource.Id);
         }
 
         /// <summary>
@@ -107,10 +98,9 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// <returns>
         /// The by resource.
         /// </returns>
-        public async Task<IEnumerable<TranslationEntity>> GetByResourceAsync(string resourceKey)
+        public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(string resourceKey)
         {
-            var resource = await UnitOfWork.GetRepository<IResourceRepository>().GetAsync(resourceKey);
-            return await GetByResourceAsync(resource.Id);
+            return Task.FromResult(GetByResource(resourceKey));
         }
 
         /// <summary>
@@ -146,11 +136,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public IEnumerable<TranslationEntity> GetByLanguage(int languageId)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(TranslationEntity), nameof(TranslationEntity.LanguageId)),
-                nameof(GetByLanguage), nameof(languageId));
-
-            return UnitOfWork.Connection.Query<TranslationEntity>(command, new {LanguageId = languageId}, UnitOfWork.Transaction);
+            return Collection.Find(entity => entity.LanguageId == languageId);
         }
 
         /// <summary>
@@ -164,11 +150,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(int languageId)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(TranslationEntity), nameof(TranslationEntity.LanguageId)),
-                nameof(GetByLanguage), nameof(languageId));
-
-            return UnitOfWork.Connection.QueryAsync<TranslationEntity>(command, new {LanguageId = languageId}, UnitOfWork.Transaction);
+            return Task.FromResult(GetByLanguage(languageId));
         }
 
         /// <summary>
@@ -183,7 +165,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         public IEnumerable<TranslationEntity> GetByLanguage(string isoName)
         {
             var language = UnitOfWork.GetRepository<ILanguageRepository>().Get(isoName);
-            return GetByLanguage(language.Id);
+            return Collection.Find(entity => entity.LanguageId == language.Id);
         }
 
         /// <summary>
@@ -195,10 +177,9 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// <returns>
         /// The by language.
         /// </returns>
-        public async Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(string isoName)
+        public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(string isoName)
         {
-            var language = await UnitOfWork.GetRepository<ILanguageRepository>().GetAsync(isoName);
-            return await GetByLanguageAsync(language.Id);
+            return Task.FromResult(GetByLanguage(isoName));
         }
     }
 }

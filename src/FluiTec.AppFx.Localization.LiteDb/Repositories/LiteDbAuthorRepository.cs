@@ -1,18 +1,17 @@
 ﻿using System.Threading.Tasks;
-using Dapper;
-using FluiTec.AppFx.Data.Dapper.Repositories;
-using FluiTec.AppFx.Data.Dapper.UnitsOfWork;
+using FluiTec.AppFx.Data.LiteDb.Repositories;
+using FluiTec.AppFx.Data.LiteDb.UnitsOfWork;
 using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace FluiTec.AppFx.Localization.Dapper.Repositories
+namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
     /// <summary>
-    /// A dapper author repository.
+    /// A lite database author repository.
     /// </summary>
-    public class DapperAuthorRepository : DapperWritableKeyTableDataRepository<AuthorEntity, int>, IAuthorRepository
+    public class LiteDbAuthorRepository : LiteDbWritableIntegerKeyTableDataRepository<AuthorEntity>, IAuthorRepository
     {
         /// <summary>
         /// Constructor.
@@ -20,7 +19,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public DapperAuthorRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public LiteDbAuthorRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
         {
         }
 
@@ -35,10 +34,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public AuthorEntity Get(string name)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(AuthorEntity), nameof(AuthorEntity.Name)));
-
-            return UnitOfWork.Connection.QuerySingle<AuthorEntity>(command, new {Name = name}, UnitOfWork.Transaction);
+            return Collection.FindOne(entity => entity.Name == name);
         }
 
         /// <summary>
@@ -52,10 +48,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public Task<AuthorEntity> GetAsync(string name)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(AuthorEntity), nameof(AuthorEntity.Name)));
-
-            return UnitOfWork.Connection.QuerySingleAsync<AuthorEntity>(command, new {Name = name}, UnitOfWork.Transaction);
+            return Task.FromResult(Get(name));
         }
     }
 }

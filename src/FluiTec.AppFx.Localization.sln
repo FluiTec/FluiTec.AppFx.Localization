@@ -56,6 +56,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.gitignore = ..\.gitignore
 		..\.gitlab-ci.yml = ..\.gitlab-ci.yml
 		..\.gitmodules = ..\.gitmodules
+		..\appsettings.integration.json = ..\appsettings.integration.json
+		..\appsettings.integration.secret.json = ..\appsettings.integration.secret.json
 		..\LICENSE.md = ..\LICENSE.md
 		..\README.md = ..\README.md
 		..\THIRD_PARTY_LICENSES.md = ..\THIRD_PARTY_LICENSES.md
@@ -81,22 +83,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Dapper.Sqlite", "FluiTec.AppFx.Localization.Dapper.Sqlite\FluiTec.AppFx.Localization.Dapper.Sqlite.csproj", "{8749A197-90F1-4047-9274-17752AB3A2C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Dapper.Mssql.Test", "tests\FluiTec.AppFx.Localization.Dapper.Mssql.Test\FluiTec.AppFx.Localization.Dapper.Mssql.Test.csproj", "{CE79F276-B3A1-435E-92FA-C094133EFC85}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Dapper.Mysql.Test", "tests\FluiTec.AppFx.Localization.Dapper.Mysql.Test\FluiTec.AppFx.Localization.Dapper.Mysql.Test.csproj", "{53AD927F-4365-459F-97F0-EC3C87767D81}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Dapper.Pgsql.Test", "tests\FluiTec.AppFx.Localization.Dapper.Pgsql.Test\FluiTec.AppFx.Localization.Dapper.Pgsql.Test.csproj", "{CBF3DF0E-54B3-4816-A169-3F683ABA767A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Dapper.Sqlite.Test", "tests\FluiTec.AppFx.Localization.Dapper.Sqlite.Test\FluiTec.AppFx.Localization.Dapper.Sqlite.Test.csproj", "{E16EDAD7-AACB-4AA3-B8EB-69ACD6136DC8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Dapper.Test", "tests\FluiTec.AppFx.Localization.Dapper.Test\FluiTec.AppFx.Localization.Dapper.Test.csproj", "{48387287-743C-4210-9A80-CB93085D4088}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Dynamic.Test", "tests\FluiTec.AppFx.Localization.Dynamic.Test\FluiTec.AppFx.Localization.Dynamic.Test.csproj", "{30C77CDF-11A2-43DC-A9FF-43FE6D4A96AA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.LiteDb.Test", "tests\FluiTec.AppFx.Localization.LiteDb.Test\FluiTec.AppFx.Localization.LiteDb.Test.csproj", "{8818F3B6-4B43-41C2-9EFE-3DF3390CE1C1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Test", "tests\FluiTec.AppFx.Localization.Test\FluiTec.AppFx.Localization.Test.csproj", "{B41BC938-17A4-4437-8A25-8EC9AFACF690}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{356A780C-19A4-4181-B03A-732D99B6CEE7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicSample", "..\fluitec.appfx.data\src\samples\DynamicSample\DynamicSample.csproj", "{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC}"
@@ -104,6 +90,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "module.fluitec.appfx.console", "module.fluitec.appfx.console", "{2C79F201-A5C2-4521-AB65-8BFED07733DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Console", "..\fluitec.appfx.console\src\FluiTec.AppFx.Console\FluiTec.AppFx.Console.csproj", "{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{67331EEC-4589-4406-9C78-E2A86EB18031}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{76504816-34EA-4105-801E-03D5AC776F85}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Dapper.Mssql.IntegrationTests", "tests\FluiTec.AppFx.Localization.Dapper.Mssql.IntegrationTests\FluiTec.AppFx.Localization.Dapper.Mssql.IntegrationTests.csproj", "{F39644D1-8E0C-44A7-9086-75726BC170E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.Tests", "tests\FluiTec.AppFx.Localization.Tests\FluiTec.AppFx.Localization.Tests.csproj", "{4B883685-F15E-4D7B-88E3-2A249EE3FA46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluiTec.AppFx.Localization.TestLibrary", "tests\FluiTec.AppFx.Localization.TestLibrary\FluiTec.AppFx.Localization.TestLibrary.csproj", "{07C4259D-C267-4E22-88FC-12DFAF8FF807}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -219,38 +215,6 @@ Global
 		{8749A197-90F1-4047-9274-17752AB3A2C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8749A197-90F1-4047-9274-17752AB3A2C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8749A197-90F1-4047-9274-17752AB3A2C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CE79F276-B3A1-435E-92FA-C094133EFC85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CE79F276-B3A1-435E-92FA-C094133EFC85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CE79F276-B3A1-435E-92FA-C094133EFC85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CE79F276-B3A1-435E-92FA-C094133EFC85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{53AD927F-4365-459F-97F0-EC3C87767D81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{53AD927F-4365-459F-97F0-EC3C87767D81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{53AD927F-4365-459F-97F0-EC3C87767D81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{53AD927F-4365-459F-97F0-EC3C87767D81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBF3DF0E-54B3-4816-A169-3F683ABA767A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBF3DF0E-54B3-4816-A169-3F683ABA767A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBF3DF0E-54B3-4816-A169-3F683ABA767A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBF3DF0E-54B3-4816-A169-3F683ABA767A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E16EDAD7-AACB-4AA3-B8EB-69ACD6136DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E16EDAD7-AACB-4AA3-B8EB-69ACD6136DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E16EDAD7-AACB-4AA3-B8EB-69ACD6136DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E16EDAD7-AACB-4AA3-B8EB-69ACD6136DC8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48387287-743C-4210-9A80-CB93085D4088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48387287-743C-4210-9A80-CB93085D4088}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48387287-743C-4210-9A80-CB93085D4088}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48387287-743C-4210-9A80-CB93085D4088}.Release|Any CPU.Build.0 = Release|Any CPU
-		{30C77CDF-11A2-43DC-A9FF-43FE6D4A96AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30C77CDF-11A2-43DC-A9FF-43FE6D4A96AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30C77CDF-11A2-43DC-A9FF-43FE6D4A96AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30C77CDF-11A2-43DC-A9FF-43FE6D4A96AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8818F3B6-4B43-41C2-9EFE-3DF3390CE1C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8818F3B6-4B43-41C2-9EFE-3DF3390CE1C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8818F3B6-4B43-41C2-9EFE-3DF3390CE1C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8818F3B6-4B43-41C2-9EFE-3DF3390CE1C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B41BC938-17A4-4437-8A25-8EC9AFACF690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B41BC938-17A4-4437-8A25-8EC9AFACF690}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B41BC938-17A4-4437-8A25-8EC9AFACF690}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B41BC938-17A4-4437-8A25-8EC9AFACF690}.Release|Any CPU.Build.0 = Release|Any CPU
 		{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -259,6 +223,18 @@ Global
 		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F39644D1-8E0C-44A7-9086-75726BC170E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F39644D1-8E0C-44A7-9086-75726BC170E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F39644D1-8E0C-44A7-9086-75726BC170E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F39644D1-8E0C-44A7-9086-75726BC170E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B883685-F15E-4D7B-88E3-2A249EE3FA46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B883685-F15E-4D7B-88E3-2A249EE3FA46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B883685-F15E-4D7B-88E3-2A249EE3FA46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B883685-F15E-4D7B-88E3-2A249EE3FA46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07C4259D-C267-4E22-88FC-12DFAF8FF807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07C4259D-C267-4E22-88FC-12DFAF8FF807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07C4259D-C267-4E22-88FC-12DFAF8FF807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07C4259D-C267-4E22-88FC-12DFAF8FF807}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -287,18 +263,15 @@ Global
 		{707C59E0-5F8D-4832-AFB2-C0F96D2CD30F} = {307CA075-08A6-4EB6-BE82-CF619301507E}
 		{793052C3-B763-409D-8D8E-F44E877F1AFA} = {307CA075-08A6-4EB6-BE82-CF619301507E}
 		{006E3059-68CB-459F-8AEA-DE568F898C67} = {307CA075-08A6-4EB6-BE82-CF619301507E}
-		{CE79F276-B3A1-435E-92FA-C094133EFC85} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
-		{53AD927F-4365-459F-97F0-EC3C87767D81} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
-		{CBF3DF0E-54B3-4816-A169-3F683ABA767A} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
-		{E16EDAD7-AACB-4AA3-B8EB-69ACD6136DC8} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
-		{48387287-743C-4210-9A80-CB93085D4088} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
-		{30C77CDF-11A2-43DC-A9FF-43FE6D4A96AA} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
-		{8818F3B6-4B43-41C2-9EFE-3DF3390CE1C1} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
-		{B41BC938-17A4-4437-8A25-8EC9AFACF690} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
 		{356A780C-19A4-4181-B03A-732D99B6CEE7} = {47EF2A62-8580-4481-AFBC-30EE697D9C84}
 		{67EFF9D0-55EC-4E83-B407-3E9DFC1D55FC} = {356A780C-19A4-4181-B03A-732D99B6CEE7}
 		{2C79F201-A5C2-4521-AB65-8BFED07733DC} = {93E2F780-BC18-4066-95E1-760581C9F55E}
 		{363AF07B-B6E3-4F61-9CD0-A3E156B9FA66} = {2C79F201-A5C2-4521-AB65-8BFED07733DC}
+		{67331EEC-4589-4406-9C78-E2A86EB18031} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
+		{76504816-34EA-4105-801E-03D5AC776F85} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
+		{F39644D1-8E0C-44A7-9086-75726BC170E5} = {76504816-34EA-4105-801E-03D5AC776F85}
+		{4B883685-F15E-4D7B-88E3-2A249EE3FA46} = {67331EEC-4589-4406-9C78-E2A86EB18031}
+		{07C4259D-C267-4E22-88FC-12DFAF8FF807} = {80D04682-FCF3-4A72-86C1-566BF121D7E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A753A15-6AF0-46FB-8836-048F64C384D6}

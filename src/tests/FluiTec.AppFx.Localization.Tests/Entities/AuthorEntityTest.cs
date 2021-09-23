@@ -1,7 +1,7 @@
 ﻿using FluiTec.AppFx.Localization.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FluiTec.AppFx.Localization.Test.Entities
+namespace FluiTec.AppFx.Localization.Tests.Entities
 {
     /// <summary>
     /// (Unit Test Class) an author entity test.

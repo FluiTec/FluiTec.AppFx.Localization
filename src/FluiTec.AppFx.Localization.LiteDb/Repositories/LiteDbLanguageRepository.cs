@@ -1,18 +1,17 @@
 ﻿using System.Threading.Tasks;
-using Dapper;
-using FluiTec.AppFx.Data.Dapper.Repositories;
-using FluiTec.AppFx.Data.Dapper.UnitsOfWork;
+using FluiTec.AppFx.Data.LiteDb.Repositories;
+using FluiTec.AppFx.Data.LiteDb.UnitsOfWork;
 using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace FluiTec.AppFx.Localization.Dapper.Repositories
+namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
     /// <summary>
-    /// A dapper language repository.
+    /// A lite database language repository.
     /// </summary>
-    public class DapperLanguageRepository : DapperWritableKeyTableDataRepository<LanguageEntity, int>, ILanguageRepository
+    public class LiteDbLanguageRepository : LiteDbWritableIntegerKeyTableDataRepository<LanguageEntity>, ILanguageRepository
     {
         /// <summary>
         /// Constructor.
@@ -20,7 +19,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public DapperLanguageRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public LiteDbLanguageRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
         {
         }
 
@@ -35,11 +34,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public LanguageEntity Get(string isoName)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(LanguageEntity), nameof(LanguageEntity.IsoName)), 
-                nameof(Get), nameof(isoName));
-
-            return UnitOfWork.Connection.QuerySingle<LanguageEntity>(command, new {IsoName = isoName}, UnitOfWork.Transaction);
+            return Collection.FindOne(entity => entity.IsoName == isoName);
         }
 
         /// <summary>
@@ -53,11 +48,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public Task<LanguageEntity> GetAsync(string isoName)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(LanguageEntity), nameof(LanguageEntity.IsoName)), 
-                nameof(Get), nameof(isoName));
-
-            return UnitOfWork.Connection.QuerySingleAsync<LanguageEntity>(command, new {IsoName = isoName}, UnitOfWork.Transaction);
+            return Task.FromResult(Get(isoName));
         }
     }
 }

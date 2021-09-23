@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Dapper;
-using FluiTec.AppFx.Data.Dapper.Repositories;
-using FluiTec.AppFx.Data.Dapper.UnitsOfWork;
+using FluiTec.AppFx.Data.LiteDb.Repositories;
+using FluiTec.AppFx.Data.LiteDb.UnitsOfWork;
 using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
 using Microsoft.Extensions.Logging;
 
-namespace FluiTec.AppFx.Localization.Dapper.Repositories
+namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
     /// <summary>
-    /// A dapper resource repository.
+    /// A lite database resource repository.
     /// </summary>
-    public abstract class DapperResourceRepository : DapperWritableKeyTableDataRepository<ResourceEntity, int>, IResourceRepository
+    public class LiteDbResourceRepository : LiteDbWritableIntegerKeyTableDataRepository<ResourceEntity>, IResourceRepository
     {
         /// <summary>
         /// Constructor.
@@ -21,7 +20,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        protected DapperResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public LiteDbResourceRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
         {
         }
 
@@ -36,11 +35,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public ResourceEntity Get(string key)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.Key)),
-                nameof(Get), nameof(key));
-
-            return UnitOfWork.Connection.QuerySingle<ResourceEntity>(command, new {Key = key}, UnitOfWork.Transaction);
+            return Collection.FindOne(entity => entity.Key == key);
         }
 
         /// <summary>
@@ -54,11 +49,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public Task<ResourceEntity> GetAsync(string key)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.Key)),
-                nameof(Get), nameof(key));
-
-            return UnitOfWork.Connection.QuerySingleAsync<ResourceEntity>(command, new {Key = key}, UnitOfWork.Transaction);
+            return Task.FromResult(Get(key));
         }
 
         /// <summary>
@@ -70,7 +61,10 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// <returns>
         /// An enumerator that allows foreach to be used to process the key prefixes in this collection.
         /// </returns>
-        public abstract IEnumerable<ResourceEntity> GetByKeyPrefix(string keyPrefix);
+        public IEnumerable<ResourceEntity> GetByKeyPrefix(string keyPrefix)
+        {
+            return Collection.Find(entity => entity.Key.StartsWith(keyPrefix));
+        }
 
         /// <summary>
         /// Gets by key prefix asynchronous.
@@ -81,7 +75,10 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// <returns>
         /// The by key prefix.
         /// </returns>
-        public abstract Task<IEnumerable<ResourceEntity>> GetByKeyPrefixAsync(string keyPrefix);
+        public Task<IEnumerable<ResourceEntity>> GetByKeyPrefixAsync(string keyPrefix)
+        {
+            return Task.FromResult(GetByKeyPrefix(keyPrefix));
+        }
 
         /// <summary>
         /// Gets the authors in this collection.
@@ -116,11 +113,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public IEnumerable<ResourceEntity> GetByAuthor(int authorId)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.AuthorId)),
-                nameof(GetByAuthor), nameof(authorId));
-
-            return UnitOfWork.Connection.Query<ResourceEntity>(command, new {AuthorId = authorId}, UnitOfWork.Transaction);
+            return Collection.Find(entity => entity.AuthorId == authorId);
         }
 
         /// <summary>
@@ -134,10 +127,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </returns>
         public Task<IEnumerable<ResourceEntity>> GetByAuthorAsync(int authorId)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.AuthorId)),
-                nameof(GetByAuthor), nameof(authorId));
-            return UnitOfWork.Connection.QueryAsync<ResourceEntity>(command, new {AuthorId = authorId}, UnitOfWork.Transaction);
+            return Task.FromResult(GetByAuthor(authorId));
         }
     }
 }
