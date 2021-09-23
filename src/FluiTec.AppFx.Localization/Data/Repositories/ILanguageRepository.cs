@@ -1,4 +1,5 @@
-﻿using FluiTec.AppFx.Data.Repositories;
+﻿using System.Threading.Tasks;
+using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 
 namespace FluiTec.AppFx.Localization.Repositories
@@ -18,5 +19,16 @@ namespace FluiTec.AppFx.Localization.Repositories
         /// A LanguageEntity.
         /// </returns>
         LanguageEntity Get(string isoName);
+
+        /// <summary>
+        /// Gets an asynchronous.
+        /// </summary>
+        ///
+        /// <param name="isoName">  The ISO name to get. </param>
+        ///
+        /// <returns>
+        /// The asynchronous.
+        /// </returns>
+        Task<LanguageEntity> GetAsync(string isoName);
     }
 }

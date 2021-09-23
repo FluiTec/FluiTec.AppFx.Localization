@@ -1,4 +1,5 @@
-﻿using FluiTec.AppFx.Data.Repositories;
+﻿using System.Threading.Tasks;
+using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 
 namespace FluiTec.AppFx.Localization.Repositories
@@ -18,5 +19,16 @@ namespace FluiTec.AppFx.Localization.Repositories
         /// An AuthorEntity.
         /// </returns>
         AuthorEntity Get(string name);
+
+        /// <summary>
+        /// Gets an asynchronous.
+        /// </summary>
+        ///
+        /// <param name="name"> The name to get. </param>
+        ///
+        /// <returns>
+        /// The asynchronous.
+        /// </returns>
+        Task<AuthorEntity> GetAsync(string name);
     }
 }
