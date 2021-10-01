@@ -36,7 +36,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         public AuthorEntity Get(string name)
         {
             var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(AuthorEntity), nameof(AuthorEntity.Name)));
+                SqlBuilder.SelectByFilter(typeof(AuthorEntity), nameof(AuthorEntity.Name)),
+                nameof (Get),nameof(name));
 
             return UnitOfWork.Connection.QuerySingle<AuthorEntity>(command, new {Name = name}, UnitOfWork.Transaction);
         }
@@ -53,7 +54,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         public Task<AuthorEntity> GetAsync(string name)
         {
             var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(AuthorEntity), nameof(AuthorEntity.Name)));
+                SqlBuilder.SelectByFilter(typeof(AuthorEntity), nameof(AuthorEntity.Name)),
+                nameof (Get),nameof(name));
 
             return UnitOfWork.Connection.QuerySingleAsync<AuthorEntity>(command, new {Name = name}, UnitOfWork.Transaction);
         }
