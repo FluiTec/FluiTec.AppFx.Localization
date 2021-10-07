@@ -37,6 +37,7 @@
     <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Pgsql\FluiTec.AppFx.Localization.Dapper.Pgsql.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Sqlite\FluiTec.AppFx.Localization.Dapper.Sqlite.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization.LiteDb\FluiTec.AppFx.Localization.LiteDb.csproj" />
+    <ProjectReference Include="..\FluiTec.AppFx.Localization.NMemory\FluiTec.AppFx.Localization.NMemory.csproj" />
     <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
   </ItemGroup>
 

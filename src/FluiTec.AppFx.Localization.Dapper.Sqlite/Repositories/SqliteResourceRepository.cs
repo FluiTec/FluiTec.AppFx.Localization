@@ -10,28 +10,26 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.Dapper.Sqlite.Repositories
 {
     /// <summary>
-    /// A mssql resource repository.
+    ///     A mssql resource repository.
     /// </summary>
     public class SqliteResourceRepository : DapperResourceRepository
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public SqliteResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public SqliteResourceRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
         /// <summary>
-        /// Gets the key prefixes in this collection.
+        ///     Gets the key prefixes in this collection.
         /// </summary>
-        ///
         /// <param name="keyPrefix">    The key prefix. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the key prefixes in this collection.
+        ///     An enumerator that allows foreach to be used to process the key prefixes in this collection.
         /// </returns>
         public override IEnumerable<ResourceEntity> GetByKeyPrefix(string keyPrefix)
         {
@@ -45,13 +43,11 @@ namespace FluiTec.AppFx.Localization.Dapper.Sqlite.Repositories
         }
 
         /// <summary>
-        /// Gets by key prefix asynchronous.
+        ///     Gets by key prefix asynchronous.
         /// </summary>
-        ///
         /// <param name="keyPrefix">    The key prefix. </param>
-        ///
         /// <returns>
-        /// The by key prefix.
+        ///     The by key prefix.
         /// </returns>
         public override Task<IEnumerable<ResourceEntity>> GetByKeyPrefixAsync(string keyPrefix)
         {

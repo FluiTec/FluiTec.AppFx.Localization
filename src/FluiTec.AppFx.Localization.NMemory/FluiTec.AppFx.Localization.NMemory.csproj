@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.NMemory\FluiTec.AppFx.Data.NMemory.csproj" />
+    <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
+  </ItemGroup>
+
+</Project>

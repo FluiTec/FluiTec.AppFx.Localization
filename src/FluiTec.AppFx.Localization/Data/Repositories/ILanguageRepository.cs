@@ -5,29 +5,25 @@ using FluiTec.AppFx.Localization.Entities;
 namespace FluiTec.AppFx.Localization.Repositories
 {
     /// <summary>
-    /// Interface for language repository.
+    ///     Interface for language repository.
     /// </summary>
     public interface ILanguageRepository : IWritableKeyTableDataRepository<LanguageEntity, int>
     {
         /// <summary>
-        /// Gets a language entity using the given ISO name.
+        ///     Gets a language entity using the given ISO name.
         /// </summary>
-        ///
         /// <param name="isoName">  The ISO name to get. </param>
-        ///
         /// <returns>
-        /// A LanguageEntity.
+        ///     A LanguageEntity.
         /// </returns>
         LanguageEntity Get(string isoName);
 
         /// <summary>
-        /// Gets an asynchronous.
+        ///     Gets an asynchronous.
         /// </summary>
-        ///
         /// <param name="isoName">  The ISO name to get. </param>
-        ///
         /// <returns>
-        /// The asynchronous.
+        ///     The asynchronous.
         /// </returns>
         Task<LanguageEntity> GetAsync(string isoName);
     }

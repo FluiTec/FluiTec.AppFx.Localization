@@ -15,8 +15,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dapper\FluiTec.AppFx.Data.Dapper.csproj" />
+    <ProjectReference Include="..\..\..\fluitec.appfx.data\src\tests\FluiTec.AppFx.Data.TestLibrary\FluiTec.AppFx.Data.TestLibrary.csproj" />
     <ProjectReference Include="..\..\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj" />
     <ProjectReference Include="..\..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
 
 </Project>

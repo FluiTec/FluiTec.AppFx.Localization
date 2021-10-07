@@ -10,54 +10,53 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.Dapper.Repositories
 {
     /// <summary>
-    /// A dapper language repository.
+    ///     A dapper language repository.
     /// </summary>
-    public class DapperLanguageRepository : DapperWritableKeyTableDataRepository<LanguageEntity, int>, ILanguageRepository
+    public class DapperLanguageRepository : DapperWritableKeyTableDataRepository<LanguageEntity, int>,
+        ILanguageRepository
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public DapperLanguageRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public DapperLanguageRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
         /// <summary>
-        /// Gets a language entity using the given ISO name.
+        ///     Gets a language entity using the given ISO name.
         /// </summary>
-        ///
         /// <param name="isoName">  The ISO name to get. </param>
-        ///
         /// <returns>
-        /// A LanguageEntity.
+        ///     A LanguageEntity.
         /// </returns>
         public LanguageEntity Get(string isoName)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(LanguageEntity), nameof(LanguageEntity.IsoName)), 
+            var command = GetFromCache(() =>
+                    SqlBuilder.SelectByFilter(typeof(LanguageEntity), nameof(LanguageEntity.IsoName)),
                 nameof(Get), nameof(isoName));
 
-            return UnitOfWork.Connection.QuerySingle<LanguageEntity>(command, new {IsoName = isoName}, UnitOfWork.Transaction);
+            return UnitOfWork.Connection.QuerySingle<LanguageEntity>(command, new {IsoName = isoName},
+                UnitOfWork.Transaction);
         }
 
         /// <summary>
-        /// Gets an asynchronous.
+        ///     Gets an asynchronous.
         /// </summary>
-        ///
         /// <param name="isoName">  The ISO name to get. </param>
-        ///
         /// <returns>
-        /// The asynchronous.
+        ///     The asynchronous.
         /// </returns>
         public Task<LanguageEntity> GetAsync(string isoName)
         {
-            var command = GetFromCache(() => 
-                SqlBuilder.SelectByFilter(typeof(LanguageEntity), nameof(LanguageEntity.IsoName)), 
+            var command = GetFromCache(() =>
+                    SqlBuilder.SelectByFilter(typeof(LanguageEntity), nameof(LanguageEntity.IsoName)),
                 nameof(Get), nameof(isoName));
 
-            return UnitOfWork.Connection.QuerySingleAsync<LanguageEntity>(command, new {IsoName = isoName}, UnitOfWork.Transaction);
+            return UnitOfWork.Connection.QuerySingleAsync<LanguageEntity>(command, new {IsoName = isoName},
+                UnitOfWork.Transaction);
         }
     }
 }

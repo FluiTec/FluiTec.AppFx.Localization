@@ -3,10 +3,9 @@
 namespace FluiTec.AppFx.Localization
 {
     /// <summary>
-    /// Interface for localization data service.
+    ///     Interface for localization data service.
     /// </summary>
     public interface ILocalizationDataService : IDataService<ILocalizationUnitOfWork>
     {
-
     }
 }

@@ -8,6 +8,7 @@ using FluiTec.AppFx.Localization.Dapper.Mssql;
 using FluiTec.AppFx.Localization.Dapper.Mysql;
 using FluiTec.AppFx.Localization.Dapper.Pgsql;
 using FluiTec.AppFx.Localization.LiteDb;
+using FluiTec.AppFx.Localization.NMemory;
 using FluiTec.AppFx.Options.Managers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -16,25 +17,24 @@ using Microsoft.Extensions.Options;
 namespace FluiTec.AppFx.Localization.Dynamic
 {
     /// <summary>
-    /// A dynamic localization data configuration extension.
+    ///     A dynamic localization data configuration extension.
     /// </summary>
     public static class DynamicLocalizationDataConfigurationExtension
     {
         /// <summary>
-        /// An IServiceCollection extension method that configure dynamic localization data provider.
+        ///     An IServiceCollection extension method that configure dynamic localization data provider.
         /// </summary>
-        ///
         /// <param name="services">             The services to act on. </param>
         /// <param name="configurationManager"> Manager for configuration. </param>
-        ///
         /// <returns>
-        /// An IServiceCollection.
+        ///     An IServiceCollection.
         /// </returns>
         public static IServiceCollection ConfigureDynamicLocalizationDataProvider(this IServiceCollection services,
             ConfigurationManager configurationManager)
         {
             services.ConfigureDynamicDataProvider(configurationManager,
-                new Func<IOptionsMonitor<DynamicDataOptions>, IServiceProvider, ILocalizationDataService>((options, provider) =>
+                new Func<IOptionsMonitor<DynamicDataOptions>, IServiceProvider, ILocalizationDataService>(
+                    (options, provider) =>
                     {
                         return options.CurrentValue.Provider switch
                         {
@@ -50,6 +50,8 @@ namespace FluiTec.AppFx.Localization.Dynamic
                             DataProvider.Mysql => new MysqlLocalizationDataService(
                                 provider.GetRequiredService<IOptionsMonitor<MysqlDapperServiceOptions>>(),
                                 provider.GetService<ILoggerFactory>()),
+                            DataProvider.NMemory => new NMemoryLocalizationDataService(
+                                provider.GetRequiredService<ILoggerFactory>()),
                             _ => throw new NotImplementedException()
                         };
                     }

@@ -10,14 +10,13 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.Dapper.Mssql
 {
     /// <summary>
-    /// A mssql localization unit of work.
+    ///     A mssql localization unit of work.
     /// </summary>
     public class MssqlLocalizationUnitOfWork : DapperLocalizationUnitOfWork
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="dataService">  The data service. </param>
         /// <param name="logger">       The logger. </param>
         public MssqlLocalizationUnitOfWork(IDapperDataService dataService, ILogger<IUnitOfWork> logger) : base(
@@ -26,9 +25,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql
         }
 
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="parentUnitOfWork"> The parent unit of work. </param>
         /// <param name="dataService">      The data service. </param>
         /// <param name="logger">           The logger. </param>
@@ -38,17 +36,17 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql
         }
 
         /// <summary>
-        /// Creates resource repository.
+        ///     Creates resource repository.
         /// </summary>
-        ///
         /// <param name="uow">  The uow. </param>
         /// <param name="log">  The log. </param>
-        ///
         /// <returns>
-        /// The new resource repository.
+        ///     The new resource repository.
         /// </returns>
         protected override IResourceRepository CreateResourceRepository(DapperLocalizationUnitOfWork uow,
             ILogger<IRepository> log)
-            => new MssqlResourceRepository(uow, log);
+        {
+            return new MssqlResourceRepository(uow, log);
+        }
     }
 }

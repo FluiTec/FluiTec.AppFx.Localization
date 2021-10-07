@@ -47,7 +47,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 
             IfDatabase(MigrationDatabaseName.Mssql, MigrationDatabaseName.Pgsql)
                 .Create
-                .ForeignKey(ForeignKeyResource)
+                .ForeignKey(ForeignKeyLanguage)
                 .FromTable(SchemaGlobals.TranslationTable)
                 .InSchema(SchemaGlobals.Schema)
                 .ForeignColumn(nameof(TranslationEntity.LanguageId))

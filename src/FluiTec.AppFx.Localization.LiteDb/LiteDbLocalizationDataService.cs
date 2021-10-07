@@ -11,105 +11,94 @@ using Microsoft.Extensions.Options;
 namespace FluiTec.AppFx.Localization.LiteDb
 {
     /// <summary>
-    /// A service for accessing lite database localization data information.
+    ///     A service for accessing lite database localization data information.
     /// </summary>
-    public class LiteDbLocalizationDataService : LiteDbDataService<LiteDbLocalizationUnitOfWork>, ILocalizationDataService
+    public class LiteDbLocalizationDataService : LiteDbDataService<LiteDbLocalizationUnitOfWork>,
+        ILocalizationDataService
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="useSingletonConnection">   The use singleton connection. </param>
         /// <param name="dbFilePath">               Full pathname of the database file. </param>
         /// <param name="loggerFactory">            The logger factory. </param>
         /// <param name="applicationFolder">        (Optional) Pathname of the application folder. </param>
-        public LiteDbLocalizationDataService(bool? useSingletonConnection, string dbFilePath, ILoggerFactory loggerFactory, string applicationFolder = null) : base(useSingletonConnection, dbFilePath, loggerFactory, applicationFolder)
+        public LiteDbLocalizationDataService(bool? useSingletonConnection, string dbFilePath,
+            ILoggerFactory loggerFactory, string applicationFolder = null) : base(useSingletonConnection, dbFilePath,
+            loggerFactory, applicationFolder)
         {
         }
 
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="useSingletonConnection">   The use singleton connection. </param>
         /// <param name="dbFilePath">               Full pathname of the database file. </param>
         /// <param name="loggerFactory">            The logger factory. </param>
         /// <param name="nameService">              The name service. </param>
         /// <param name="applicationFolder">        (Optional) Pathname of the application folder. </param>
-        public LiteDbLocalizationDataService(bool? useSingletonConnection, string dbFilePath, ILoggerFactory loggerFactory, IEntityNameService nameService, string applicationFolder = null) : base(useSingletonConnection, dbFilePath, loggerFactory, nameService, applicationFolder)
+        public LiteDbLocalizationDataService(bool? useSingletonConnection, string dbFilePath,
+            ILoggerFactory loggerFactory, IEntityNameService nameService, string applicationFolder = null) : base(
+            useSingletonConnection, dbFilePath, loggerFactory, nameService, applicationFolder)
         {
         }
 
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="options">          Options for controlling the operation. </param>
         /// <param name="loggerFactory">    The logger factory. </param>
-        public LiteDbLocalizationDataService(LiteDbServiceOptions options, ILoggerFactory loggerFactory) : base(options, loggerFactory)
+        public LiteDbLocalizationDataService(LiteDbServiceOptions options, ILoggerFactory loggerFactory) : base(options,
+            loggerFactory)
         {
         }
 
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
-        /// <param name="options">          Options for controlling the operation. </param>
-        /// <param name="loggerFactory">    The logger factory. </param>
-        /// <param name="nameService">      The name service. </param>
-        public LiteDbLocalizationDataService(LiteDbServiceOptions options, ILoggerFactory loggerFactory, IEntityNameService nameService) : base(options, loggerFactory, nameService)
-        {
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        ///
-        /// <param name="options">          Options for controlling the operation. </param>
-        /// <param name="loggerFactory">    The logger factory. </param>
-        public LiteDbLocalizationDataService(IOptionsMonitor<LiteDbServiceOptions> options, ILoggerFactory loggerFactory) : base(options, loggerFactory)
-        {
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        ///
         /// <param name="options">          Options for controlling the operation. </param>
         /// <param name="loggerFactory">    The logger factory. </param>
         /// <param name="nameService">      The name service. </param>
-        public LiteDbLocalizationDataService(IOptionsMonitor<LiteDbServiceOptions> options, ILoggerFactory loggerFactory, IEntityNameService nameService) : base(options, loggerFactory, nameService)
+        public LiteDbLocalizationDataService(LiteDbServiceOptions options, ILoggerFactory loggerFactory,
+            IEntityNameService nameService) : base(options, loggerFactory, nameService)
         {
         }
 
         /// <summary>
-        /// Gets the name.
+        ///     Constructor.
         /// </summary>
-        ///
+        /// <param name="options">          Options for controlling the operation. </param>
+        /// <param name="loggerFactory">    The logger factory. </param>
+        public LiteDbLocalizationDataService(IOptionsMonitor<LiteDbServiceOptions> options,
+            ILoggerFactory loggerFactory) : base(options, loggerFactory)
+        {
+        }
+
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <param name="options">          Options for controlling the operation. </param>
+        /// <param name="loggerFactory">    The logger factory. </param>
+        /// <param name="nameService">      The name service. </param>
+        public LiteDbLocalizationDataService(IOptionsMonitor<LiteDbServiceOptions> options,
+            ILoggerFactory loggerFactory, IEntityNameService nameService) : base(options, loggerFactory, nameService)
+        {
+        }
+
+        /// <summary>
+        ///     Gets the name.
+        /// </summary>
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public override string Name => nameof(LiteDbLocalizationDataService);
 
         /// <summary>
-        /// Begins unit of work.
-        /// </summary>
-        ///
-        /// <returns>
-        /// An IUnitOfWork.
-        /// </returns>
-        public override LiteDbLocalizationUnitOfWork BeginUnitOfWork()
-        {
-            return new LiteDbLocalizationUnitOfWork(this, LoggerFactory?.CreateLogger<IUnitOfWork>());
-        }
-
-        /// <summary>
-        /// Begins unit of work.
+        ///     Begins unit of work.
         /// </summary>
         /// <param name="other">    The other. </param>
-        /// 
         /// <returns>
-        /// A TUnitOfWork.
+        ///     A TUnitOfWork.
         /// </returns>
         ILocalizationUnitOfWork IDataService<ILocalizationUnitOfWork>.BeginUnitOfWork(IUnitOfWork other)
         {
@@ -117,10 +106,10 @@ namespace FluiTec.AppFx.Localization.LiteDb
         }
 
         /// <summary>
-        /// Begins unit of work.
+        ///     Begins unit of work.
         /// </summary>
         /// <returns>
-        /// A TUnitOfWork.
+        ///     A TUnitOfWork.
         /// </returns>
         ILocalizationUnitOfWork IDataService<ILocalizationUnitOfWork>.BeginUnitOfWork()
         {
@@ -128,18 +117,30 @@ namespace FluiTec.AppFx.Localization.LiteDb
         }
 
         /// <summary>
-        /// Begins unit of work.
+        ///     Begins unit of work.
         /// </summary>
-        ///
-        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-        ///                                             null. </exception>
-        /// <exception cref="ArgumentException">        Thrown when one or more arguments have
-        ///                                             unsupported or illegal values. </exception>
-        ///
-        /// <param name="other">    The other. </param>
-        ///
         /// <returns>
-        /// An IUnitOfWork.
+        ///     An IUnitOfWork.
+        /// </returns>
+        public override LiteDbLocalizationUnitOfWork BeginUnitOfWork()
+        {
+            return new LiteDbLocalizationUnitOfWork(this, LoggerFactory?.CreateLogger<IUnitOfWork>());
+        }
+
+        /// <summary>
+        ///     Begins unit of work.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when one or more required arguments are
+        ///     null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     Thrown when one or more arguments have
+        ///     unsupported or illegal values.
+        /// </exception>
+        /// <param name="other">    The other. </param>
+        /// <returns>
+        ///     An IUnitOfWork.
         /// </returns>
         public override LiteDbLocalizationUnitOfWork BeginUnitOfWork(IUnitOfWork other)
         {

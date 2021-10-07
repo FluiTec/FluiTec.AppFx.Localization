@@ -9,28 +9,27 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
     /// <summary>
-    /// A lite database language repository.
+    ///     A lite database language repository.
     /// </summary>
-    public class LiteDbLanguageRepository : LiteDbWritableIntegerKeyTableDataRepository<LanguageEntity>, ILanguageRepository
+    public class LiteDbLanguageRepository : LiteDbWritableIntegerKeyTableDataRepository<LanguageEntity>,
+        ILanguageRepository
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public LiteDbLanguageRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public LiteDbLanguageRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
         /// <summary>
-        /// Gets a language entity using the given ISO name.
+        ///     Gets a language entity using the given ISO name.
         /// </summary>
-        ///
         /// <param name="isoName">  The ISO name to get. </param>
-        ///
         /// <returns>
-        /// A LanguageEntity.
+        ///     A LanguageEntity.
         /// </returns>
         public LanguageEntity Get(string isoName)
         {
@@ -38,13 +37,11 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         }
 
         /// <summary>
-        /// Gets an asynchronous.
+        ///     Gets an asynchronous.
         /// </summary>
-        ///
         /// <param name="isoName">  The ISO name to get. </param>
-        ///
         /// <returns>
-        /// The asynchronous.
+        ///     The asynchronous.
         /// </returns>
         public Task<LanguageEntity> GetAsync(string isoName)
         {

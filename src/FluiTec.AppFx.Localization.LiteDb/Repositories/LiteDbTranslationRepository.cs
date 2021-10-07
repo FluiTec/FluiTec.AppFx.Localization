@@ -10,50 +10,51 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
     /// <summary>
-    /// A lite database translation repository.
+    ///     A lite database translation repository.
     /// </summary>
-    public class LiteDbTranslationRepository : LiteDbWritableIntegerKeyTableDataRepository<TranslationEntity>, ITranslationRepository
+    public class LiteDbTranslationRepository : LiteDbWritableIntegerKeyTableDataRepository<TranslationEntity>,
+        ITranslationRepository
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public LiteDbTranslationRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork, logger)
+        public LiteDbTranslationRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+            logger)
         {
         }
 
         /// <summary>
-        /// Gets the resources in this collection.
+        ///     Gets the resources in this collection.
         /// </summary>
-        ///
         /// <param name="resource"> The resource. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the resources in this collection.
+        ///     An enumerator that allows foreach to be used to process the resources in this collection.
         /// </returns>
-        public IEnumerable<TranslationEntity> GetByResource(ResourceEntity resource) => GetByResource(resource.Id);
+        public IEnumerable<TranslationEntity> GetByResource(ResourceEntity resource)
+        {
+            return GetByResource(resource.Id);
+        }
 
         /// <summary>
-        /// Gets by resource asynchronous.
+        ///     Gets by resource asynchronous.
         /// </summary>
-        ///
         /// <param name="resource"> The resource. </param>
-        ///
         /// <returns>
-        /// The by resource.
+        ///     The by resource.
         /// </returns>
-        public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(ResourceEntity resource) => GetByResourceAsync(resource.Id);
+        public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(ResourceEntity resource)
+        {
+            return GetByResourceAsync(resource.Id);
+        }
 
         /// <summary>
-        /// Gets the resources in this collection.
+        ///     Gets the resources in this collection.
         /// </summary>
-        ///
         /// <param name="resourceId">   Identifier for the resource. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the resources in this collection.
+        ///     An enumerator that allows foreach to be used to process the resources in this collection.
         /// </returns>
         public IEnumerable<TranslationEntity> GetByResource(int resourceId)
         {
@@ -61,13 +62,11 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         }
 
         /// <summary>
-        /// Gets by resource asynchronous.
+        ///     Gets by resource asynchronous.
         /// </summary>
-        ///
         /// <param name="resourceId">   Identifier for the resource. </param>
-        ///
         /// <returns>
-        /// The by resource.
+        ///     The by resource.
         /// </returns>
         public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(int resourceId)
         {
@@ -75,13 +74,11 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         }
 
         /// <summary>
-        /// Gets the resources in this collection.
+        ///     Gets the resources in this collection.
         /// </summary>
-        ///
         /// <param name="resourceKey">  The resource key. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the resources in this collection.
+        ///     An enumerator that allows foreach to be used to process the resources in this collection.
         /// </returns>
         public IEnumerable<TranslationEntity> GetByResource(string resourceKey)
         {
@@ -90,13 +87,11 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         }
 
         /// <summary>
-        /// Gets by resource asynchronous.
+        ///     Gets by resource asynchronous.
         /// </summary>
-        ///
         /// <param name="resourceKey">  The resource key. </param>
-        ///
         /// <returns>
-        /// The by resource.
+        ///     The by resource.
         /// </returns>
         public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(string resourceKey)
         {
@@ -104,35 +99,35 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         }
 
         /// <summary>
-        /// Gets the languages in this collection.
+        ///     Gets the languages in this collection.
         /// </summary>
-        ///
         /// <param name="language"> The language. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
         /// </returns>
-        public IEnumerable<TranslationEntity> GetByLanguage(LanguageEntity language) => GetByLanguage(language.Id);
+        public IEnumerable<TranslationEntity> GetByLanguage(LanguageEntity language)
+        {
+            return GetByLanguage(language.Id);
+        }
 
         /// <summary>
-        /// Gets by language asynchronous.
+        ///     Gets by language asynchronous.
         /// </summary>
-        ///
         /// <param name="language"> The language. </param>
-        ///
         /// <returns>
-        /// The by language.
+        ///     The by language.
         /// </returns>
-        public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(LanguageEntity language) => GetByLanguageAsync(language.Id);
+        public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(LanguageEntity language)
+        {
+            return GetByLanguageAsync(language.Id);
+        }
 
         /// <summary>
-        /// Gets the languages in this collection.
+        ///     Gets the languages in this collection.
         /// </summary>
-        ///
         /// <param name="languageId">   Identifier for the language. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
         /// </returns>
         public IEnumerable<TranslationEntity> GetByLanguage(int languageId)
         {
@@ -140,13 +135,11 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         }
 
         /// <summary>
-        /// Gets by language asynchronous.
+        ///     Gets by language asynchronous.
         /// </summary>
-        ///
         /// <param name="languageId">   Identifier for the language. </param>
-        ///
         /// <returns>
-        /// The by language.
+        ///     The by language.
         /// </returns>
         public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(int languageId)
         {
@@ -154,13 +147,11 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         }
 
         /// <summary>
-        /// Gets the languages in this collection.
+        ///     Gets the languages in this collection.
         /// </summary>
-        ///
         /// <param name="isoName">  Name of the ISO. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
         /// </returns>
         public IEnumerable<TranslationEntity> GetByLanguage(string isoName)
         {
@@ -169,13 +160,11 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         }
 
         /// <summary>
-        /// Gets by language asynchronous.
+        ///     Gets by language asynchronous.
         /// </summary>
-        ///
         /// <param name="isoName">  Name of the ISO. </param>
-        ///
         /// <returns>
-        /// The by language.
+        ///     The by language.
         /// </returns>
         public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(string isoName)
         {

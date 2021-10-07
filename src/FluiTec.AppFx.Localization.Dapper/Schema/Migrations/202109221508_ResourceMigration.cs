@@ -32,7 +32,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
                 .InSchema(SchemaGlobals.Schema)
                 .WithColumn(nameof(ResourceEntity.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(ResourceEntity.Key)).AsString().NotNullable()
-                .WithColumn(nameof(ResourceEntity.ModificationDate)).AsDateTime().NotNullable()
+                .WithColumn(nameof(ResourceEntity.ModificationDate)).AsDateTimeOffset().NotNullable()
                 .WithColumn(nameof(ResourceEntity.AuthorId)).AsInt32().NotNullable();
 
             IfDatabase(MigrationDatabaseName.Mssql, MigrationDatabaseName.Pgsql)
@@ -58,7 +58,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
                 .InSchema(SchemaGlobals.Schema)
                 .WithColumn(nameof(ResourceEntity.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(ResourceEntity.Key)).AsString().NotNullable()
-                .WithColumn(nameof(ResourceEntity.ModificationDate)).AsDateTime().NotNullable()
+                .WithColumn(nameof(ResourceEntity.ModificationDate)).AsDateTimeOffset().NotNullable()
                 .WithColumn(nameof(ResourceEntity.AuthorId)).AsInt32().NotNullable();
         }
 

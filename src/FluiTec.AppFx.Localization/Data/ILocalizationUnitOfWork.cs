@@ -4,43 +4,39 @@ using FluiTec.AppFx.Localization.Repositories;
 namespace FluiTec.AppFx.Localization
 {
     /// <summary>
-    /// Interface for localization unit of work.
+    ///     Interface for localization unit of work.
     /// </summary>
     public interface ILocalizationUnitOfWork : IUnitOfWork
     {
         /// <summary>
-        /// Gets the author repository.
+        ///     Gets the author repository.
         /// </summary>
-        ///
         /// <value>
-        /// The author repository.
+        ///     The author repository.
         /// </value>
         IAuthorRepository AuthorRepository { get; }
 
         /// <summary>
-        /// Gets the language repository.
+        ///     Gets the language repository.
         /// </summary>
-        ///
         /// <value>
-        /// The language repository.
+        ///     The language repository.
         /// </value>
         ILanguageRepository LanguageRepository { get; }
 
         /// <summary>
-        /// Gets the resource repository.
+        ///     Gets the resource repository.
         /// </summary>
-        ///
         /// <value>
-        /// The resource repository.
+        ///     The resource repository.
         /// </value>
         IResourceRepository ResourceRepository { get; }
 
         /// <summary>
-        /// Gets the translation repository.
+        ///     Gets the translation repository.
         /// </summary>
-        ///
         /// <value>
-        /// The translation repository.
+        ///     The translation repository.
         /// </value>
         ITranslationRepository TranslationRepository { get; }
     }
