@@ -14,6 +14,14 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql.IntegrationTests
             var provider = new MssqlLocalizationDataServiceProvider();
             var dataService = provider.ProvideDataService();
 
+            System.Console.WriteLine("###################################");
+            System.Console.WriteLine("###################################");
+            System.Console.WriteLine("###################################");
+            System.Console.WriteLine(provider.AdminOptions.AdminConnectionString ?? provider.ServiceOptions.ConnectionString);
+            System.Console.WriteLine("###################################");
+            System.Console.WriteLine("###################################");
+            System.Console.WriteLine("###################################");
+            
             MssqlAdminHelper.CreateDababase(provider.AdminOptions.AdminConnectionString ?? provider.ServiceOptions.ConnectionString,
                 provider.AdminOptions.IntegrationDb);
             MssqlAdminHelper.CreateUserAndLogin(provider.AdminOptions.AdminConnectionString,
