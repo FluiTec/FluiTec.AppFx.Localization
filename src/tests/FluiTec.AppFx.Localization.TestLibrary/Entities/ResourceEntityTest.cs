@@ -53,7 +53,7 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             return new ResourceEntity
             {
                 AuthorId = Author.Id,
-                Key = "FluiTec.AppFx.ClassName.ClassProperty1",
+                ResourceKey = "FluiTec.AppFx.ClassName.ClassProperty1",
                 ModificationDate = DateTimeOffset.Now
             };
         }
@@ -71,7 +71,7 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             {
                 Id = 100,
                 AuthorId = Author.Id,
-                Key = "NO-UPDATE",
+                ResourceKey = "NO-UPDATE",
                 ModificationDate = DateTimeOffset.Now
             };
         }
@@ -90,14 +90,14 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
                 {
                     Id = 1,
                     AuthorId = Author.Id,
-                    Key = "FluiTec.AppFx.ClassName.ClassProperty1",
+                    ResourceKey = "FluiTec.AppFx.ClassName.ClassProperty1",
                     ModificationDate = DateTimeOffset.Now
                 },
                 new ResourceEntity
                 {
                     Id = 2,
                     AuthorId = Author.Id,
-                    Key = "FluiTec.AppFx.ClassName.ClassProperty2",
+                    ResourceKey = "FluiTec.AppFx.ClassName.ClassProperty2",
                     ModificationDate = DateTimeOffset.Now
                 }
             };
@@ -112,7 +112,7 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
         /// </returns>
         protected override ResourceEntity ChangeEntity(ResourceEntity entity)
         {
-            entity.Key = "Changed.Key";
+            entity.ResourceKey = "Changed.Key";
             return entity;
         }
 
@@ -141,7 +141,7 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
 
             var resource = uow.GetRepository<IResourceRepository>().Add(CreateEntity());
             
-            var dbEntity = uow.GetRepository<IResourceRepository>().Get(resource.Key);
+            var dbEntity = uow.GetRepository<IResourceRepository>().Get(resource.ResourceKey);
 
             Assert.IsTrue(EntityEquals(resource, dbEntity));
         }
@@ -155,7 +155,7 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             using var uow = BeginUnitOfWork();
             var resource = uow.GetRepository<IResourceRepository>().Add(CreateEntity());
             
-            var dbEntity = uow.GetRepository<IResourceRepository>().GetAsync(resource.Key).Result;
+            var dbEntity = uow.GetRepository<IResourceRepository>().GetAsync(resource.ResourceKey).Result;
 
             Assert.IsTrue(EntityEquals(resource, dbEntity));
         }
@@ -170,8 +170,11 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             using var uow = BeginUnitOfWork();
 
             var entities = CreateEntities().ToList();
+            var entity = CreateEntity();
+            entity.ResourceKey = "Trash";
 
             uow.GetRepository<IResourceRepository>().AddRange(entities);
+            uow.GetRepository<IResourceRepository>().Add(entity); // ensure we have something we don't want back
             var dbEntities = uow.GetRepository<IResourceRepository>().GetByKeyPrefix(prefix);
 
             Assert.AreEqual(entities.Count, dbEntities.Count());

@@ -35,7 +35,7 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         /// </returns>
         public ResourceEntity Get(string key)
         {
-            return Table.SingleOrDefault(e => e.Key == key);
+            return Table.SingleOrDefault(e => e.ResourceKey == key);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         /// </returns>
         public IEnumerable<ResourceEntity> GetByKeyPrefix(string keyPrefix)
         {
-            return Table.Where(e => e.Key.StartsWith(keyPrefix));
+            return Table.Where(e => e.ResourceKey.StartsWith(keyPrefix));
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using FluentMigrator;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Localization.Entities;
+using FluiTec.AppFx.Data.Dapper.Extensions;
 
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 {
@@ -28,8 +29,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
         {
             IfDatabase(MigrationDatabaseName.Mssql, MigrationDatabaseName.Pgsql)
                 .Create
-                .Table(SchemaGlobals.TranslationTable)
-                .InSchema(SchemaGlobals.Schema)
+                .Table(SchemaGlobals.Schema, SchemaGlobals.TranslationTable, true)
                 .WithColumn(nameof(ResourceEntity.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(TranslationEntity.ResourceId)).AsInt32().NotNullable()
                 .WithColumn(nameof(TranslationEntity.LanguageId)).AsInt32().NotNullable()
@@ -55,10 +55,9 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
                 .InSchema(SchemaGlobals.Schema)
                 .PrimaryColumn(nameof(LanguageEntity.Id));
 
-            IfDatabase(MigrationDatabaseName.Mysql)
+            IfDatabase(MigrationDatabaseName.Mysql, MigrationDatabaseName.Sqlite)
                 .Create
-                .Table(SchemaGlobals.TranslationTable)
-                .InSchema(SchemaGlobals.Schema)
+                .Table(SchemaGlobals.Schema, SchemaGlobals.TranslationTable, false)
                 .WithColumn(nameof(ResourceEntity.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(TranslationEntity.ResourceId)).AsInt32().NotNullable()
                 .WithColumn(nameof(TranslationEntity.LanguageId)).AsInt32().NotNullable()
@@ -84,13 +83,11 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
             
             IfDatabase(MigrationDatabaseName.Mssql, MigrationDatabaseName.Pgsql)
                 .Delete
-                .Table(SchemaGlobals.TranslationTable)
-                .InSchema(SchemaGlobals.Schema);
+                .Table(SchemaGlobals.Schema, SchemaGlobals.TranslationTable, true);
 
-            IfDatabase(MigrationDatabaseName.Mysql)
+            IfDatabase(MigrationDatabaseName.Mysql, MigrationDatabaseName.Sqlite)
                 .Delete
-                .Table(SchemaGlobals.TranslationTable)
-                .InSchema(SchemaGlobals.Schema);
+                .Table(SchemaGlobals.Schema, SchemaGlobals.TranslationTable, false);
         }
     }
 }

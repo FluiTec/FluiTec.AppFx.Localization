@@ -35,7 +35,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql.Repositories
         {
             var command = GetFromCache(() =>
                     $"SELECT * FROM {SqlBuilder.Adapter.RenderTableName(typeof(ResourceEntity))} " +
-                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.Key))} " +
+                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.ResourceKey))} " +
                     $"LIKE {SqlBuilder.Adapter.RenderParameterProperty(nameof(keyPrefix))} + '%'",
                 nameof(GetByKeyPrefix), nameof(keyPrefix));
 
@@ -53,7 +53,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql.Repositories
         {
             var command = GetFromCache(() =>
                     $"SELECT * FROM {SqlBuilder.Adapter.RenderTableName(typeof(ResourceEntity))} " +
-                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.Key))} " +
+                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.ResourceKey))} " +
                     $"LIKE {SqlBuilder.Adapter.RenderParameterProperty(nameof(keyPrefix))} + '%'",
                 nameof(GetByKeyPrefix), nameof(keyPrefix));
 

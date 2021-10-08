@@ -2,6 +2,7 @@
 using FluentMigrator;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Localization.Entities;
+using FluiTec.AppFx.Data.Dapper.Extensions;
 
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 {
@@ -28,10 +29,9 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
         {
             IfDatabase(MigrationDatabaseName.Mssql, MigrationDatabaseName.Pgsql)
                 .Create
-                .Table(SchemaGlobals.ResourceTable)
-                .InSchema(SchemaGlobals.Schema)
+                .Table(SchemaGlobals.Schema, SchemaGlobals.ResourceTable, true)
                 .WithColumn(nameof(ResourceEntity.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
-                .WithColumn(nameof(ResourceEntity.Key)).AsString().NotNullable()
+                .WithColumn(nameof(ResourceEntity.ResourceKey)).AsString().NotNullable()
                 .WithColumn(nameof(ResourceEntity.ModificationDate)).AsDateTimeOffset().NotNullable()
                 .WithColumn(nameof(ResourceEntity.AuthorId)).AsInt32().NotNullable();
 
@@ -50,15 +50,14 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
                 .UniqueConstraint(UniqueResourceKey)
                 .OnTable(SchemaGlobals.ResourceTable)
                 .WithSchema(SchemaGlobals.Schema)
-                .Column(nameof(ResourceEntity.Key));
+                .Column(nameof(ResourceEntity.ResourceKey));
             
-            IfDatabase(MigrationDatabaseName.Mysql)
+            IfDatabase(MigrationDatabaseName.Mysql, MigrationDatabaseName.Sqlite)
                 .Create
-                .Table(SchemaGlobals.ResourceTable)
-                .InSchema(SchemaGlobals.Schema)
+                .Table(SchemaGlobals.Schema, SchemaGlobals.ResourceTable, false)
                 .WithColumn(nameof(ResourceEntity.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
-                .WithColumn(nameof(ResourceEntity.Key)).AsString().NotNullable()
-                .WithColumn(nameof(ResourceEntity.ModificationDate)).AsDateTimeOffset().NotNullable()
+                .WithColumn(nameof(ResourceEntity.ResourceKey)).AsString().NotNullable()
+                .WithColumn(nameof(ResourceEntity.ModificationDate)).AsDateTime().NotNullable()
                 .WithColumn(nameof(ResourceEntity.AuthorId)).AsInt32().NotNullable();
         }
 
@@ -81,13 +80,11 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
             
             IfDatabase(MigrationDatabaseName.Mssql, MigrationDatabaseName.Pgsql)
                 .Delete
-                .Table(SchemaGlobals.ResourceTable)
-                .InSchema(SchemaGlobals.Schema);
+                .Table(SchemaGlobals.Schema, SchemaGlobals.ResourceTable, true);
             
-            IfDatabase(MigrationDatabaseName.Mysql)
+            IfDatabase(MigrationDatabaseName.Mysql, MigrationDatabaseName.Sqlite)
                 .Delete
-                .Table(SchemaGlobals.ResourceTable)
-                .InSchema(SchemaGlobals.Schema);
+                .Table(SchemaGlobals.Schema, SchemaGlobals.ResourceTable, false);
         }
     }
 }

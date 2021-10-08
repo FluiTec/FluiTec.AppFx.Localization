@@ -56,7 +56,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Sqlite
         /// <value>
         ///     The type of the SQL.
         /// </value>
-        public override SqlType SqlType => SqlType.Mysql;
+        public override SqlType SqlType => SqlType.Sqlite;
 
         /// <summary>
         ///     Begins unit of work.

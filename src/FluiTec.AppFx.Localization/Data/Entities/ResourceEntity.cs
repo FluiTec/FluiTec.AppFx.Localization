@@ -1,6 +1,7 @@
 ﻿using System;
 using FluiTec.AppFx.Data.Entities;
 using FluiTec.AppFx.Data.EntityNameServices;
+using FluiTec.AppFx.Data.Extensions;
 using FluiTec.AppFx.Localization.Schema;
 
 namespace FluiTec.AppFx.Localization.Entities
@@ -12,12 +13,13 @@ namespace FluiTec.AppFx.Localization.Entities
     public class ResourceEntity : IKeyEntity<int>, IEquatable<ResourceEntity>
     {
         /// <summary>
-        ///     Gets or sets the key.
+        /// Gets or sets the resource key.
         /// </summary>
+        ///
         /// <value>
-        ///     The key.
+        /// The resource key.
         /// </value>
-        public string Key { get; set; }
+        public string ResourceKey { get; set; }
 
         /// <summary>
         ///     Gets or sets the modification date.
@@ -46,8 +48,8 @@ namespace FluiTec.AppFx.Localization.Entities
         public bool Equals(ResourceEntity other)
         {
             return Id.Equals(other?.Id) &&
-                   Key.Equals(other?.Key) &&
-                   ModificationDate.Equals(other?.ModificationDate) &&
+                   ResourceKey.Equals(other?.ResourceKey) &&
+                   ModificationDate.EqualsRemovingPrecision(other?.ModificationDate) &&
                    AuthorId.Equals(other?.AuthorId);
         }
 

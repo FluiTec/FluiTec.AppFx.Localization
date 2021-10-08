@@ -29,33 +29,33 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// <summary>
         ///     Gets a resource entity using the given key.
         /// </summary>
-        /// <param name="key">  The key to get. </param>
+        /// <param name="resourceKey">  The key to get. </param>
         /// <returns>
         ///     A ResourceEntity.
         /// </returns>
-        public ResourceEntity Get(string key)
+        public ResourceEntity Get(string resourceKey)
         {
             var command = GetFromCache(() =>
-                    SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.Key)),
-                nameof(Get), nameof(key));
+                    SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.ResourceKey)),
+                nameof(Get), nameof(resourceKey));
 
-            return UnitOfWork.Connection.QuerySingle<ResourceEntity>(command, new {Key = key}, UnitOfWork.Transaction);
+            return UnitOfWork.Connection.QuerySingle<ResourceEntity>(command, new {ResourceKey = resourceKey}, UnitOfWork.Transaction);
         }
 
         /// <summary>
         ///     Gets an asynchronous.
         /// </summary>
-        /// <param name="key">  The key to get. </param>
+        /// <param name="resourceKey">  The key to get. </param>
         /// <returns>
         ///     The asynchronous.
         /// </returns>
-        public Task<ResourceEntity> GetAsync(string key)
+        public Task<ResourceEntity> GetAsync(string resourceKey)
         {
             var command = GetFromCache(() =>
-                    SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.Key)),
-                nameof(Get), nameof(key));
+                    SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.ResourceKey)),
+                nameof(Get), nameof(resourceKey));
 
-            return UnitOfWork.Connection.QuerySingleAsync<ResourceEntity>(command, new {Key = key},
+            return UnitOfWork.Connection.QuerySingleAsync<ResourceEntity>(command, new {ResourceKey = resourceKey},
                 UnitOfWork.Transaction);
         }
 

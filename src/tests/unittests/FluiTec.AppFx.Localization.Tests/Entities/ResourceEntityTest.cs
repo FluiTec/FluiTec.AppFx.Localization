@@ -23,7 +23,7 @@ namespace FluiTec.AppFx.Localization.Tests.Entities
                 Id = 1,
                 AuthorId = 1,
                 ModificationDate = new DateTime(2021, 09, 22),
-                Key = "Key1"
+                ResourceKey = "Key1"
             };
         }
 
@@ -40,7 +40,7 @@ namespace FluiTec.AppFx.Localization.Tests.Entities
                 Id = 2,
                 AuthorId = 2,
                 ModificationDate = new DateTime(2021, 09, 21),
-                Key = "Key2"
+                ResourceKey = "Key2"
             };
         }
     }

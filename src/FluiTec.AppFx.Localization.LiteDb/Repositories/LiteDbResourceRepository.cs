@@ -34,7 +34,7 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         /// </returns>
         public ResourceEntity Get(string key)
         {
-            return Collection.FindOne(entity => entity.Key == key);
+            return Collection.FindOne(entity => entity.ResourceKey == key);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         /// </returns>
         public IEnumerable<ResourceEntity> GetByKeyPrefix(string keyPrefix)
         {
-            return Collection.Find(entity => entity.Key.StartsWith(keyPrefix));
+            return Collection.Find(entity => entity.ResourceKey.StartsWith(keyPrefix));
         }
 
         /// <summary>

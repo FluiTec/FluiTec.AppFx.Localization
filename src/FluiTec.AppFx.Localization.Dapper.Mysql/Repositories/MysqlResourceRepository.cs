@@ -35,8 +35,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Mysql.Repositories
         {
             var command = GetFromCache(() =>
                     $"SELECT * FROM {SqlBuilder.Adapter.RenderTableName(typeof(ResourceEntity))} " +
-                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.Key))} " +
-                    $"LIKE '{SqlBuilder.Adapter.RenderParameterProperty(nameof(keyPrefix))}%'",
+                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.ResourceKey))} " +
+                    $"LIKE CONCAT({SqlBuilder.Adapter.RenderParameterProperty(nameof(keyPrefix))}, '%')",
                 nameof(GetByKeyPrefix), nameof(keyPrefix));
 
             return UnitOfWork.Connection.Query<ResourceEntity>(command, new {keyPrefix}, UnitOfWork.Transaction);
@@ -53,8 +53,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Mysql.Repositories
         {
             var command = GetFromCache(() =>
                     $"SELECT * FROM {SqlBuilder.Adapter.RenderTableName(typeof(ResourceEntity))} " +
-                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.Key))} " +
-                    $"LIKE '{SqlBuilder.Adapter.RenderParameterProperty(nameof(keyPrefix))}%'",
+                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.ResourceKey))} " +
+                    $"LIKE CONCAT({SqlBuilder.Adapter.RenderParameterProperty(nameof(keyPrefix))}, '%')",
                 nameof(GetByKeyPrefix), nameof(keyPrefix));
 
             return UnitOfWork.Connection.QueryAsync<ResourceEntity>(command, new {keyPrefix}, UnitOfWork.Transaction);

@@ -130,7 +130,7 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             var author = new AuthorEntity {Name = "Max Mustermann"};
             Author = uow.AuthorRepository.Add(author);
 
-            var resource = new ResourceEntity {AuthorId = Author.Id, Key = "MyKey", ModificationDate = DateTimeOffset.Now};
+            var resource = new ResourceEntity {AuthorId = Author.Id, ResourceKey = "MyKey", ModificationDate = DateTimeOffset.Now};
             Resource = uow.ResourceRepository.Add(resource);
 
             var language1 = new LanguageEntity {IsoName = "de-DE", Name = "Deutsch"};
@@ -212,7 +212,7 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
 
             var translation = uow.GetRepository<ITranslationRepository>().Add(CreateEntity());
 
-            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResource(Resource.Key).Single();
+            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResource(Resource.ResourceKey).Single();
             Assert.IsTrue(translation.Equals(dbTranslation));
         }
 
@@ -226,7 +226,7 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
 
             var translation = uow.GetRepository<ITranslationRepository>().Add(CreateEntity());
 
-            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceAsync(Resource.Key).Result
+            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceAsync(Resource.ResourceKey).Result
                 .Single();
             Assert.IsTrue(translation.Equals(dbTranslation));
         }

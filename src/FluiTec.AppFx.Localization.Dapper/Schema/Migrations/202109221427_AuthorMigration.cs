@@ -2,6 +2,7 @@
 using FluentMigrator;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Schema;
+using FluiTec.AppFx.Data.Dapper.Extensions;
 
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 {
@@ -23,8 +24,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
         {
             IfDatabase(MigrationDatabaseName.Mssql, MigrationDatabaseName.Pgsql)
                 .Create
-                .Table(SchemaGlobals.AuthorTable)
-                .InSchema(SchemaGlobals.Schema)
+                .Table(SchemaGlobals.Schema, SchemaGlobals.AuthorTable, true)
                 .WithColumn(nameof(AuthorEntity.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(AuthorEntity.Name)).AsString().NotNullable();
 
@@ -35,10 +35,9 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
                 .WithSchema(SchemaGlobals.Schema)
                 .Column(nameof(AuthorEntity.Name));
 
-            IfDatabase(MigrationDatabaseName.Mysql)
+            IfDatabase(MigrationDatabaseName.Mysql, MigrationDatabaseName.Sqlite)
                 .Create
-                .Table(SchemaGlobals.AuthorTable)
-                .InSchema(SchemaGlobals.Schema)
+                .Table(SchemaGlobals.Schema, SchemaGlobals.AuthorTable, false)
                 .WithColumn(nameof(AuthorEntity.Id)).AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn(nameof(AuthorEntity.Name)).AsString().NotNullable();
         }
@@ -56,13 +55,11 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 
             IfDatabase(MigrationDatabaseName.Mssql, MigrationDatabaseName.Pgsql)
                 .Delete
-                .Table(SchemaGlobals.AuthorTable)
-                .InSchema(SchemaGlobals.Schema);
+                .Table(SchemaGlobals.Schema, SchemaGlobals.AuthorTable, true);
 
-            IfDatabase(MigrationDatabaseName.Mysql)
+            IfDatabase(MigrationDatabaseName.Mysql, MigrationDatabaseName.Sqlite)
                 .Delete
-                .Table(SchemaGlobals.AuthorTable)
-                .InSchema(SchemaGlobals.Schema);
+                .Table(SchemaGlobals.Schema, SchemaGlobals.AuthorTable, false);
         }
     }
 }
