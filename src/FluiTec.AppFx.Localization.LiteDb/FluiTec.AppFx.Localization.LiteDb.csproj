@@ -29,7 +29,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="FluiTec.AppFx.Data.LiteDb" Version="1.0.18"></PackageReference>
+    <PackageReference Include="FluiTec.AppFx.Data.LiteDb" Version="1.0.96"></PackageReference>
   </ItemGroup>
 
   <ItemGroup>
