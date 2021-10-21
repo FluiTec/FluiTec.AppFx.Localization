@@ -11,9 +11,9 @@ namespace FluiTec.AppFx.Localization.LiteDb.IntegrationTests.Entities
     public class LiteDbLanguageEntityTest : LanguageEntityTest
     {
         /// <summary>
-        /// Specialized constructor for use only by derived class.
+        /// Default constructor.
         /// </summary>
-        protected LiteDbLanguageEntityTest() : base(new LiteDbDataServiceProvider())
+        public LiteDbLanguageEntityTest() : base(new LiteDbDataServiceProvider())
         {
         }
     }
