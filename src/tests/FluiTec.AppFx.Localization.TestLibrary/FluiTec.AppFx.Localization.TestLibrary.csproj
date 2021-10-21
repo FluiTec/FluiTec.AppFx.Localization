@@ -13,11 +13,16 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <ProjectReference Include="..\..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dapper\FluiTec.AppFx.Data.Dapper.csproj" />
     <ProjectReference Include="..\..\..\fluitec.appfx.data\src\tests\FluiTec.AppFx.Data.TestLibrary\FluiTec.AppFx.Data.TestLibrary.csproj" />
-    <ProjectReference Include="..\..\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj" />
     <ProjectReference Include="..\..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <ProjectReference Include="..\..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
+    <ProjectReference Include="..\..\..\fluitec.appfx.data\src\tests\FluiTec.AppFx.Data.TestLibrary\FluiTec.AppFx.Data.TestLibrary.csproj" />
+    <PackageReference Include="FluiTec.AppFx.Data.Dapper" Version="1.0.97"></PackageReference>
   </ItemGroup>
 
   <ItemGroup>

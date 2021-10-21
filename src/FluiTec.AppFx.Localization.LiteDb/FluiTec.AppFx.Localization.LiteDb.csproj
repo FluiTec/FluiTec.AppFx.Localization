@@ -28,10 +28,6 @@
     <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="FluiTec.AppFx.Data.LiteDb" Version="1.0.96"></PackageReference>
-  </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Repositories\" />
   </ItemGroup>
