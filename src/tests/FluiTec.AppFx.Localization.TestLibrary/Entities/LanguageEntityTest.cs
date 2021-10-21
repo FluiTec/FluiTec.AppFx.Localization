@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluiTec.AppFx.Data.TestLibrary.DataServiceProviders;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
@@ -106,6 +107,40 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             var dbEntity = uow.GetRepository<ILanguageRepository>().GetAsync(entity.IsoName).Result;
 
             Assert.IsTrue(EntityEquals(entity, dbEntity));
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can read entity by two letter ISO.
+        /// </summary>
+        [TestMethod]
+        public void CanReadEntityByTwoLetterIso()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var entities = CreateEntities().ToList();
+            uow.GetRepository<ILanguageRepository>().AddRange(entities);
+
+            var filteredEntitiesCode = entities.Where(e => e.IsoName.StartsWith("de"));
+            var filteredEntitiesDb = uow.GetRepository<ILanguageRepository>().GetByTwoLetterIso("de");
+
+            Assert.AreEqual(filteredEntitiesCode.Count(), filteredEntitiesDb.Count());
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can read entity by two letter ISO asynchronous.
+        /// </summary>
+        [TestMethod]
+        public void CanReadEntityByTwoLetterIsoAsync()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var entities = CreateEntities().ToList();
+            uow.GetRepository<ILanguageRepository>().AddRange(entities);
+
+            var filteredEntitiesCode = entities.Where(e => e.IsoName.StartsWith("de"));
+            var filteredEntitiesDb = uow.GetRepository<ILanguageRepository>().GetByTwoLetterIsoAsync("de").Result;
+
+            Assert.AreEqual(filteredEntitiesCode.Count(), filteredEntitiesDb.Count());
         }
 
         #endregion

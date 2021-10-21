@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using FluiTec.AppFx.Data.Dapper.Repositories;
@@ -13,7 +14,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
     /// <summary>
     ///     A dapper translation repository.
     /// </summary>
-    public class DapperTranslationRepository : DapperWritableKeyTableDataRepository<TranslationEntity, int>,
+    public abstract class DapperTranslationRepository : DapperWritableKeyTableDataRepository<TranslationEntity, int>,
         ITranslationRepository
     {
         /// <summary>
@@ -21,7 +22,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public DapperTranslationRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+        protected DapperTranslationRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
             logger)
         {
         }
@@ -193,5 +194,55 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
             var language = await UnitOfWork.GetRepository<ILanguageRepository>().GetAsync(isoName);
             return await GetByLanguageAsync(language.Id);
         }
+
+        /// <summary>
+        /// Gets the languages in this collection.
+        /// </summary>
+        ///
+        /// <param name="languages">    The languages. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<LanguageEntity> languages)
+        {
+            return GetByLanguages(languages.Select(l => l.Id));
+        }
+
+        /// <summary>
+        /// Gets by languages asynchronous.
+        /// </summary>
+        ///
+        /// <param name="languages">    The languages. </param>
+        ///
+        /// <returns>
+        /// The by languages.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<LanguageEntity> languages)
+        {
+            return GetByLanguagesAsync(languages.Select(l => l.Id));
+        }
+
+        /// <summary>
+        /// Gets the languages in this collection.
+        /// </summary>
+        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public abstract IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<int> languageIds);
+
+        /// <summary>
+        /// Gets by languages asynchronous.
+        /// </summary>
+        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        ///
+        /// <returns>
+        /// The by languages.
+        /// </returns>
+        public abstract Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<int> languageIds);
     }
 }

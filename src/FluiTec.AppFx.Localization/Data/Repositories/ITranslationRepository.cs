@@ -117,5 +117,49 @@ namespace FluiTec.AppFx.Localization.Repositories
         ///     The by language.
         /// </returns>
         Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(string isoName);
+
+        /// <summary>
+        /// Gets the languages in this collection.
+        /// </summary>
+        ///
+        /// <param name="languages">    The languages. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<LanguageEntity> languages);
+
+        /// <summary>
+        /// Gets by languages asynchronous.
+        /// </summary>
+        ///
+        /// <param name="languages">    The languages. </param>
+        ///
+        /// <returns>
+        /// The by languages.
+        /// </returns>
+        Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<LanguageEntity> languages);
+
+        /// <summary>
+        /// Gets the languages in this collection.
+        /// </summary>
+        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<int> languageIds);
+
+        /// <summary>
+        /// Gets by languages asynchronous.
+        /// </summary>
+        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        ///
+        /// <returns>
+        /// The by languages.
+        /// </returns>
+        Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<int> languageIds);
     }
 }

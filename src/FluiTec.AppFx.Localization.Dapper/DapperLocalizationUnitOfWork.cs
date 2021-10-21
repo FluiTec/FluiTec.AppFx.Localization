@@ -79,11 +79,11 @@ namespace FluiTec.AppFx.Localization.Dapper
             RepositoryProviders.Add(typeof(IAuthorRepository), (uow, log)
                 => new DapperAuthorRepository((DapperLocalizationUnitOfWork) uow, log));
             RepositoryProviders.Add(typeof(ILanguageRepository), (uow, log)
-                => new DapperLanguageRepository((DapperLocalizationUnitOfWork) uow, log));
+                => CreateLanguageRepository((DapperLocalizationUnitOfWork) uow, log));
             RepositoryProviders.Add(typeof(IResourceRepository), (uow, log)
                 => CreateResourceRepository((DapperLocalizationUnitOfWork) uow, log));
             RepositoryProviders.Add(typeof(ITranslationRepository), (uow, log)
-                => new DapperTranslationRepository((DapperLocalizationUnitOfWork) uow, log));
+                => CreateTranslationRepository((DapperLocalizationUnitOfWork) uow, log));
         }
 
         /// <summary>
@@ -95,6 +95,32 @@ namespace FluiTec.AppFx.Localization.Dapper
         ///     The new resource repository.
         /// </returns>
         protected abstract IResourceRepository CreateResourceRepository(DapperLocalizationUnitOfWork uow,
+            ILogger<IRepository> log);
+
+        /// <summary>
+        /// Creates language repository.
+        /// </summary>
+        ///
+        /// <param name="uow">  The uow. </param>
+        /// <param name="log">  The log. </param>
+        ///
+        /// <returns>
+        /// The new language repository.
+        /// </returns>
+        protected abstract ILanguageRepository CreateLanguageRepository(DapperLocalizationUnitOfWork uow,
+            ILogger<IRepository> log);
+
+        /// <summary>
+        /// Creates translation repository.
+        /// </summary>
+        ///
+        /// <param name="uow">  The uow. </param>
+        /// <param name="log">  The log. </param>
+        ///
+        /// <returns>
+        /// The new translation repository.
+        /// </returns>
+        protected abstract ITranslationRepository CreateTranslationRepository(DapperLocalizationUnitOfWork uow,
             ILogger<IRepository> log);
     }
 }

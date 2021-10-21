@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentMigrator.Expressions;
 using FluiTec.AppFx.Data.TestLibrary.DataServiceProviders;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
@@ -316,6 +317,106 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByLanguageAsync(Language1.IsoName).Result
                 .Single();
             Assert.IsTrue(translation.Equals(dbTranslation));
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can get by languages.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByLanguages()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var entities = CreateEntities().ToList();
+            uow.GetRepository<ITranslationRepository>().AddRange(entities);
+
+            var languages = uow.GetRepository<ILanguageRepository>().GetAll();
+            var translations = uow.GetRepository<ITranslationRepository>().GetByLanguages(languages).ToList();
+
+            Assert.AreEqual(entities.Count, translations.Count);
+
+            foreach (var t in translations)
+            {
+                Assert.IsNotNull(t.Translation);
+                Assert.IsNotNull(t.Author);
+                Assert.IsNotNull(t.Language);
+                Assert.IsNotNull(t.Resource);
+            }
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can get by languages asynchronous.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByLanguagesAsync()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var entities = CreateEntities().ToList();
+            uow.GetRepository<ITranslationRepository>().AddRange(entities);
+
+            var languages = uow.GetRepository<ILanguageRepository>().GetAll();
+            var translations = uow.GetRepository<ITranslationRepository>().GetByLanguagesAsync(languages).Result.ToList();
+
+            Assert.AreEqual(entities.Count, translations.Count);
+
+            foreach (var t in translations)
+            {
+                Assert.IsNotNull(t.Translation);
+                Assert.IsNotNull(t.Author);
+                Assert.IsNotNull(t.Language);
+                Assert.IsNotNull(t.Resource);
+            }
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can get by language identifiers.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByLanguageIds()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var entities = CreateEntities().ToList();
+            uow.GetRepository<ITranslationRepository>().AddRange(entities);
+
+            var languages = uow.GetRepository<ILanguageRepository>().GetAll();
+            var translations = uow.GetRepository<ITranslationRepository>().GetByLanguages(languages.Select(l => l.Id)).ToList();
+
+            Assert.AreEqual(entities.Count, translations.Count);
+
+            foreach (var t in translations)
+            {
+                Assert.IsNotNull(t.Translation);
+                Assert.IsNotNull(t.Author);
+                Assert.IsNotNull(t.Language);
+                Assert.IsNotNull(t.Resource);
+            }
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can get by language identifiers asynchronous.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByLanguageIdsAsync()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var entities = CreateEntities().ToList();
+            uow.GetRepository<ITranslationRepository>().AddRange(entities);
+
+            var languages = uow.GetRepository<ILanguageRepository>().GetAll();
+            var translations = uow.GetRepository<ITranslationRepository>().GetByLanguagesAsync(languages.Select(l => l.Id)).Result.ToList();
+
+            Assert.AreEqual(entities.Count, translations.Count);
+
+            foreach (var t in translations)
+            {
+                Assert.IsNotNull(t.Translation);
+                Assert.IsNotNull(t.Author);
+                Assert.IsNotNull(t.Language);
+                Assert.IsNotNull(t.Resource);
+            }
         }
 
         #endregion

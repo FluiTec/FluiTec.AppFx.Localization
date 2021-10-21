@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Dapper;
 using FluiTec.AppFx.Data.Dapper.Repositories;
 using FluiTec.AppFx.Data.Dapper.UnitsOfWork;
@@ -12,7 +13,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
     /// <summary>
     ///     A dapper language repository.
     /// </summary>
-    public class DapperLanguageRepository : DapperWritableKeyTableDataRepository<LanguageEntity, int>,
+    public abstract class DapperLanguageRepository : DapperWritableKeyTableDataRepository<LanguageEntity, int>,
         ILanguageRepository
     {
         /// <summary>
@@ -20,7 +21,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         /// </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        public DapperLanguageRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+        protected DapperLanguageRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
             logger)
         {
         }
@@ -58,5 +59,28 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
             return UnitOfWork.Connection.QuerySingleAsync<LanguageEntity>(command, new {IsoName = isoName},
                 UnitOfWork.Transaction);
         }
+
+        /// <summary>
+        /// Gets the two letter isoes in this collection.
+        /// </summary>
+        ///
+        /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the two letter isoes in this
+        /// collection.
+        /// </returns>
+        public abstract IEnumerable<LanguageEntity> GetByTwoLetterIso(string cultureTwoLetterIsoLanguageName);
+
+        /// <summary>
+        /// Gets by two letter ISO asynchronous.
+        /// </summary>
+        ///
+        /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
+        ///
+        /// <returns>
+        /// The by two letter ISO.
+        /// </returns>
+        public abstract Task<IEnumerable<LanguageEntity>> GetByTwoLetterIsoAsync(string cultureTwoLetterIsoLanguageName);
     }
 }

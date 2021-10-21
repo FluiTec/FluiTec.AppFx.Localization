@@ -171,5 +171,92 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         {
             return Task.FromResult(GetByLanguage(isoName));
         }
+
+        /// <summary>
+        /// Gets the languages in this collection.
+        /// </summary>
+        ///
+        /// <param name="languages">    The languages. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<LanguageEntity> languages)
+        {
+            return GetByLanguages(languages.Select(l => l.Id));
+        }
+
+        /// <summary>
+        /// Gets by languages asynchronous.
+        /// </summary>
+        ///
+        /// <param name="languages">    The languages. </param>
+        ///
+        /// <returns>
+        /// The by languages.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<LanguageEntity> languages)
+        {
+            return GetByLanguagesAsync(languages.Select(l => l.Id));
+        }
+
+        /// <summary>
+        /// Gets the languages in this collection.
+        /// </summary>
+        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<int> languageIds)
+        {
+            var resourceTable = UnitOfWork.NMemoryDataService.GetTable<ResourceEntity>();
+            var languageTable = UnitOfWork.NMemoryDataService.GetTable<LanguageEntity>();
+            var authorTable = UnitOfWork.NMemoryDataService.GetTable<AuthorEntity>();
+
+            return Table
+                .Join(resourceTable, 
+                translation => translation.ResourceId, 
+                resource => resource.Id,
+                (translation, resource) => new CompoundTranslationEntity
+                    {
+                        Translation = translation, 
+                        Resource = resource
+                    })
+                .Join(languageTable, 
+                    translation => translation.Translation.LanguageId, 
+                    language => language.Id, 
+                    (entity, language) => new CompoundTranslationEntity
+                    {
+                        Translation = entity.Translation, 
+                        Resource = entity.Resource,
+                        Language = language
+                    })
+                .Join(authorTable, 
+                    translation => translation.Resource.AuthorId, 
+                    author => author.Id, 
+                    (entity, author) => new CompoundTranslationEntity
+                    {
+                        Translation = entity.Translation, 
+                        Resource = entity.Resource,
+                        Language = entity.Language,
+                        Author = author
+                    });
+        }
+
+        /// <summary>
+        /// Gets by languages asynchronous.
+        /// </summary>
+        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        ///
+        /// <returns>
+        /// The by languages.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<int> languageIds)
+        {
+            return Task.FromResult(GetByLanguages(languageIds));
+        }
     }
 }

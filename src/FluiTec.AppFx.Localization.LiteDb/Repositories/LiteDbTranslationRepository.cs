@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FluiTec.AppFx.Data.LiteDb.Repositories;
 using FluiTec.AppFx.Data.LiteDb.UnitsOfWork;
@@ -169,6 +170,75 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(string isoName)
         {
             return Task.FromResult(GetByLanguage(isoName));
+        }
+
+        /// <summary>
+        /// Gets the languages in this collection.
+        /// </summary>
+        ///
+        /// <param name="languages">    The languages. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<LanguageEntity> languages)
+        {
+            return GetByLanguages(languages.Select(l => l.Id));
+        }
+
+        /// <summary>
+        /// Gets by languages asynchronous.
+        /// </summary>
+        ///
+        /// <param name="languages">    The languages. </param>
+        ///
+        /// <returns>
+        /// The by languages.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<LanguageEntity> languages)
+        {
+            return GetByLanguagesAsync(languages.Select(l => l.Id));
+        }
+
+        /// <summary>
+        /// Gets the languages in this collection.
+        /// </summary>
+        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<int> languageIds)
+        {
+            var authors = UnitOfWork.GetRepository<IAuthorRepository>().GetAll();
+            var languages = UnitOfWork.GetRepository<ILanguageRepository>().GetAll();
+            var resources = UnitOfWork.GetRepository<IResourceRepository>().GetAll().ToList();
+            var translations = GetAll();
+
+            return translations
+                .Where(t => languageIds.Contains(t.LanguageId))
+                .Select(t => new CompoundTranslationEntity
+                {
+                    Translation = t,
+                    Resource = resources.Single(r => r.Id == t.ResourceId),
+                    Language = languages.Single(l => l.Id == t.LanguageId),
+                    Author = authors.Single(a => a.Id == resources.Single(r => r.Id == t.ResourceId).AuthorId)
+                });
+        }
+
+        /// <summary>
+        /// Gets by languages asynchronous.
+        /// </summary>
+        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        ///
+        /// <returns>
+        /// The by languages.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<int> languageIds)
+        {
+            return Task.FromResult(GetByLanguages(languageIds));
         }
     }
 }

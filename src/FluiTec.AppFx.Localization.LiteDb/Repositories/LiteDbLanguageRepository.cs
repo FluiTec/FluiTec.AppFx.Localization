@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using FluiTec.AppFx.Data.LiteDb.Repositories;
 using FluiTec.AppFx.Data.LiteDb.UnitsOfWork;
 using FluiTec.AppFx.Data.Repositories;
@@ -46,6 +48,35 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         public Task<LanguageEntity> GetAsync(string isoName)
         {
             return Task.FromResult(Get(isoName));
+        }
+
+        /// <summary>
+        /// Gets the two letter isoes in this collection.
+        /// </summary>
+        ///
+        /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the two letter isoes in this
+        /// collection.
+        /// </returns>
+        public IEnumerable<LanguageEntity> GetByTwoLetterIso(string cultureTwoLetterIsoLanguageName)
+        {
+            return Collection.Find(e => e.IsoName.StartsWith(cultureTwoLetterIsoLanguageName));
+        }
+
+        /// <summary>
+        /// Gets by two letter ISO asynchronous.
+        /// </summary>
+        ///
+        /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
+        ///
+        /// <returns>
+        /// The by two letter ISO.
+        /// </returns>
+        public Task<IEnumerable<LanguageEntity>> GetByTwoLetterIsoAsync(string cultureTwoLetterIsoLanguageName)
+        {
+            return Task.FromResult(GetByTwoLetterIso(cultureTwoLetterIsoLanguageName));
         }
     }
 }

@@ -45,8 +45,34 @@ namespace FluiTec.AppFx.Localization.Dapper.Mysql
         /// </returns>
         protected override IResourceRepository CreateResourceRepository(DapperLocalizationUnitOfWork uow,
             ILogger<IRepository> log)
-        {
-            return new MysqlResourceRepository(uow, log);
-        }
+            => new MysqlResourceRepository(uow, log);
+
+        /// <summary>
+        /// Creates language repository.
+        /// </summary>
+        ///
+        /// <param name="uow">  The uow. </param>
+        /// <param name="log">  The log. </param>
+        ///
+        /// <returns>
+        /// The new language repository.
+        /// </returns>
+        protected override ILanguageRepository CreateLanguageRepository(DapperLocalizationUnitOfWork uow, 
+            ILogger<IRepository> log)
+            => new MysqlLanguageRepository(uow, log);
+
+        /// <summary>
+        /// Creates translation repository.
+        /// </summary>
+        ///
+        /// <param name="uow">  The uow. </param>
+        /// <param name="log">  The log. </param>
+        ///
+        /// <returns>
+        /// The new translation repository.
+        /// </returns>
+        protected override ITranslationRepository CreateTranslationRepository(DapperLocalizationUnitOfWork uow,
+            ILogger<IRepository> log)
+            => new MysqlTranslationRepository(uow, log);
     }
 }
