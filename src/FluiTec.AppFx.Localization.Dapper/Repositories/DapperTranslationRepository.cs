@@ -40,6 +40,21 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
+        /// Gets the resource compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="resource"> The resource. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource compounds in this
+        /// collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceCompound(ResourceEntity resource)
+        {
+            return GetByResourceCompound(resource.Id);
+        }
+
+        /// <summary>
         ///     Gets by resource asynchronous.
         /// </summary>
         /// <param name="resource"> The resource. </param>
@@ -49,6 +64,20 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(ResourceEntity resource)
         {
             return GetByResourceAsync(resource.Id);
+        }
+
+        /// <summary>
+        /// Gets by resource compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="resource"> The resource. </param>
+        ///
+        /// <returns>
+        /// The by resource compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(ResourceEntity resource)
+        {
+            return GetByResourceCompoundAsync(resource.Id);
         }
 
         /// <summary>
@@ -69,6 +98,18 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
+        /// Gets the resource compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="resourceId">   Identifier for the resource. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource compounds in this
+        /// collection.
+        /// </returns>
+        public abstract IEnumerable<CompoundTranslationEntity> GetByResourceCompound(int resourceId);
+
+        /// <summary>
         ///     Gets by resource asynchronous.
         /// </summary>
         /// <param name="resourceId">   Identifier for the resource. </param>
@@ -86,6 +127,17 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
+        /// Gets by resource compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="resourceId">   Identifier for the resource. </param>
+        ///
+        /// <returns>
+        /// The by resource compound.
+        /// </returns>
+        public abstract Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(int resourceId);
+
+        /// <summary>
         ///     Gets the resources in this collection.
         /// </summary>
         /// <param name="resourceKey">  The resource key. </param>
@@ -99,6 +151,18 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
+        /// Gets the resource compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="resourceKey">  The resource key. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource compounds in this
+        /// collection.
+        /// </returns>
+        public abstract IEnumerable<CompoundTranslationEntity> GetByResourceCompound(string resourceKey);
+
+        /// <summary>
         ///     Gets by resource asynchronous.
         /// </summary>
         /// <param name="resourceKey">  The resource key. </param>
@@ -110,6 +174,17 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
             var resource = await UnitOfWork.GetRepository<IResourceRepository>().GetAsync(resourceKey);
             return await GetByResourceAsync(resource.Id);
         }
+
+        /// <summary>
+        /// Gets by resource compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="resourceKey">  The resource key. </param>
+        ///
+        /// <returns>
+        /// The by resource compound.
+        /// </returns>
+        public abstract Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(string resourceKey);
 
         /// <summary>
         ///     Gets the languages in this collection.

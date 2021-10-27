@@ -160,6 +160,20 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
         }
 
         /// <summary>
+        /// (Unit Test Method) can get by resource compound.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByResourceCompound()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var translation = uow.GetRepository<ITranslationRepository>().Add(CreateEntity());
+
+            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceCompound(Resource).Single();
+            Assert.IsTrue(translation.Equals(dbTranslation.Translation));
+        }
+
+        /// <summary>
         ///     (Unit Test Method) can get by resource asynchronous.
         /// </summary>
         [TestMethod]
@@ -175,6 +189,21 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
         }
 
         /// <summary>
+        /// (Unit Test Method) can get by resource compound asynchronous.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByResourceCompoundAsync()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var translation = uow.GetRepository<ITranslationRepository>().Add(CreateEntity());
+
+            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceCompoundAsync(Resource).Result
+                .Single();
+            Assert.IsTrue(translation.Equals(dbTranslation.Translation));
+        }
+
+        /// <summary>
         ///     (Unit Test Method) can get by resource identifier.
         /// </summary>
         [TestMethod]
@@ -186,6 +215,20 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
 
             var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResource(Resource.Id).Single();
             Assert.IsTrue(translation.Equals(dbTranslation));
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can get by resource identifier compound.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByResourceIdCompound()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var translation = uow.GetRepository<ITranslationRepository>().Add(CreateEntity());
+
+            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceCompound(Resource.Id).Single();
+            Assert.IsTrue(translation.Equals(dbTranslation.Translation));
         }
 
         /// <summary>
@@ -204,6 +247,21 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
         }
 
         /// <summary>
+        /// (Unit Test Method) can get by resource identifier compound asynchronous.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByResourceIdCompoundAsync()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var translation = uow.GetRepository<ITranslationRepository>().Add(CreateEntity());
+
+            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceCompoundAsync(Resource.Id).Result
+                .Single();
+            Assert.IsTrue(translation.Equals(dbTranslation.Translation));
+        }
+
+        /// <summary>
         ///     (Unit Test Method) can get by resource key.
         /// </summary>
         [TestMethod]
@@ -215,6 +273,20 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
 
             var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResource(Resource.ResourceKey).Single();
             Assert.IsTrue(translation.Equals(dbTranslation));
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can get by resource key compound.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByResourceKeyCompound()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var translation = uow.GetRepository<ITranslationRepository>().Add(CreateEntity());
+
+            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceCompound(Resource.ResourceKey).Single();
+            Assert.IsTrue(translation.Equals(dbTranslation.Translation));
         }
 
         /// <summary>
@@ -230,6 +302,21 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceAsync(Resource.ResourceKey).Result
                 .Single();
             Assert.IsTrue(translation.Equals(dbTranslation));
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can get by resource key compound asynchronous.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByResourceKeyCompoundAsync()
+        {
+            using var uow = BeginUnitOfWork();
+
+            var translation = uow.GetRepository<ITranslationRepository>().Add(CreateEntity());
+
+            var dbTranslation = uow.GetRepository<ITranslationRepository>().GetByResourceCompoundAsync(Resource.ResourceKey).Result
+                .Single();
+            Assert.IsTrue(translation.Equals(dbTranslation.Translation));
         }
 
         /// <summary>

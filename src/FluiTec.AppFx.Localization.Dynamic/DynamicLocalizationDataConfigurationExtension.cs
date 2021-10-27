@@ -51,7 +51,7 @@ namespace FluiTec.AppFx.Localization.Dynamic
                                 provider.GetRequiredService<IOptionsMonitor<MysqlDapperServiceOptions>>(),
                                 provider.GetService<ILoggerFactory>()),
                             DataProvider.NMemory => new NMemoryLocalizationDataService(
-                                provider.GetRequiredService<ILoggerFactory>()),
+                                provider.GetService<ILoggerFactory>()),
                             _ => throw new NotImplementedException()
                         };
                     }

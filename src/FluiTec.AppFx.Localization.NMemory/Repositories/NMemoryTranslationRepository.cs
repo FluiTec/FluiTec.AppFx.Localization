@@ -39,6 +39,21 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         }
 
         /// <summary>
+        /// Gets the resource compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="resource"> The resource. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource compounds in this
+        /// collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceCompound(ResourceEntity resource)
+        {
+            return GetByResourceCompound(resource.Id);
+        }
+
+        /// <summary>
         ///     Gets by resource asynchronous.
         /// </summary>
         /// <param name="resource"> The resource. </param>
@@ -48,6 +63,20 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(ResourceEntity resource)
         {
             return Task.FromResult(GetByResource(resource));
+        }
+
+        /// <summary>
+        /// Gets by resource compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="resource"> The resource. </param>
+        ///
+        /// <returns>
+        /// The by resource compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(ResourceEntity resource)
+        {
+            return GetByResourceCompoundAsync(resource.Id);
         }
 
         /// <summary>
@@ -63,6 +92,53 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         }
 
         /// <summary>
+        /// Gets the resource compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="resourceId">   Identifier for the resource. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource compounds in this
+        /// collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceCompound(int resourceId)
+        {
+            var resourceTable = UnitOfWork.NMemoryDataService.GetTable<ResourceEntity>();
+            var languageTable = UnitOfWork.NMemoryDataService.GetTable<LanguageEntity>();
+            var authorTable = UnitOfWork.NMemoryDataService.GetTable<AuthorEntity>();
+
+            return Table
+                .Join(resourceTable, 
+                    translation => translation.ResourceId, 
+                    resource => resource.Id,
+                    (translation, resource) => new CompoundTranslationEntity
+                    {
+                        Translation = translation, 
+                        Resource = resource
+                    })
+                .Join(languageTable, 
+                    translation => translation.Translation.LanguageId, 
+                    language => language.Id, 
+                    (entity, language) => new CompoundTranslationEntity
+                    {
+                        Translation = entity.Translation, 
+                        Resource = entity.Resource,
+                        Language = language
+                    })
+                .Join(authorTable, 
+                    translation => translation.Resource.AuthorId, 
+                    author => author.Id, 
+                    (entity, author) => new CompoundTranslationEntity
+                    {
+                        Translation = entity.Translation, 
+                        Resource = entity.Resource,
+                        Language = entity.Language,
+                        Author = author
+                    })
+                .Where(t => t.Resource.Id == resourceId);
+        }
+
+        /// <summary>
         ///     Gets by resource asynchronous.
         /// </summary>
         /// <param name="resourceId">   Identifier for the resource. </param>
@@ -72,6 +148,20 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(int resourceId)
         {
             return Task.FromResult(GetByResource(resourceId));
+        }
+
+        /// <summary>
+        /// Gets by resource compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="resourceId">   Identifier for the resource. </param>
+        ///
+        /// <returns>
+        /// The by resource compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(int resourceId)
+        {
+            return Task.FromResult(GetByResourceCompound(resourceId));
         }
 
         /// <summary>
@@ -88,6 +178,53 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         }
 
         /// <summary>
+        /// Gets the resource compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="resourceKey">  The resource key. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource compounds in this
+        /// collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceCompound(string resourceKey)
+        {
+            var resourceTable = UnitOfWork.NMemoryDataService.GetTable<ResourceEntity>();
+            var languageTable = UnitOfWork.NMemoryDataService.GetTable<LanguageEntity>();
+            var authorTable = UnitOfWork.NMemoryDataService.GetTable<AuthorEntity>();
+
+            return Table
+                .Join(resourceTable, 
+                    translation => translation.ResourceId, 
+                    resource => resource.Id,
+                    (translation, resource) => new CompoundTranslationEntity
+                    {
+                        Translation = translation, 
+                        Resource = resource
+                    })
+                .Join(languageTable, 
+                    translation => translation.Translation.LanguageId, 
+                    language => language.Id, 
+                    (entity, language) => new CompoundTranslationEntity
+                    {
+                        Translation = entity.Translation, 
+                        Resource = entity.Resource,
+                        Language = language
+                    })
+                .Join(authorTable, 
+                    translation => translation.Resource.AuthorId, 
+                    author => author.Id, 
+                    (entity, author) => new CompoundTranslationEntity
+                    {
+                        Translation = entity.Translation, 
+                        Resource = entity.Resource,
+                        Language = entity.Language,
+                        Author = author
+                    })
+                .Where(t => t.Resource.ResourceKey == resourceKey);
+        }
+
+        /// <summary>
         ///     Gets by resource asynchronous.
         /// </summary>
         /// <param name="resourceKey">  The resource key. </param>
@@ -97,6 +234,20 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(string resourceKey)
         {
             return Task.FromResult(GetByResource(resourceKey));
+        }
+
+        /// <summary>
+        /// Gets by resource compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="resourceKey">  The resource ke. </param>
+        ///
+        /// <returns>
+        /// The by resource compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(string resourceKey)
+        {
+            return Task.FromResult(GetByResourceCompound(resourceKey));
         }
 
         /// <summary>
