@@ -230,5 +230,28 @@ namespace FluiTec.AppFx.Localization.Repositories
         /// The by languages.
         /// </returns>
         Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<int> languageIds);
+
+        /// <summary>
+        /// Gets the resource suffix compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="suffix">   The suffix. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource suffix compounds in this
+        /// collection.
+        /// </returns>
+        IEnumerable<CompoundTranslationEntity> GetByResourceSuffixCompound(string suffix);
+
+        /// <summary>
+        /// Gets by resource suffix compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="suffix">   The suffix. </param>
+        ///
+        /// <returns>
+        /// The by resource suffix compound.
+        /// </returns>
+        Task<IEnumerable<CompoundTranslationEntity>> GetByResourceSuffixCompoundAsync(string suffix);
     }
 }

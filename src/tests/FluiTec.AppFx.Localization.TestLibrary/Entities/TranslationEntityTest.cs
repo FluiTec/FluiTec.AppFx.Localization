@@ -506,6 +506,24 @@ namespace FluiTec.AppFx.Localization.TestLibrary.Entities
             }
         }
 
+        /// <summary>
+        /// (Unit Test Method) can get by resource suffix compound.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByResourceSuffixCompound()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// (Unit Test Method) can get by resource suffix compound asynchronous.
+        /// </summary>
+        [TestMethod]
+        public void CanGetByResourceSuffixCompoundAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

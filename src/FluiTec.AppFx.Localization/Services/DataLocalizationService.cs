@@ -42,23 +42,21 @@ namespace FluiTec.AppFx.Localization.Services
         public virtual LocalizedString ByName(string name, CultureInfo culture)
         {
             using var uow = DataService.BeginUnitOfWork();
-            var resource = uow.ResourceRepository.Get(name);
-
-            if (resource == null)
-                return new LocalizedString(name, name, true);
 
             var translations = uow.TranslationRepository
-                .GetByResourceCompound(resource)
+                .GetByResourceCompound(name)
                 .ToList();
+
+            if (!translations.Any())
+                return new LocalizedString(name, name, true);
 
             var perfectFit = translations.SingleOrDefault(t => t.Language.IsoName == culture.Name);
             if (perfectFit != null) return new LocalizedString(name, perfectFit.Translation.Value);
 
             var baseFit =
                 translations.SingleOrDefault(t => t.Language.IsoName[..2] == culture.TwoLetterISOLanguageName);
-            if (baseFit != null) return new LocalizedString(name, baseFit.Translation.Value);
 
-            return new LocalizedString(name, name, true);
+            return baseFit != null ? new LocalizedString(name, baseFit.Translation.Value) : new LocalizedString(name, name, true);
         }
 
         /// <summary>
@@ -73,6 +71,20 @@ namespace FluiTec.AppFx.Localization.Services
         /// </returns>
         public virtual IEnumerable<LocalizedString> ByBaseName(string baseName, CultureInfo culture)
         {
+            using var uow = DataService.BeginUnitOfWork();
+
+            var translations = uow.TranslationRepository
+                .GetByResourceSuffixCompound(baseName)
+                .ToList();
+
+            var grouped = translations
+                .OrderBy(t => t.Resource.ResourceKey)
+                .ThenByDescending(t => t.Language.IsoName.Length)
+                .GroupBy(t => t.Resource.ResourceKey);
+
+            var filtered = grouped
+                .Select(g => g.First());
+
             throw new System.NotImplementedException();
         }
     }

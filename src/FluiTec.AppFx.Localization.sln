@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{93E2F780-BC18-4066-95E1-760581C9F55E}"
 EndProject
@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.gitignore = ..\.gitignore
 		..\.gitlab-ci.yml = ..\.gitlab-ci.yml
 		..\.gitmodules = ..\.gitmodules
+		..\.version = ..\.version
 		..\appsettings.integration.json = ..\appsettings.integration.json
 		..\appsettings.integration.secret.json = ..\appsettings.integration.secret.json
 		..\LICENSE.md = ..\LICENSE.md
@@ -95,7 +96,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.LiteDb.IntegrationTests", "tests\integrationtests\FluiTec.AppFx.Localization.LiteDb.IntegrationTests\FluiTec.AppFx.Localization.LiteDb.IntegrationTests.csproj", "{1CF9E70F-7DB9-4E5A-B5E5-A143F094A2B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluiTec.AppFx.Localization.CliTest", "FluiTec.AppFx.Localization.CliTest\FluiTec.AppFx.Localization.CliTest.csproj", "{C4F91D5E-BBEB-4B65-B27B-CA0C0FF0F8A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.CliTest", "FluiTec.AppFx.Localization.CliTest\FluiTec.AppFx.Localization.CliTest.csproj", "{C4F91D5E-BBEB-4B65-B27B-CA0C0FF0F8A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
