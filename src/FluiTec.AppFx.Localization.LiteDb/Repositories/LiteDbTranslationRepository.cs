@@ -353,5 +353,48 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         {
             return Task.FromResult(GetByLanguages(languageIds));
         }
+
+        /// <summary>
+        /// Gets the resource suffix compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="suffix">   The suffix. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource suffix compounds in this
+        /// collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceSuffixCompound(string suffix)
+        {
+            var authors = UnitOfWork.GetRepository<IAuthorRepository>().GetAll();
+            var languages = UnitOfWork.GetRepository<ILanguageRepository>().GetAll();
+            var resources = UnitOfWork.GetRepository<IResourceRepository>().GetByKeyPrefix(suffix).ToList();
+            var resourceIds = resources.Select(r => r.Id).ToList();
+            var translations = GetAll();
+
+            return translations
+                .Where(t => resourceIds.Contains(t.ResourceId))
+                .Select(t => new CompoundTranslationEntity
+                {
+                    Translation = t,
+                    Resource = resources.Single(r => r.Id == t.ResourceId),
+                    Language = languages.Single(l => l.Id == t.LanguageId),
+                    Author = authors.Single(a => a.Id == resources.Single(r => r.Id == t.ResourceId).AuthorId)
+                });
+        }
+
+        /// <summary>
+        /// Gets by resource suffix compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="suffix">   The suffix. </param>
+        ///
+        /// <returns>
+        /// The by resource suffix compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceSuffixCompoundAsync(string suffix)
+        {
+            return Task.FromResult(GetByResourceSuffixCompound(suffix));
+        }
     }
 }

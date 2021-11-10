@@ -409,5 +409,66 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         {
             return Task.FromResult(GetByLanguages(languageIds));
         }
+
+        /// <summary>
+        /// Gets the resource suffix compounds in this collection.
+        /// </summary>
+        ///
+        /// <param name="suffix">   The suffix. </param>
+        ///
+        /// <returns>
+        /// An enumerator that allows foreach to be used to process the resource suffix compounds in this
+        /// collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceSuffixCompound(string suffix)
+        {
+            var resourceTable = UnitOfWork.NMemoryDataService.GetTable<ResourceEntity>();
+            var languageTable = UnitOfWork.NMemoryDataService.GetTable<LanguageEntity>();
+            var authorTable = UnitOfWork.NMemoryDataService.GetTable<AuthorEntity>();
+
+            return Table
+                .Join(resourceTable,
+                    translation => translation.ResourceId,
+                    resource => resource.Id,
+                    (translation, resource) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = resource
+                    })
+                .Join(languageTable,
+                    translation => translation.Translation.LanguageId,
+                    language => language.Id,
+                    (entity, language) => new CompoundTranslationEntity
+                    {
+                        Translation = entity.Translation,
+                        Resource = entity.Resource,
+                        Language = language
+                    })
+                .Join(authorTable,
+                    translation => translation.Resource.AuthorId,
+                    author => author.Id,
+                    (entity, author) => new CompoundTranslationEntity
+                    {
+                        Translation = entity.Translation,
+                        Resource = entity.Resource,
+                        Language = entity.Language,
+                        Author = author
+                    })
+                .Where(t => t.Resource.ResourceKey.StartsWith(suffix));
+        }
+
+        /// <summary>
+        /// Gets by resource suffix compound asynchronous.
+        /// </summary>
+        ///
+        /// <param name="suffix">   The suffix. </param>
+        ///
+        /// <returns>
+        /// The by resource suffix compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceSuffixCompoundAsync(string suffix)
+        {
+            return Task.FromResult(GetByResourceSuffixCompound(suffix));
+        }
     }
 }

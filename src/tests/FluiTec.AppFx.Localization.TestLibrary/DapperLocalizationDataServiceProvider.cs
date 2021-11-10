@@ -4,6 +4,7 @@ using FluiTec.AppFx.Localization.TestLibrary.Configuration;
 using FluiTec.AppFx.Options.Helpers;
 using FluiTec.AppFx.Options.Managers;
 using Microsoft.Extensions.Configuration;
+using ConfigurationManager = FluiTec.AppFx.Options.Managers.ConfigurationManager;
 
 namespace FluiTec.AppFx.Localization.TestLibrary
 {
