@@ -1,20 +1,19 @@
 ﻿using FluiTec.AppFx.Localization.TestLibrary.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FluiTec.AppFx.Localization.Dapper.Pgsql.IntegrationTests.Entities
+namespace FluiTec.AppFx.Localization.Dapper.Pgsql.IntegrationTests.Entities;
+
+/// <summary>
+///     (Unit Test Class) a mssql resource entity test.
+/// </summary>
+[TestClass]
+[TestCategory("Integration")]
+public class PgsqlResourceEntityTest : ResourceEntityTest
 {
     /// <summary>
-    ///     (Unit Test Class) a mssql resource entity test.
+    ///     Constructor.
     /// </summary>
-    [TestClass]
-    [TestCategory("Integration")]
-    public class PgsqlResourceEntityTest : ResourceEntityTest
+    public PgsqlResourceEntityTest() : base(new PgsqlLocalizationDataServiceProvider())
     {
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        public PgsqlResourceEntityTest() : base(new PgsqlLocalizationDataServiceProvider())
-        {
-        }
     }
 }

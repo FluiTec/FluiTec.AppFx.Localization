@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using FluiTec.AppFx.Localization.Dynamic;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Services;
@@ -62,13 +61,13 @@ namespace FluiTec.AppFx.Localization.CliTest
             var language1 = uow.LanguageRepository.Add(new LanguageEntity {IsoName = "de", Name = "Deutsch"});
             var language2 = uow.LanguageRepository.Add(new LanguageEntity {IsoName = "de-DE", Name = "Deutsch (Deutschland)"});
             var resource1 = uow.ResourceRepository.Add(new ResourceEntity
-                {ResourceKey = "Namespace.Class.Key", ModificationDate = DateTimeOffset.Now, AuthorId = author1.Id});
+                {ResourceKey = "Namespace.Class.Key", ModificationDate = DateTimeOffset.UtcNow, AuthorId = author1.Id});
             var translation1 = uow.TranslationRepository.Add(new TranslationEntity
                 {ResourceId = resource1.Id, LanguageId = language1.Id, Value = "de"});
             var translation2 = uow.TranslationRepository.Add(new TranslationEntity
                 {ResourceId = resource1.Id, LanguageId = language2.Id, Value = "de-DE"});
             var resource2 = uow.ResourceRepository.Add(new ResourceEntity
-                {ResourceKey = "Namespace.Class2.Key", ModificationDate = DateTimeOffset.Now, AuthorId = author1.Id});
+                {ResourceKey = "Namespace.Class2.Key", ModificationDate = DateTimeOffset.UtcNow, AuthorId = author1.Id});
             var translation3 = uow.TranslationRepository.Add(new TranslationEntity
                 {ResourceId = resource2.Id, LanguageId = language1.Id, Value = "de"});
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Dapper;
 using FluiTec.AppFx.Data.Dapper.Repositories;
 using FluiTec.AppFx.Data.Dapper.UnitsOfWork;
+using FluiTec.AppFx.Data.Entities;
 using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
@@ -17,15 +18,58 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
     public abstract class DapperTranslationRepository : DapperWritableKeyTableDataRepository<TranslationEntity, int>,
         ITranslationRepository
     {
+        #region Constructors
+
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
-        protected DapperTranslationRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
+        protected DapperTranslationRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(
+            unitOfWork,
             logger)
         {
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     Gets the 'get by resource identifier' command.
+        /// </summary>
+        /// <value>
+        ///     The 'get by resource identifier' command.
+        /// </value>
+        protected abstract string GetByResourceIdCommand { get; }
+
+        /// <summary>
+        ///     Gets the 'get by resource key' command.
+        /// </summary>
+        /// <value>
+        ///     The 'get by resource key' command.
+        /// </value>
+        protected abstract string GetByResourceKeyCommand { get; }
+
+        /// <summary>
+        ///     Gets the 'get by languages' command.
+        /// </summary>
+        /// <value>
+        ///     The 'get by languages' command.
+        /// </value>
+        protected abstract string GetByLanguagesCommand { get; }
+
+        /// <summary>
+        ///     Gets the 'get by resource suffix' command.
+        /// </summary>
+        /// <value>
+        ///     The 'get by resource suffix' command.
+        /// </value>
+        protected abstract string GetByResourceSuffixCommand { get; }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         ///     Gets the resources in this collection.
@@ -40,14 +84,12 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets the resource compounds in this collection.
+        ///     Gets the resource compounds in this collection.
         /// </summary>
-        ///
         /// <param name="resource"> The resource. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the resource compounds in this
-        /// collection.
+        ///     An enumerator that allows foreach to be used to process the resource compounds in this
+        ///     collection.
         /// </returns>
         public IEnumerable<CompoundTranslationEntity> GetByResourceCompound(ResourceEntity resource)
         {
@@ -67,13 +109,11 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets by resource compound asynchronous.
+        ///     Gets by resource compound asynchronous.
         /// </summary>
-        ///
         /// <param name="resource"> The resource. </param>
-        ///
         /// <returns>
-        /// The by resource compound.
+        ///     The by resource compound.
         /// </returns>
         public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(ResourceEntity resource)
         {
@@ -98,16 +138,35 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets the resource compounds in this collection.
+        ///     Gets the resource compounds in this collection.
         /// </summary>
-        ///
         /// <param name="resourceId">   Identifier for the resource. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the resource compounds in this
-        /// collection.
+        ///     An enumerator that allows foreach to be used to process the resource compounds in this
+        ///     collection.
         /// </returns>
-        public abstract IEnumerable<CompoundTranslationEntity> GetByResourceCompound(int resourceId);
+        public virtual IEnumerable<CompoundTranslationEntity> GetByResourceCompound(int resourceId)
+        {
+            var resourceDictionary = new Dictionary<int, ResourceEntity>();
+            var languageDictionary = new Dictionary<int, LanguageEntity>();
+            var authorDictionary = new Dictionary<int, AuthorEntity>();
+
+            return UnitOfWork.Connection
+                .Query<TranslationEntity, ResourceEntity, LanguageEntity, AuthorEntity, CompoundTranslationEntity>
+                (
+                    GetByResourceIdCommand,
+                    (translation, resource, language, author) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = MapById(resourceDictionary, resource),
+                        Language = MapById(languageDictionary, language),
+                        Author = MapById(authorDictionary, author)
+                    },
+                    splitOn: nameof(IKeyEntity<int>.Id),
+                    transaction: UnitOfWork.Transaction,
+                    param: new {resourceId}
+                );
+        }
 
         /// <summary>
         ///     Gets by resource asynchronous.
@@ -127,15 +186,34 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets by resource compound asynchronous.
+        ///     Gets by resource compound asynchronous.
         /// </summary>
-        ///
         /// <param name="resourceId">   Identifier for the resource. </param>
-        ///
         /// <returns>
-        /// The by resource compound.
+        ///     The by resource compound.
         /// </returns>
-        public abstract Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(int resourceId);
+        public virtual Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(int resourceId)
+        {
+            var resourceDictionary = new Dictionary<int, ResourceEntity>();
+            var languageDictionary = new Dictionary<int, LanguageEntity>();
+            var authorDictionary = new Dictionary<int, AuthorEntity>();
+
+            return UnitOfWork.Connection
+                .QueryAsync<TranslationEntity, ResourceEntity, LanguageEntity, AuthorEntity, CompoundTranslationEntity>
+                (
+                    GetByResourceIdCommand,
+                    (translation, resource, language, author) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = MapById(resourceDictionary, resource),
+                        Language = MapById(languageDictionary, language),
+                        Author = MapById(authorDictionary, author)
+                    },
+                    splitOn: nameof(IKeyEntity<int>.Id),
+                    transaction: UnitOfWork.Transaction,
+                    param: new {resourceId}
+                );
+        }
 
         /// <summary>
         ///     Gets the resources in this collection.
@@ -151,18 +229,6 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets the resource compounds in this collection.
-        /// </summary>
-        ///
-        /// <param name="resourceKey">  The resource key. </param>
-        ///
-        /// <returns>
-        /// An enumerator that allows foreach to be used to process the resource compounds in this
-        /// collection.
-        /// </returns>
-        public abstract IEnumerable<CompoundTranslationEntity> GetByResourceCompound(string resourceKey);
-
-        /// <summary>
         ///     Gets by resource asynchronous.
         /// </summary>
         /// <param name="resourceKey">  The resource key. </param>
@@ -176,15 +242,65 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets by resource compound asynchronous.
+        ///     Gets the resource compounds in this collection.
         /// </summary>
-        ///
         /// <param name="resourceKey">  The resource key. </param>
-        ///
         /// <returns>
-        /// The by resource compound.
+        ///     An enumerator that allows foreach to be used to process the resource compounds in this
+        ///     collection.
         /// </returns>
-        public abstract Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(string resourceKey);
+        public virtual IEnumerable<CompoundTranslationEntity> GetByResourceCompound(string resourceKey)
+        {
+            var resourceDictionary = new Dictionary<int, ResourceEntity>();
+            var languageDictionary = new Dictionary<int, LanguageEntity>();
+            var authorDictionary = new Dictionary<int, AuthorEntity>();
+
+            return UnitOfWork.Connection
+                .Query<TranslationEntity, ResourceEntity, LanguageEntity, AuthorEntity, CompoundTranslationEntity>
+                (
+                    GetByResourceKeyCommand,
+                    (translation, resource, language, author) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = MapById(resourceDictionary, resource),
+                        Language = MapById(languageDictionary, language),
+                        Author = MapById(authorDictionary, author)
+                    },
+                    splitOn: nameof(IKeyEntity<int>.Id),
+                    transaction: UnitOfWork.Transaction,
+                    param: new {resourceKey}
+                );
+        }
+
+        /// <summary>
+        ///     Gets by resource compound asynchronous.
+        /// </summary>
+        /// <param name="resourceKey">  The resource key. </param>
+        /// <returns>
+        ///     The by resource compound.
+        /// </returns>
+        public virtual Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(string resourceKey)
+        {
+            var resourceDictionary = new Dictionary<int, ResourceEntity>();
+            var languageDictionary = new Dictionary<int, LanguageEntity>();
+            var authorDictionary = new Dictionary<int, AuthorEntity>();
+
+            return UnitOfWork.Connection
+                .QueryAsync<TranslationEntity, ResourceEntity, LanguageEntity, AuthorEntity, CompoundTranslationEntity>
+                (
+                    GetByResourceKeyCommand,
+                    (translation, resource, language, author) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = MapById(resourceDictionary, resource),
+                        Language = MapById(languageDictionary, language),
+                        Author = MapById(authorDictionary, author)
+                    },
+                    splitOn: nameof(IKeyEntity<int>.Id),
+                    transaction: UnitOfWork.Transaction,
+                    param: new {resourceKey}
+                );
+        }
 
         /// <summary>
         ///     Gets the languages in this collection.
@@ -271,13 +387,11 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets the languages in this collection.
+        ///     Gets the languages in this collection.
         /// </summary>
-        ///
         /// <param name="languages">    The languages. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
         /// </returns>
         public IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<LanguageEntity> languages)
         {
@@ -285,13 +399,11 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets by languages asynchronous.
+        ///     Gets by languages asynchronous.
         /// </summary>
-        ///
         /// <param name="languages">    The languages. </param>
-        ///
         /// <returns>
-        /// The by languages.
+        ///     The by languages.
         /// </returns>
         public Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<LanguageEntity> languages)
         {
@@ -299,54 +411,126 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
         }
 
         /// <summary>
-        /// Gets the languages in this collection.
+        ///     Gets the languages in this collection.
         /// </summary>
-        ///
         /// <param name="languageIds">  List of identifiers for the languages. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the languages in this collection.
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
         /// </returns>
-        public abstract IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<int> languageIds);
-
-        /// <summary>
-        /// Gets by languages asynchronous.
-        /// </summary>
-        ///
-        /// <param name="languageIds">  List of identifiers for the languages. </param>
-        ///
-        /// <returns>
-        /// The by languages.
-        /// </returns>
-        public abstract Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<int> languageIds);
-
-        /// <summary>
-        /// Gets the resource suffix compounds in this collection.
-        /// </summary>
-        ///
-        /// <param name="suffix">   The suffix. </param>
-        ///
-        /// <returns>
-        /// An enumerator that allows foreach to be used to process the resource suffix compounds in this
-        /// collection.
-        /// </returns>
-        public IEnumerable<CompoundTranslationEntity> GetByResourceSuffixCompound(string suffix)
+        public virtual IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<int> languageIds)
         {
-            throw new System.NotImplementedException();
+            var resourceDictionary = new Dictionary<int, ResourceEntity>();
+            var languageDictionary = new Dictionary<int, LanguageEntity>();
+            var authorDictionary = new Dictionary<int, AuthorEntity>();
+
+            return UnitOfWork.Connection
+                .Query<TranslationEntity, ResourceEntity, LanguageEntity, AuthorEntity, CompoundTranslationEntity>
+                (
+                    GetByLanguagesCommand,
+                    (translation, resource, language, author) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = MapById(resourceDictionary, resource),
+                        Language = MapById(languageDictionary, language),
+                        Author = MapById(authorDictionary, author)
+                    },
+                    splitOn: nameof(IKeyEntity<int>.Id),
+                    transaction: UnitOfWork.Transaction,
+                    param: new {languageIds = languageIds.ToArray()}
+                );
         }
 
         /// <summary>
-        /// Gets by resource suffix compound asynchronous.
+        ///     Gets by languages asynchronous.
         /// </summary>
-        ///
-        /// <param name="suffix">   The suffix. </param>
-        ///
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
         /// <returns>
-        /// The by resource suffix compound.
+        ///     The by languages.
         /// </returns>
-        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceSuffixCompoundAsync(string suffix)
+        public virtual Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<int> languageIds)
         {
-            throw new System.NotImplementedException();
+            var resourceDictionary = new Dictionary<int, ResourceEntity>();
+            var languageDictionary = new Dictionary<int, LanguageEntity>();
+            var authorDictionary = new Dictionary<int, AuthorEntity>();
+
+            return UnitOfWork.Connection
+                .QueryAsync<TranslationEntity, ResourceEntity, LanguageEntity, AuthorEntity, CompoundTranslationEntity>
+                (
+                    GetByLanguagesCommand,
+                    (translation, resource, language, author) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = MapById(resourceDictionary, resource),
+                        Language = MapById(languageDictionary, language),
+                        Author = MapById(authorDictionary, author)
+                    },
+                    splitOn: nameof(IKeyEntity<int>.Id),
+                    transaction: UnitOfWork.Transaction,
+                    param: new {languageIds = languageIds.ToArray()}
+                );
         }
+
+        /// <summary>
+        ///     Gets the resource suffix compounds in this collection.
+        /// </summary>
+        /// <param name="suffix">   The suffix. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the resource suffix compounds in this
+        ///     collection.
+        /// </returns>
+        public virtual IEnumerable<CompoundTranslationEntity> GetByResourceSuffixCompound(string suffix)
+        {
+            var resourceDictionary = new Dictionary<int, ResourceEntity>();
+            var languageDictionary = new Dictionary<int, LanguageEntity>();
+            var authorDictionary = new Dictionary<int, AuthorEntity>();
+
+            return UnitOfWork.Connection
+                .Query<TranslationEntity, ResourceEntity, LanguageEntity, AuthorEntity, CompoundTranslationEntity>
+                (
+                    GetByResourceSuffixCommand,
+                    (translation, resource, language, author) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = MapById(resourceDictionary, resource),
+                        Language = MapById(languageDictionary, language),
+                        Author = MapById(authorDictionary, author)
+                    },
+                    splitOn: nameof(IKeyEntity<int>.Id),
+                    transaction: UnitOfWork.Transaction,
+                    param: new {suffix}
+                );
+        }
+
+        /// <summary>
+        ///     Gets by resource suffix compound asynchronous.
+        /// </summary>
+        /// <param name="suffix">   The suffix. </param>
+        /// <returns>
+        ///     The by resource suffix compound.
+        /// </returns>
+        public virtual Task<IEnumerable<CompoundTranslationEntity>> GetByResourceSuffixCompoundAsync(string suffix)
+        {
+            var resourceDictionary = new Dictionary<int, ResourceEntity>();
+            var languageDictionary = new Dictionary<int, LanguageEntity>();
+            var authorDictionary = new Dictionary<int, AuthorEntity>();
+
+            return UnitOfWork.Connection
+                .QueryAsync<TranslationEntity, ResourceEntity, LanguageEntity, AuthorEntity, CompoundTranslationEntity>
+                (
+                    GetByResourceSuffixCommand,
+                    (translation, resource, language, author) => new CompoundTranslationEntity
+                    {
+                        Translation = translation,
+                        Resource = MapById(resourceDictionary, resource),
+                        Language = MapById(languageDictionary, language),
+                        Author = MapById(authorDictionary, author)
+                    },
+                    splitOn: nameof(IKeyEntity<int>.Id),
+                    transaction: UnitOfWork.Transaction,
+                    param: new {suffix}
+                );
+        }
+
+        #endregion
     }
 }

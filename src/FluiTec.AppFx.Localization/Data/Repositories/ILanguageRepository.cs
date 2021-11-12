@@ -29,25 +29,21 @@ namespace FluiTec.AppFx.Localization.Repositories
         Task<LanguageEntity> GetAsync(string isoName);
 
         /// <summary>
-        /// Gets the two letter isoes in this collection.
+        ///     Gets the two letter isoes in this collection.
         /// </summary>
-        ///
         /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the two letter isoes in this
-        /// collection.
+        ///     An enumerator that allows foreach to be used to process the two letter isoes in this
+        ///     collection.
         /// </returns>
         IEnumerable<LanguageEntity> GetByTwoLetterIso(string cultureTwoLetterIsoLanguageName);
 
         /// <summary>
-        /// Gets by two letter ISO asynchronous.
+        ///     Gets by two letter ISO asynchronous.
         /// </summary>
-        ///
         /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
-        ///
         /// <returns>
-        /// The by two letter ISO.
+        ///     The by two letter ISO.
         /// </returns>
         Task<IEnumerable<LanguageEntity>> GetByTwoLetterIsoAsync(string cultureTwoLetterIsoLanguageName);
     }

@@ -1,43 +1,39 @@
 ﻿namespace FluiTec.AppFx.Localization.Entities
 {
     /// <summary>
-    /// A compound translation entity.
+    ///     A compound translation entity.
     /// </summary>
     public class CompoundTranslationEntity
     {
         /// <summary>
-        /// Gets or sets the translation.
+        ///     Gets or sets the translation.
         /// </summary>
-        ///
         /// <value>
-        /// The translation.
+        ///     The translation.
         /// </value>
         public TranslationEntity Translation { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource.
+        ///     Gets or sets the resource.
         /// </summary>
-        ///
         /// <value>
-        /// The resource.
+        ///     The resource.
         /// </value>
         public ResourceEntity Resource { get; set; }
 
         /// <summary>
-        /// Gets or sets the language.
+        ///     Gets or sets the language.
         /// </summary>
-        ///
         /// <value>
-        /// The language.
+        ///     The language.
         /// </value>
         public LanguageEntity Language { get; set; }
 
         /// <summary>
-        /// Gets or sets the author.
+        ///     Gets or sets the author.
         /// </summary>
-        ///
         /// <value>
-        /// The author.
+        ///     The author.
         /// </value>
         public AuthorEntity Author { get; set; }
     }

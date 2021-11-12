@@ -39,7 +39,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Repositories
                     SqlBuilder.SelectByFilter(typeof(ResourceEntity), nameof(ResourceEntity.ResourceKey)),
                 nameof(Get), nameof(resourceKey));
 
-            return UnitOfWork.Connection.QuerySingle<ResourceEntity>(command, new {ResourceKey = resourceKey}, UnitOfWork.Transaction);
+            return UnitOfWork.Connection.QuerySingle<ResourceEntity>(command, new {ResourceKey = resourceKey},
+                UnitOfWork.Transaction);
         }
 
         /// <summary>

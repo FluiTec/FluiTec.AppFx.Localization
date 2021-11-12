@@ -13,11 +13,10 @@ namespace FluiTec.AppFx.Localization.Entities
     public class ResourceEntity : IKeyEntity<int>, IEquatable<ResourceEntity>
     {
         /// <summary>
-        /// Gets or sets the resource key.
+        ///     Gets or sets the resource key.
         /// </summary>
-        ///
         /// <value>
-        /// The resource key.
+        ///     The resource key.
         /// </value>
         public string ResourceKey { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Microsoft.Extensions.Localization;
@@ -6,23 +7,13 @@ using Microsoft.Extensions.Localization;
 namespace FluiTec.AppFx.Localization.Services
 {
     /// <summary>
-    /// A service for accessing data localizations information.
+    ///     A service for accessing data localizations information.
     /// </summary>
     public class DataLocalizationService : ILocalizationService
     {
         /// <summary>
-        /// Gets the data service.
+        ///     Constructor.
         /// </summary>
-        ///
-        /// <value>
-        /// The data service.
-        /// </value>
-        public ILocalizationDataService DataService { get; }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        ///
         /// <param name="dataService">  The data service. </param>
         public DataLocalizationService(ILocalizationDataService dataService)
         {
@@ -30,14 +21,20 @@ namespace FluiTec.AppFx.Localization.Services
         }
 
         /// <summary>
-        /// By name.
+        ///     Gets the data service.
         /// </summary>
-        ///
+        /// <value>
+        ///     The data service.
+        /// </value>
+        public ILocalizationDataService DataService { get; }
+
+        /// <summary>
+        ///     By name.
+        /// </summary>
         /// <param name="name">     The name. </param>
         /// <param name="culture">  The culture. </param>
-        ///
         /// <returns>
-        /// A LocalizedString.
+        ///     A LocalizedString.
         /// </returns>
         public virtual LocalizedString ByName(string name, CultureInfo culture)
         {
@@ -56,18 +53,18 @@ namespace FluiTec.AppFx.Localization.Services
             var baseFit =
                 translations.SingleOrDefault(t => t.Language.IsoName[..2] == culture.TwoLetterISOLanguageName);
 
-            return baseFit != null ? new LocalizedString(name, baseFit.Translation.Value) : new LocalizedString(name, name, true);
+            return baseFit != null
+                ? new LocalizedString(name, baseFit.Translation.Value)
+                : new LocalizedString(name, name, true);
         }
 
         /// <summary>
-        /// Enumerates by base name in this collection.
+        ///     Enumerates by base name in this collection.
         /// </summary>
-        ///
         /// <param name="baseName"> Name of the base. </param>
         /// <param name="culture">  The culture. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process by base name in this collection.
+        ///     An enumerator that allows foreach to be used to process by base name in this collection.
         /// </returns>
         public virtual IEnumerable<LocalizedString> ByBaseName(string baseName, CultureInfo culture)
         {
@@ -85,7 +82,7 @@ namespace FluiTec.AppFx.Localization.Services
             var filtered = grouped
                 .Select(g => g.First());
 
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

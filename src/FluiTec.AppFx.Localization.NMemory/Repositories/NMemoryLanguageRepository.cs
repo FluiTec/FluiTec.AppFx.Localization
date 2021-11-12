@@ -39,13 +39,11 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         }
 
         /// <summary>
-        /// Gets an asynchronous.
+        ///     Gets an asynchronous.
         /// </summary>
-        ///
         /// <param name="isoName">  The ISO name to get. </param>
-        ///
         /// <returns>
-        /// The asynchronous.
+        ///     The asynchronous.
         /// </returns>
         public Task<LanguageEntity> GetAsync(string isoName)
         {
@@ -53,14 +51,12 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         }
 
         /// <summary>
-        /// Gets the two letter isoes in this collection.
+        ///     Gets the two letter isoes in this collection.
         /// </summary>
-        ///
         /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the two letter isoes in this
-        /// collection.
+        ///     An enumerator that allows foreach to be used to process the two letter isoes in this
+        ///     collection.
         /// </returns>
         public IEnumerable<LanguageEntity> GetByTwoLetterIso(string cultureTwoLetterIsoLanguageName)
         {
@@ -68,13 +64,11 @@ namespace FluiTec.AppFx.Localization.NMemory.Repositories
         }
 
         /// <summary>
-        /// Gets by two letter ISO asynchronous.
+        ///     Gets by two letter ISO asynchronous.
         /// </summary>
-        ///
         /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
-        ///
         /// <returns>
-        /// The by two letter ISO.
+        ///     The by two letter ISO.
         /// </returns>
         public Task<IEnumerable<LanguageEntity>> GetByTwoLetterIsoAsync(string cultureTwoLetterIsoLanguageName)
         {

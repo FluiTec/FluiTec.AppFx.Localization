@@ -1,20 +1,19 @@
 ﻿using FluiTec.AppFx.Localization.TestLibrary.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FluiTec.AppFx.Localization.NMemory.IntegrationTests.Entities
+namespace FluiTec.AppFx.Localization.NMemory.IntegrationTests.Entities;
+
+/// <summary>
+///     (Unit Test Class) a memory author entity test.
+/// </summary>
+[TestClass]
+[TestCategory("Integration")]
+public class NMemoryAuthorEntityTest : AuthorEntityTest
 {
     /// <summary>
-    ///     (Unit Test Class) a memory author entity test.
+    ///     Default constructor.
     /// </summary>
-    [TestClass]
-    [TestCategory("Integration")]
-    public class NMemoryAuthorEntityTest : AuthorEntityTest
+    public NMemoryAuthorEntityTest() : base(new NMemoryDataServiceProvider())
     {
-        /// <summary>
-        ///     Default constructor.
-        /// </summary>
-        public NMemoryAuthorEntityTest() : base(new NMemoryDataServiceProvider())
-        {
-        }
     }
 }

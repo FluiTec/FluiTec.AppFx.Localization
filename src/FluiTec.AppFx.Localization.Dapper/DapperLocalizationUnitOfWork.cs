@@ -98,27 +98,23 @@ namespace FluiTec.AppFx.Localization.Dapper
             ILogger<IRepository> log);
 
         /// <summary>
-        /// Creates language repository.
+        ///     Creates language repository.
         /// </summary>
-        ///
         /// <param name="uow">  The uow. </param>
         /// <param name="log">  The log. </param>
-        ///
         /// <returns>
-        /// The new language repository.
+        ///     The new language repository.
         /// </returns>
         protected abstract ILanguageRepository CreateLanguageRepository(DapperLocalizationUnitOfWork uow,
             ILogger<IRepository> log);
 
         /// <summary>
-        /// Creates translation repository.
+        ///     Creates translation repository.
         /// </summary>
-        ///
         /// <param name="uow">  The uow. </param>
         /// <param name="log">  The log. </param>
-        ///
         /// <returns>
-        /// The new translation repository.
+        ///     The new translation repository.
         /// </returns>
         protected abstract ITranslationRepository CreateTranslationRepository(DapperLocalizationUnitOfWork uow,
             ILogger<IRepository> log);

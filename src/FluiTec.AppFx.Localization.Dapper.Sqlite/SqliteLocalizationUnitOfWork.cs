@@ -45,34 +45,36 @@ namespace FluiTec.AppFx.Localization.Dapper.Sqlite
         /// </returns>
         protected override IResourceRepository CreateResourceRepository(DapperLocalizationUnitOfWork uow,
             ILogger<IRepository> log)
-            => new SqliteResourceRepository(uow, log);
+        {
+            return new SqliteResourceRepository(uow, log);
+        }
 
         /// <summary>
-        /// Creates language repository.
+        ///     Creates language repository.
         /// </summary>
-        ///
         /// <param name="uow">  The uow. </param>
         /// <param name="log">  The log. </param>
-        ///
         /// <returns>
-        /// The new language repository.
+        ///     The new language repository.
         /// </returns>
         protected override ILanguageRepository CreateLanguageRepository(DapperLocalizationUnitOfWork uow,
             ILogger<IRepository> log)
-            => new SqliteLanguageRepository(uow, log);
+        {
+            return new SqliteLanguageRepository(uow, log);
+        }
 
         /// <summary>
-        /// Creates translation repository.
+        ///     Creates translation repository.
         /// </summary>
-        ///
         /// <param name="uow">  The uow. </param>
         /// <param name="log">  The log. </param>
-        ///
         /// <returns>
-        /// The new translation repository.
+        ///     The new translation repository.
         /// </returns>
         protected override ITranslationRepository CreateTranslationRepository(DapperLocalizationUnitOfWork uow,
             ILogger<IRepository> log)
-            => new SqliteTranslationRepository(uow, log);
+        {
+            return new SqliteTranslationRepository(uow, log);
+        }
     }
 }

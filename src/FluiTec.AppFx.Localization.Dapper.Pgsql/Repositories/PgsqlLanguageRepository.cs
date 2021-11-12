@@ -10,14 +10,13 @@ using Microsoft.Extensions.Logging;
 namespace FluiTec.AppFx.Localization.Dapper.Pgsql.Repositories
 {
     /// <summary>
-    /// A pgsql language repository.
+    ///     A pgsql language repository.
     /// </summary>
     public class PgsqlLanguageRepository : DapperLanguageRepository
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
         public PgsqlLanguageRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
@@ -26,14 +25,12 @@ namespace FluiTec.AppFx.Localization.Dapper.Pgsql.Repositories
         }
 
         /// <summary>
-        /// Gets the two letter isoes in this collection.
+        ///     Gets the two letter isoes in this collection.
         /// </summary>
-        ///
         /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the two letter isoes in this
-        /// collection.
+        ///     An enumerator that allows foreach to be used to process the two letter isoes in this
+        ///     collection.
         /// </returns>
         public override IEnumerable<LanguageEntity> GetByTwoLetterIso(string cultureTwoLetterIsoLanguageName)
         {
@@ -43,17 +40,16 @@ namespace FluiTec.AppFx.Localization.Dapper.Pgsql.Repositories
                     $"LIKE {SqlBuilder.Adapter.RenderParameterProperty(nameof(cultureTwoLetterIsoLanguageName))} || '%'",
                 nameof(GetByTwoLetterIso), nameof(cultureTwoLetterIsoLanguageName));
 
-            return UnitOfWork.Connection.Query<LanguageEntity>(command, new {cultureTwoLetterIsoLanguageName}, UnitOfWork.Transaction);
+            return UnitOfWork.Connection.Query<LanguageEntity>(command, new {cultureTwoLetterIsoLanguageName},
+                UnitOfWork.Transaction);
         }
 
         /// <summary>
-        /// Gets by two letter ISO asynchronous.
+        ///     Gets by two letter ISO asynchronous.
         /// </summary>
-        ///
         /// <param name="cultureTwoLetterIsoLanguageName">  Name of the culture two letter ISO language. </param>
-        ///
         /// <returns>
-        /// The by two letter ISO.
+        ///     The by two letter ISO.
         /// </returns>
         public override Task<IEnumerable<LanguageEntity>> GetByTwoLetterIsoAsync(string cultureTwoLetterIsoLanguageName)
         {
@@ -63,7 +59,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Pgsql.Repositories
                     $"LIKE {SqlBuilder.Adapter.RenderParameterProperty(nameof(cultureTwoLetterIsoLanguageName))} || '%'",
                 nameof(GetByTwoLetterIso), nameof(cultureTwoLetterIsoLanguageName));
 
-            return UnitOfWork.Connection.QueryAsync<LanguageEntity>(command, new {cultureTwoLetterIsoLanguageName}, UnitOfWork.Transaction);
+            return UnitOfWork.Connection.QueryAsync<LanguageEntity>(command, new {cultureTwoLetterIsoLanguageName},
+                UnitOfWork.Transaction);
         }
     }
 }

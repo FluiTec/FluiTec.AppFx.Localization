@@ -1,22 +1,22 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FluiTec.AppFx.Localization.Dapper.Sqlite.IntegrationTests
+namespace FluiTec.AppFx.Localization.Dapper.Sqlite.IntegrationTests;
+
+/// <summary>   An initialize.</summary>
+[TestClass]
+public static class Initialize
 {
-    /// <summary>   An initialize.</summary>
-    [TestClass]
-    public static class Initialize
+    /// <summary>   Initializes this Initialize.</summary>
+    [AssemblyInitialize]
+    public static void Init(TestContext context)
     {
-        /// <summary>   Initializes this Initialize.</summary>
-        [AssemblyInitialize]
-        public static void Init(TestContext context)
-        {
-            var provider = new SqliteLocalizationDataServiceProvider();
-            var dataService = provider.ProvideDataService();
+        var provider = new SqliteLocalizationDataServiceProvider();
+        var dataService = provider.ProvideDataService();
 
-            if (System.IO.File.Exists("mydb.db"))
-                System.IO.File.Delete("mydb.db");
+        if (File.Exists("mydb.db"))
+            File.Delete("mydb.db");
 
-            dataService.GetMigrator().Migrate();
-        }
+        dataService.GetMigrator().Migrate();
     }
 }

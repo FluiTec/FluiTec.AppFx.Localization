@@ -1,20 +1,19 @@
 ﻿using FluiTec.AppFx.Localization.TestLibrary.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FluiTec.AppFx.Localization.Dapper.Sqlite.IntegrationTests.Entities
+namespace FluiTec.AppFx.Localization.Dapper.Sqlite.IntegrationTests.Entities;
+
+/// <summary>
+///     (Unit Test Class) a mssql translation entity test.
+/// </summary>
+[TestClass]
+[TestCategory("Integration")]
+public class SqliteTranslationEntityTest : TranslationEntityTest
 {
     /// <summary>
-    ///     (Unit Test Class) a mssql translation entity test.
+    ///     Constructor.
     /// </summary>
-    [TestClass]
-    [TestCategory("Integration")]
-    public class SqliteTranslationEntityTest : TranslationEntityTest
+    public SqliteTranslationEntityTest() : base(new SqliteLocalizationDataServiceProvider())
     {
-        /// <summary>
-        ///     Constructor.
-        /// </summary>
-        public SqliteTranslationEntityTest() : base(new SqliteLocalizationDataServiceProvider())
-        {
-        }
     }
 }
