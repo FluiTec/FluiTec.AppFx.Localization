@@ -41,4 +41,8 @@
     <PackageReference Include="FluiTec.AppFx.Data" Version="1.0.101"></PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Reflection\MemberScanner\" />
+  </ItemGroup>
+
 </Project>

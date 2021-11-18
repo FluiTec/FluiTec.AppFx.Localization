@@ -1,4 +1,5 @@
-﻿namespace FluiTec.AppFx.Localization.TestLibrary.Configuration;
+﻿// ReSharper disable UnusedMember.Global
+namespace FluiTec.AppFx.Localization.TestLibrary.Configuration;
 
 /// <summary>
 ///     A database admin options.
