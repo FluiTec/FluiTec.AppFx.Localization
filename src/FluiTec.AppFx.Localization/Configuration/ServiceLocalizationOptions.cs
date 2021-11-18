@@ -34,11 +34,11 @@ namespace FluiTec.AppFx.Localization.Configuration
             MemoryCacheEntryOptions = new MemoryCacheEntryOptions();
             AssemblyFilterExlusions = new List<string>
             {
-                "Microsoft", 
-                "mscorlib", 
-                "System", 
-                "EntityFramework", 
-                "Newtonsoft", 
+                "Microsoft",
+                "mscorlib",
+                "System",
+                "EntityFramework",
+                "Newtonsoft",
                 "netstandard"
             };
         }

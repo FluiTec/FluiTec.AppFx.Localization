@@ -103,7 +103,8 @@ namespace FluiTec.AppFx.Localization.CliTest
                 {
                     new KeyValuePair<string, string>("DynamicDataOptions:Provider", "NMemory"),
                     new KeyValuePair<string, string>("DynamicDataOptions:AutoMigrate", "false"),
-                    new KeyValuePair<string, string>("ServiceLocalizationOptions:MemoryCacheEntryOptions:SlidingExpiration", "00:15:00")
+                    new KeyValuePair<string, string>("ServiceLocalizationOptions:MemoryCacheEntryOptions:SlidingExpiration", "00:15:00"),
+                    new KeyValuePair<string, string>("ServiceLocalizationOptions:AssemblyFilterExlusions", "{test1, test2}")
                 })
                 .Build();
             var manager = new ConsoleReportingConfigurationManager(config);
