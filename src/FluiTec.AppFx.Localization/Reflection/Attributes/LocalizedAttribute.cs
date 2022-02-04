@@ -3,7 +3,7 @@
 namespace FluiTec.AppFx.Localization.Reflection.Attributes
 {
     /// <summary>
-    /// Attribute for localized.
+    /// Attribute for localized classes and enums.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum)]
     public class LocalizedAttribute : Attribute

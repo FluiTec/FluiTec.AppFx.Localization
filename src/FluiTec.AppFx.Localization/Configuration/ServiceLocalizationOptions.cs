@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FluiTec.AppFx.Options.Attributes;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace FluiTec.AppFx.Localization.Configuration
@@ -6,6 +7,7 @@ namespace FluiTec.AppFx.Localization.Configuration
     /// <summary>
     /// A localization options.
     /// </summary>
+    [ConfigurationKey("ServiceLocalizationOptions")]
     public class ServiceLocalizationOptions
     {
         /// <summary>
@@ -25,7 +27,7 @@ namespace FluiTec.AppFx.Localization.Configuration
         /// The assembly filter exlusions.
         /// </value>
         public List<string> AssemblyFilterExlusions { get; set; }
-
+        
         /// <summary>
         /// Default constructor.
         /// </summary>

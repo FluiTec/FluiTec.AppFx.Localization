@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using FluiTec.AppFx.Localization.Configuration;
 using FluiTec.AppFx.Localization.Dynamic;
 using FluiTec.AppFx.Localization.Entities;
+using FluiTec.AppFx.Localization.Import;
 using FluiTec.AppFx.Localization.Localizers;
-using FluiTec.AppFx.Localization.Reflection;
 using FluiTec.AppFx.Localization.Reflection.AssemblyScanner;
 using FluiTec.AppFx.Localization.Reflection.Attributes;
 using FluiTec.AppFx.Localization.Reflection.Helpers;
@@ -12,7 +12,6 @@ using FluiTec.AppFx.Localization.Reflection.MemberScanner;
 using FluiTec.AppFx.Localization.Reflection.TypeScanner;
 using FluiTec.AppFx.Localization.Services;
 using FluiTec.AppFx.Options.Managers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +32,8 @@ namespace FluiTec.AppFx.Localization.CliTest
         private static void Main(string[] args)
         {
             TestScanner();
+            TestStringLocalizer();
+            TestStringImporter();
         }
 
         /// <summary>
@@ -72,8 +73,18 @@ namespace FluiTec.AppFx.Localization.CliTest
 
             var factory = sp.GetRequiredService<IStringLocalizerFactory>();
 
-            ReportContents(factory.Create(typeof(Program)), "localizer1");
-            ReportContents(factory.Create(typeof(Program)), "localizer2");
+            ReportContents(factory.Create(typeof(Program)), "localizer");
+        }
+
+        /// <summary>
+        /// Tests string importer.
+        /// </summary>
+        private static void TestStringImporter()
+        {
+            var sp = GetServiceProvider();
+
+            var importService = sp.GetRequiredService<ILocalizationImportService>();
+            importService.Import();
         }
 
         /// <summary>
@@ -104,9 +115,14 @@ namespace FluiTec.AppFx.Localization.CliTest
                     new KeyValuePair<string, string>("DynamicDataOptions:Provider", "NMemory"),
                     new KeyValuePair<string, string>("DynamicDataOptions:AutoMigrate", "false"),
                     new KeyValuePair<string, string>("ServiceLocalizationOptions:MemoryCacheEntryOptions:SlidingExpiration", "00:15:00"),
-                    new KeyValuePair<string, string>("ServiceLocalizationOptions:AssemblyFilterExlusions", "{test1, test2}")
+                    new KeyValuePair<string, string>("ServiceLocalizationOptions:AssemblyFilterExlusions:0", "test1"),
+                    new KeyValuePair<string, string>("ServiceLocalizationOptions:AssemblyFilterExlusions:1", "test2"),
+                    new KeyValuePair<string, string>("ServiceLocalizationImportOptions:DefaultLanguageIsoName", "en"),
+                    new KeyValuePair<string, string>("ServiceLocalizationImportOptions:UpdateableAuthors:0", "Import-Code"),
+                    new KeyValuePair<string, string>("ServiceLocalizationImportOptions:UpdateableAuthors:1", "Import-File (json)")
                 })
                 .Build();
+
             var manager = new ConsoleReportingConfigurationManager(config);
             var services = new ServiceCollection();
             
@@ -114,9 +130,17 @@ namespace FluiTec.AppFx.Localization.CliTest
             services.AddLogging();
 
             services.Configure<ServiceLocalizationOptions>(manager, true);
+            services.Configure<ServiceLocalizationImportOptions>(manager, true);
             services.AddSingleton(typeof(IMemoryCache), typeof(MemoryCache));
             services.AddSingleton(typeof(ILocalizationService), typeof(MemoryBackedDataLocalizationService));
             services.AddSingleton(typeof(IStringLocalizerFactory), typeof(ServiceStringLocalizerFactory));
+
+            services.AddSingleton<ILocalizationImportService, LocalizationImportService>();
+            services.AddSingleton<ReflectionHelper>();
+            services.AddSingleton<IAssemblyScanner, ExclusionFilteringAssemblyScanner>();
+            services.AddSingleton<ITypeScanner, LocalizedAttributeFilteringTypeScanner>();
+            services.AddSingleton<IMemberScanner, DefaultFilteringMemberScanner>();
+            services.AddSingleton<ILocalizationSource, CodeLocalizationSource>();
 
             return services.BuildServiceProvider();
         }

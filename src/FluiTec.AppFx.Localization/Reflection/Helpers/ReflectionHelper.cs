@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Reflection;
 using FluiTec.AppFx.Localization.Reflection.Attributes;
 
 namespace FluiTec.AppFx.Localization.Reflection.Helpers

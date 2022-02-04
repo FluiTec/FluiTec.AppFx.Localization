@@ -27,6 +27,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Import\" />
     <Folder Include="Reflection\MemberScanner\" />
   </ItemGroup>
 
