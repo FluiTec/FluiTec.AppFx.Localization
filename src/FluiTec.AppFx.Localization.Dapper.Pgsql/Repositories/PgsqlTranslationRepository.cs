@@ -2,15 +2,18 @@
 using FluiTec.AppFx.Data.Repositories;
 using FluiTec.AppFx.Localization.Dapper.Repositories;
 using FluiTec.AppFx.Localization.Entities;
-using FluiTec.AppFx.Localization.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace FluiTec.AppFx.Localization.Dapper.Pgsql.Repositories
 {
-    /// <summary>   A Pgsql translation repository. </summary>
-    public class PgsqlTranslationRepository : TranslationRepository
+    /// <summary>
+    ///     A pgsql translation repository.
+    /// </summary>
+    public class PgsqlTranslationRepository : DapperTranslationRepository
     {
-        /// <summary>   Constructor. </summary>
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
         public PgsqlTranslationRepository(DapperUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
@@ -18,13 +21,100 @@ namespace FluiTec.AppFx.Localization.Dapper.Pgsql.Repositories
         {
         }
 
-        /// <summary>   Creates get all compound query command. </summary>
-        /// <returns>   The new get all compound query command. </returns>
-        protected override string CreateGetAllCompoundQueryCommand()
+        /// <summary>
+        ///     Gets the 'get by resource identifier' command.
+        /// </summary>
+        /// <value>
+        ///     The 'get by resource identifier' command.
+        /// </value>
+        protected override string GetByResourceIdCommand
         {
-            return $"SELECT * FROM {UnitOfWork.GetRepository<IResourceRepository>().TableName} AS resource" +
-                   $" LEFT JOIN {TableName} AS translation" +
-                   $" ON resource.{nameof(ResourceEntity.Id)} = translation.{nameof(TranslationEntity.ResourceId)}";
+            get
+            {
+                return GetFromCache(() =>
+                    "SELECT * " +
+                    $"FROM {SqlBuilder.Adapter.RenderTableName(typeof(TranslationEntity))} AS \"translation\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(ResourceEntity))} AS \"tresource\" " +
+                    "ON \"translation\".\"ResourceId\" = \"tresource\".\"Id\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(LanguageEntity))} AS \"tlanguage\" " +
+                    "ON \"translation\".\"LanguageId\" = \"tlanguage\".\"Id\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(AuthorEntity))} AS \"author\" " +
+                    "ON \"author\".\"Id\" = \"tresource\".\"AuthorId\" " +
+                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(TranslationEntity.ResourceId))} = " +
+                    $"{SqlBuilder.Adapter.RenderParameterProperty("resourceId")}");
+            }
+        }
+
+        /// <summary>
+        ///     Gets the 'get by resource key' command.
+        /// </summary>
+        /// <value>
+        ///     The 'get by resource key' command.
+        /// </value>
+        protected override string GetByResourceKeyCommand
+        {
+            get
+            {
+                return GetFromCache(() =>
+                    "SELECT * " +
+                    $"FROM {SqlBuilder.Adapter.RenderTableName(typeof(TranslationEntity))} AS \"translation\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(ResourceEntity))} AS \"tresource\" " +
+                    "ON \"translation\".\"ResourceId\" = \"tresource\".\"Id\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(LanguageEntity))} AS \"tlanguage\" " +
+                    "ON \"translation\".\"LanguageId\" = \"tlanguage\".\"Id\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(AuthorEntity))} AS \"author\" " +
+                    "ON \"author\".\"Id\" = \"tresource\".\"AuthorId\" " +
+                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.ResourceKey))} = " +
+                    $"{SqlBuilder.Adapter.RenderParameterProperty("resourceKey")}");
+            }
+        }
+
+        /// <summary>
+        ///     Gets the 'get by languages' command.
+        /// </summary>
+        /// <value>
+        ///     The 'get by languages' command.
+        /// </value>
+        protected override string GetByLanguagesCommand
+        {
+            get
+            {
+                return GetFromCache(() =>
+                    "SELECT * " +
+                    $"FROM {SqlBuilder.Adapter.RenderTableName(typeof(TranslationEntity))} AS \"translation\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(ResourceEntity))} AS \"tresource\" " +
+                    "ON \"translation\".\"ResourceId\" = \"tresource\".\"Id\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(LanguageEntity))} AS \"tlanguage\" " +
+                    "ON \"translation\".\"LanguageId\" = \"tlanguage\".\"Id\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(AuthorEntity))} AS \"author\" " +
+                    "ON \"author\".\"Id\" = \"tresource\".\"AuthorId\" " +
+                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(TranslationEntity.LanguageId))} = " +
+                    $"ANY({SqlBuilder.Adapter.RenderParameterProperty("languageIds")})");
+            }
+        }
+
+        /// <summary>
+        ///     Gets the 'get by resource suffix' command.
+        /// </summary>
+        /// <value>
+        ///     The 'get by resource suffix' command.
+        /// </value>
+        protected override string GetByResourceSuffixCommand
+        {
+            get
+            {
+                return GetFromCache(() =>
+                    "SELECT * " +
+                    $"FROM {SqlBuilder.Adapter.RenderTableName(typeof(TranslationEntity))} AS \"translation\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(ResourceEntity))} AS \"tresource\" " +
+                    "ON \"translation\".\"ResourceId\" = \"tresource\".\"Id\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(LanguageEntity))} AS \"tlanguage\" " +
+                    "ON \"translation\".\"LanguageId\" = \"tlanguage\".\"Id\" " +
+                    $"LEFT JOIN {SqlBuilder.Adapter.RenderTableName(typeof(AuthorEntity))} AS \"author\" " +
+                    "ON \"author\".\"Id\" = \"tresource\".\"AuthorId\" " +
+                    $"WHERE {SqlBuilder.Adapter.RenderPropertyName(nameof(ResourceEntity.ResourceKey))} " +
+                    $"LIKE {SqlBuilder.Adapter.RenderParameterProperty("suffix")} || '%'");
+            }
         }
     }
 }

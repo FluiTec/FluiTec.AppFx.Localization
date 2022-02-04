@@ -1,23 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FluiTec.AppFx.Data.LiteDb.Repositories;
 using FluiTec.AppFx.Data.LiteDb.UnitsOfWork;
 using FluiTec.AppFx.Data.Repositories;
-using FluiTec.AppFx.Localization.Compound;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace FluiTec.AppFx.Localization.LiteDb.Repositories
 {
-    /// <summary>   A lite database translation repository. </summary>
+    /// <summary>
+    ///     A lite database translation repository.
+    /// </summary>
     public class LiteDbTranslationRepository : LiteDbWritableIntegerKeyTableDataRepository<TranslationEntity>,
         ITranslationRepository
     {
-        #region Constructors
-
-        /// <summary>   Constructor. </summary>
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
         /// <param name="unitOfWork">   The unit of work. </param>
         /// <param name="logger">       The logger. </param>
         public LiteDbTranslationRepository(LiteDbUnitOfWork unitOfWork, ILogger<IRepository> logger) : base(unitOfWork,
@@ -25,92 +26,351 @@ namespace FluiTec.AppFx.Localization.LiteDb.Repositories
         {
         }
 
-        #endregion
-
-        #region Methods
-
-        /// <summary>   Gets by resource identifier and culture. </summary>
-        /// <param name="resourceId">   Identifier for the resource. </param>
-        /// <param name="culture">      The culture. </param>
-        /// <returns>   The by resource identifier and culture. </returns>
-        private TranslationEntity GetByResourceIdAndCulture(int resourceId, string culture)
-        {
-            return Collection.Find(e => e.ResourceId == resourceId && e.Language == culture).SingleOrDefault();
-        }
-
-        #endregion
-
-        #region Repository
-
-        /// <summary>   Adds entity. </summary>
-        /// <param name="entity">   The entity to add. </param>
-        /// <returns>   A TEntity. </returns>
-        public override TranslationEntity Add(TranslationEntity entity)
-        {
-            return GetByResourceIdAndCulture(entity.ResourceId, entity.Language) ?? base.Add(entity);
-        }
-
-        /// <summary>   Adds a range of entities. </summary>
-        /// <param name="entities"> An IEnumerable&lt;TEntity&gt; of items to append to this collection. </param>
-        public override void AddRange(IEnumerable<TranslationEntity> entities)
-        {
-            foreach (var entity in entities)
-                if (GetByResourceIdAndCulture(entity.ResourceId, entity.Language) == null)
-                    Collection.Insert(entity);
-        }
-
-        /// <summary>   Updates the given entity. </summary>
-        /// <exception cref="InvalidOperationException">
-        ///     Thrown when the requested operation is
-        ///     invalid.
-        /// </exception>
-        /// <param name="entity">   The entity to add. </param>
-        /// <returns>   A TEntity. </returns>
-        public override TranslationEntity Update(TranslationEntity entity)
-        {
-            var original = Get(entity.Id);
-
-            // if key wasnt changed - continue as usual
-            if (original.ResourceId == entity.ResourceId && original.Language == entity.Language)
-                return base.Update(entity);
-
-            // if key was changed - make sure a corresponding one doesnt exist
-            if (GetByResourceIdAndCulture(entity.ResourceId, entity.Language) == null)
-                return base.Update(entity);
-
-            throw new InvalidOperationException("Duplicate key cannot be created");
-        }
-
-        /// <summary>   Enumerates by resource in this collection. </summary>
+        /// <summary>
+        ///     Gets the resources in this collection.
+        /// </summary>
         /// <param name="resource"> The resource. </param>
         /// <returns>
-        ///     An enumerator that allows foreach to be used to process by resource in this collection.
+        ///     An enumerator that allows foreach to be used to process the resources in this collection.
         /// </returns>
-        public IEnumerable<TranslationEntity> ByResource(ResourceEntity resource)
+        public IEnumerable<TranslationEntity> GetByResource(ResourceEntity resource)
         {
+            return GetByResource(resource.Id);
+        }
+
+        /// <summary>
+        ///     Gets the resource compounds in this collection.
+        /// </summary>
+        /// <param name="resource"> The resource. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the resource compounds in this
+        ///     collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceCompound(ResourceEntity resource)
+        {
+            return GetByResourceCompound(resource.Id);
+        }
+
+        /// <summary>
+        ///     Gets by resource asynchronous.
+        /// </summary>
+        /// <param name="resource"> The resource. </param>
+        /// <returns>
+        ///     The by resource.
+        /// </returns>
+        public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(ResourceEntity resource)
+        {
+            return GetByResourceAsync(resource.Id);
+        }
+
+        /// <summary>
+        ///     Gets by resource compound asynchronous.
+        /// </summary>
+        /// <param name="resource"> The resource. </param>
+        /// <returns>
+        ///     The by resource compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(ResourceEntity resource)
+        {
+            return Task.FromResult(GetByResourceCompound(resource));
+        }
+
+        /// <summary>
+        ///     Gets the resources in this collection.
+        /// </summary>
+        /// <param name="resourceId">   Identifier for the resource. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the resources in this collection.
+        /// </returns>
+        public IEnumerable<TranslationEntity> GetByResource(int resourceId)
+        {
+            return Collection.Find(entity => entity.ResourceId == resourceId);
+        }
+
+        /// <summary>
+        ///     Gets the resource compounds in this collection.
+        /// </summary>
+        /// <param name="resourceId">   Identifier for the resource. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the resource compounds in this
+        ///     collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceCompound(int resourceId)
+        {
+            var authors = UnitOfWork.GetRepository<IAuthorRepository>().GetAll();
+            var languages = UnitOfWork.GetRepository<ILanguageRepository>().GetAll();
+            var resource = UnitOfWork.GetRepository<IResourceRepository>().Get(resourceId);
+            var translations = GetAll();
+
+            return translations
+                .Where(t => t.ResourceId == resource.Id)
+                .Select(t => new CompoundTranslationEntity
+                {
+                    Translation = t,
+                    Resource = resource,
+                    Language = languages.Single(l => l.Id == t.LanguageId),
+                    Author = authors.Single(a => a.Id == resource.AuthorId)
+                });
+        }
+
+        /// <summary>
+        ///     Gets by resource asynchronous.
+        /// </summary>
+        /// <param name="resourceId">   Identifier for the resource. </param>
+        /// <returns>
+        ///     The by resource.
+        /// </returns>
+        public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(int resourceId)
+        {
+            return Task.FromResult(GetByResource(resourceId));
+        }
+
+        /// <summary>
+        ///     Gets by resource compound asynchronous.
+        /// </summary>
+        /// <param name="resourceId">   Identifier for the resource. </param>
+        /// <returns>
+        ///     The by resource compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(int resourceId)
+        {
+            return Task.FromResult(GetByResourceCompound(resourceId));
+        }
+
+        /// <summary>
+        ///     Gets the resources in this collection.
+        /// </summary>
+        /// <param name="resourceKey">  The resource key. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the resources in this collection.
+        /// </returns>
+        public IEnumerable<TranslationEntity> GetByResource(string resourceKey)
+        {
+            var resource = UnitOfWork.GetRepository<IResourceRepository>().Get(resourceKey);
             return Collection.Find(entity => entity.ResourceId == resource.Id);
         }
 
-        /// <summary>   Gets all compounds in this collection. </summary>
+        /// <summary>
+        ///     Gets the resource compounds in this collection.
+        /// </summary>
+        /// <param name="resourceKey">  The resource key. </param>
         /// <returns>
-        ///     An enumerator that allows foreach to be used to process all compounds in this collection.
+        ///     An enumerator that allows foreach to be used to process the resource compounds in this
+        ///     collection.
         /// </returns>
-        public IEnumerable<CompoundTranslationEntity> GetAllCompound()
+        public IEnumerable<CompoundTranslationEntity> GetByResourceCompound(string resourceKey)
         {
-            var resources = UnitOfWork.GetRepository<IResourceRepository>().GetAll().ToList();
-            var translations = UnitOfWork.GetRepository<ITranslationRepository>().GetAll().GroupBy(t => t.ResourceId);
+            var authors = UnitOfWork.GetRepository<IAuthorRepository>().GetAll();
+            var languages = UnitOfWork.GetRepository<ILanguageRepository>().GetAll();
+            var resource = UnitOfWork.GetRepository<IResourceRepository>().Get(resourceKey);
+            var translations = GetAll();
 
-            foreach (var group in translations)
-            {
-                var resource = resources.Single(r => r.Id == group.Key);
-                yield return new CompoundTranslationEntity
+            return translations
+                .Where(t => t.ResourceId == resource.Id)
+                .Select(t => new CompoundTranslationEntity
                 {
+                    Translation = t,
                     Resource = resource,
-                    Translations = group.ToList()
-                };
-            }
+                    Language = languages.Single(l => l.Id == t.LanguageId),
+                    Author = authors.Single(a => a.Id == resource.AuthorId)
+                });
         }
 
-        #endregion
+        /// <summary>
+        ///     Gets by resource asynchronous.
+        /// </summary>
+        /// <param name="resourceKey">  The resource key. </param>
+        /// <returns>
+        ///     The by resource.
+        /// </returns>
+        public Task<IEnumerable<TranslationEntity>> GetByResourceAsync(string resourceKey)
+        {
+            return Task.FromResult(GetByResource(resourceKey));
+        }
+
+        /// <summary>
+        ///     Gets by resource compound asynchronous.
+        /// </summary>
+        /// <param name="resourceKey">  The resource key. </param>
+        /// <returns>
+        ///     The by resource compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceCompoundAsync(string resourceKey)
+        {
+            return Task.FromResult(GetByResourceCompound(resourceKey));
+        }
+
+        /// <summary>
+        ///     Gets the languages in this collection.
+        /// </summary>
+        /// <param name="language"> The language. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<TranslationEntity> GetByLanguage(LanguageEntity language)
+        {
+            return GetByLanguage(language.Id);
+        }
+
+        /// <summary>
+        ///     Gets by language asynchronous.
+        /// </summary>
+        /// <param name="language"> The language. </param>
+        /// <returns>
+        ///     The by language.
+        /// </returns>
+        public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(LanguageEntity language)
+        {
+            return GetByLanguageAsync(language.Id);
+        }
+
+        /// <summary>
+        ///     Gets the languages in this collection.
+        /// </summary>
+        /// <param name="languageId">   Identifier for the language. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<TranslationEntity> GetByLanguage(int languageId)
+        {
+            return Collection.Find(entity => entity.LanguageId == languageId);
+        }
+
+        /// <summary>
+        ///     Gets by language asynchronous.
+        /// </summary>
+        /// <param name="languageId">   Identifier for the language. </param>
+        /// <returns>
+        ///     The by language.
+        /// </returns>
+        public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(int languageId)
+        {
+            return Task.FromResult(GetByLanguage(languageId));
+        }
+
+        /// <summary>
+        ///     Gets the languages in this collection.
+        /// </summary>
+        /// <param name="isoName">  Name of the ISO. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<TranslationEntity> GetByLanguage(string isoName)
+        {
+            var language = UnitOfWork.GetRepository<ILanguageRepository>().Get(isoName);
+            return Collection.Find(entity => entity.LanguageId == language.Id);
+        }
+
+        /// <summary>
+        ///     Gets by language asynchronous.
+        /// </summary>
+        /// <param name="isoName">  Name of the ISO. </param>
+        /// <returns>
+        ///     The by language.
+        /// </returns>
+        public Task<IEnumerable<TranslationEntity>> GetByLanguageAsync(string isoName)
+        {
+            return Task.FromResult(GetByLanguage(isoName));
+        }
+
+        /// <summary>
+        ///     Gets the languages in this collection.
+        /// </summary>
+        /// <param name="languages">    The languages. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<LanguageEntity> languages)
+        {
+            return GetByLanguages(languages.Select(l => l.Id));
+        }
+
+        /// <summary>
+        ///     Gets by languages asynchronous.
+        /// </summary>
+        /// <param name="languages">    The languages. </param>
+        /// <returns>
+        ///     The by languages.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<LanguageEntity> languages)
+        {
+            return GetByLanguagesAsync(languages.Select(l => l.Id));
+        }
+
+        /// <summary>
+        ///     Gets the languages in this collection.
+        /// </summary>
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the languages in this collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByLanguages(IEnumerable<int> languageIds)
+        {
+            var authors = UnitOfWork.GetRepository<IAuthorRepository>().GetAll();
+            var languages = UnitOfWork.GetRepository<ILanguageRepository>().GetAll();
+            var resources = UnitOfWork.GetRepository<IResourceRepository>().GetAll().ToList();
+            var translations = GetAll();
+
+            return translations
+                .Where(t => languageIds.Contains(t.LanguageId))
+                .Select(t => new CompoundTranslationEntity
+                {
+                    Translation = t,
+                    Resource = resources.Single(r => r.Id == t.ResourceId),
+                    Language = languages.Single(l => l.Id == t.LanguageId),
+                    Author = authors.Single(a => a.Id == resources.Single(r => r.Id == t.ResourceId).AuthorId)
+                });
+        }
+
+        /// <summary>
+        ///     Gets by languages asynchronous.
+        /// </summary>
+        /// <param name="languageIds">  List of identifiers for the languages. </param>
+        /// <returns>
+        ///     The by languages.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByLanguagesAsync(IEnumerable<int> languageIds)
+        {
+            return Task.FromResult(GetByLanguages(languageIds));
+        }
+
+        /// <summary>
+        ///     Gets the resource suffix compounds in this collection.
+        /// </summary>
+        /// <param name="suffix">   The suffix. </param>
+        /// <returns>
+        ///     An enumerator that allows foreach to be used to process the resource suffix compounds in this
+        ///     collection.
+        /// </returns>
+        public IEnumerable<CompoundTranslationEntity> GetByResourceSuffixCompound(string suffix)
+        {
+            var authors = UnitOfWork.GetRepository<IAuthorRepository>().GetAll();
+            var languages = UnitOfWork.GetRepository<ILanguageRepository>().GetAll();
+            var resources = UnitOfWork.GetRepository<IResourceRepository>().GetByKeyPrefix(suffix).ToList();
+            var resourceIds = resources.Select(r => r.Id).ToList();
+            var translations = GetAll();
+
+            return translations
+                .Where(t => resourceIds.Contains(t.ResourceId))
+                .Select(t => new CompoundTranslationEntity
+                {
+                    Translation = t,
+                    Resource = resources.Single(r => r.Id == t.ResourceId),
+                    Language = languages.Single(l => l.Id == t.LanguageId),
+                    Author = authors.Single(a => a.Id == resources.Single(r => r.Id == t.ResourceId).AuthorId)
+                });
+        }
+
+        /// <summary>
+        ///     Gets by resource suffix compound asynchronous.
+        /// </summary>
+        /// <param name="suffix">   The suffix. </param>
+        /// <returns>
+        ///     The by resource suffix compound.
+        /// </returns>
+        public Task<IEnumerable<CompoundTranslationEntity>> GetByResourceSuffixCompoundAsync(string suffix)
+        {
+            return Task.FromResult(GetByResourceSuffixCompound(suffix));
+        }
     }
 }

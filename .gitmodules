@@ -4,3 +4,6 @@
 [submodule "fluitec.appfx.data"]
 	path = fluitec.appfx.data
 	url = ../../fluitec/fluitec.appfx.data.git
+[submodule "fluitec.appfx.console"]
+	path = fluitec.appfx.console
+	url = ../../fluitec/fluitec.appfx.console.git
