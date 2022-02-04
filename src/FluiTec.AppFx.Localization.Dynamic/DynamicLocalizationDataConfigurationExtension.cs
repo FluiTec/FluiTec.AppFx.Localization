@@ -32,30 +32,28 @@ namespace FluiTec.AppFx.Localization.Dynamic
         public static IServiceCollection ConfigureDynamicLocalizationDataProvider(this IServiceCollection services,
             ConfigurationManager configurationManager)
         {
-            services.ConfigureDynamicDataProvider(configurationManager,
-                new Func<IOptionsMonitor<DynamicDataOptions>, IServiceProvider, ILocalizationDataService>(
-                    (options, provider) =>
+            services.ConfigureDynamicDataProvider<ILocalizationDataService, LocalizationDynamicDataOptions>(configurationManager,
+                (options, provider) =>
+                {
+                    return options.CurrentValue.Provider switch
                     {
-                        return options.CurrentValue.Provider switch
-                        {
-                            DataProvider.LiteDb => new LiteDbLocalizationDataService(
-                                provider.GetRequiredService<IOptionsMonitor<LiteDbServiceOptions>>(),
-                                provider.GetService<ILoggerFactory>()),
-                            DataProvider.Mssql => new MssqlLocalizationDataService(
-                                provider.GetRequiredService<IOptionsMonitor<MssqlDapperServiceOptions>>(),
-                                provider.GetService<ILoggerFactory>()),
-                            DataProvider.Pgsql => new PgsqlLocalizationDataService(
-                                provider.GetRequiredService<IOptionsMonitor<PgsqlDapperServiceOptions>>(),
-                                provider.GetService<ILoggerFactory>()),
-                            DataProvider.Mysql => new MysqlLocalizationDataService(
-                                provider.GetRequiredService<IOptionsMonitor<MysqlDapperServiceOptions>>(),
-                                provider.GetService<ILoggerFactory>()),
-                            DataProvider.NMemory => new NMemoryLocalizationDataService(
-                                provider.GetService<ILoggerFactory>()),
-                            _ => throw new NotImplementedException()
-                        };
-                    }
-                )
+                        DataProvider.LiteDb => new LiteDbLocalizationDataService(
+                            provider.GetRequiredService<IOptionsMonitor<LiteDbServiceOptions>>(),
+                            provider.GetService<ILoggerFactory>()),
+                        DataProvider.Mssql => new MssqlLocalizationDataService(
+                            provider.GetRequiredService<IOptionsMonitor<MssqlDapperServiceOptions>>(),
+                            provider.GetService<ILoggerFactory>()),
+                        DataProvider.Pgsql => new PgsqlLocalizationDataService(
+                            provider.GetRequiredService<IOptionsMonitor<PgsqlDapperServiceOptions>>(),
+                            provider.GetService<ILoggerFactory>()),
+                        DataProvider.Mysql => new MysqlLocalizationDataService(
+                            provider.GetRequiredService<IOptionsMonitor<MysqlDapperServiceOptions>>(),
+                            provider.GetService<ILoggerFactory>()),
+                        DataProvider.NMemory => new NMemoryLocalizationDataService(
+                            provider.GetService<ILoggerFactory>()),
+                        _ => throw new NotImplementedException()
+                    };
+                }
             );
 
             return services;
