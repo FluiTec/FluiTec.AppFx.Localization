@@ -77,6 +77,7 @@ public class Startup
         IServiceProvider serviceProvider)
     {
         var changes = serviceProvider.GetRequiredService<ILocalizationImportService>().Import();
+        var res = serviceProvider.GetRequiredService<ILocalizationDataService>().BeginUnitOfWork().ResourceRepository.GetAll();
         
         // Configure the HTTP request pipeline.
         if (!Environment.IsDevelopment())

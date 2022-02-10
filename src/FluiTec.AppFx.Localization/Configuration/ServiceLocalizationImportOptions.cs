@@ -20,11 +20,24 @@ namespace FluiTec.AppFx.Localization.Configuration
         public List<string> UpdateableAuthors { get; set; }
 
         /// <summary>
+        /// Gets or sets the import files.
+        /// </summary>
+        ///
+        /// <value>
+        /// The import files.
+        /// </value>
+        public List<string> ImportFiles { get; set; }
+
+        /// <summary>
         /// Default constructor.
         /// </summary>
         public ServiceLocalizationImportOptions()
         {
-            UpdateableAuthors = new List<string>(new[] {CodeLocalizationSource.CodeAuthor});
+            UpdateableAuthors = new List<string>(new[]
+            {
+                CodeLocalizationSource.CodeAuthor,
+                FileLocalizationSource.FileAuthor
+            });
         }
     }
 }

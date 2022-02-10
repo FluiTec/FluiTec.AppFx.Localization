@@ -1,0 +1,19 @@
+[
+  {
+    "ResourceKey": "MyTestKey",
+    "Translations": [
+      {
+        "Language": "iv",
+        "Translation": "iv"
+      },
+      {
+        "Language": "de",
+        "Translation": "de"
+      },
+      {
+        "Language": "de-DE",
+        "Translation": "de-DE"
+      }
+    ] 
+  }
+]

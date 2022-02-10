@@ -83,6 +83,7 @@ namespace FluiTec.AppFx.Localization.Extensions
         public static IServiceCollection ConfigureLocalizationImport(this IServiceCollection services)
         {
             services.AddSingleton<ILocalizationSource, CodeLocalizationSource>();
+            services.AddSingleton<ILocalizationSource, JsonFileLocalizationSource>();
             services.AddSingleton<ILocalizationImportService, LocalizationImportService>();
 
             return services;

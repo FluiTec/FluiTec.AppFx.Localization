@@ -12,7 +12,7 @@ namespace FluiTec.AppFx.Localization.Import
     /// <summary>
     /// A code localization source.
     /// </summary>
-    public class CodeLocalizationSource : ILocalizationSource
+    public class CodeLocalizationSource : BaseLocalizationSource
     {
         /// <summary>
         /// (Immutable) the code author.
@@ -64,12 +64,11 @@ namespace FluiTec.AppFx.Localization.Import
         /// <param name="memberScanner">    The member scanner. </param>
         /// <param name="importOptions">    Options that control the import. </param>
         public CodeLocalizationSource(IAssemblyScanner assemblyScanner, ITypeScanner typeScanner,
-            IMemberScanner memberScanner, ServiceLocalizationImportOptions importOptions)
+            IMemberScanner memberScanner, ServiceLocalizationImportOptions importOptions) : base(importOptions)
         {
             AssemblyScanner = assemblyScanner;
             TypeScanner = typeScanner;
             MemberScanner = memberScanner;
-            ImportOptions = importOptions;
         }
 
         /// <summary>
@@ -79,7 +78,7 @@ namespace FluiTec.AppFx.Localization.Import
         ///
         /// An enumerator that allows foreach to be used to process the resources in this collection.
         /// </returns>
-        public IEnumerable<ILocalizationResource> FindResources()
+        public override IEnumerable<ILocalizationResource> FindResources()
         {
             return 
                 from assembly in AssemblyScanner.GetAssemblies() 
