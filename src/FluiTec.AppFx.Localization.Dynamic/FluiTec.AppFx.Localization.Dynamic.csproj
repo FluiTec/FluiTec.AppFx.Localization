@@ -49,4 +49,8 @@
     <PackageReference Include="FluiTec.AppFx.Data.Dynamic" Version="1.0.101"></PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>
