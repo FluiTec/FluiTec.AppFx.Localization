@@ -98,6 +98,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Localization.CliTest", "FluiTec.AppFx.Localization.CliTest\FluiTec.AppFx.Localization.CliTest.csproj", "{C4F91D5E-BBEB-4B65-B27B-CA0C0FF0F8A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluiTec.AppFx.Localization.WebSample", "samples\FluiTec.AppFx.Localization.WebSample\FluiTec.AppFx.Localization.WebSample.csproj", "{16E55159-4A61-40D9-BE4F-25E981F1EC38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -232,6 +234,10 @@ Global
 		{C4F91D5E-BBEB-4B65-B27B-CA0C0FF0F8A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4F91D5E-BBEB-4B65-B27B-CA0C0FF0F8A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4F91D5E-BBEB-4B65-B27B-CA0C0FF0F8A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16E55159-4A61-40D9-BE4F-25E981F1EC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16E55159-4A61-40D9-BE4F-25E981F1EC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16E55159-4A61-40D9-BE4F-25E981F1EC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16E55159-4A61-40D9-BE4F-25E981F1EC38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -266,6 +272,7 @@ Global
 		{5A5A6298-D500-4B9D-9DE1-99A9AC0B505F} = {76504816-34EA-4105-801E-03D5AC776F85}
 		{1CF9E70F-7DB9-4E5A-B5E5-A143F094A2B5} = {76504816-34EA-4105-801E-03D5AC776F85}
 		{C4F91D5E-BBEB-4B65-B27B-CA0C0FF0F8A0} = {D8DEFEBD-27F8-4322-A545-F53008E02249}
+		{16E55159-4A61-40D9-BE4F-25E981F1EC38} = {D8DEFEBD-27F8-4322-A545-F53008E02249}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A753A15-6AF0-46FB-8836-048F64C384D6}

@@ -73,7 +73,14 @@ public class TranslationEntityTest : DependencyLocalizationDataTest<TranslationE
     /// </returns>
     protected override TranslationEntity CreateEntity()
     {
-        return new TranslationEntity {LanguageId = Language1.Id, ResourceId = Resource.Id, Value = "deusch"};
+        return new TranslationEntity
+        {
+            LanguageId = Language1.Id, 
+            ResourceId = Resource.Id, 
+            Value = "deusch", 
+            AuthorId = Author.Id, 
+            ModificationDate = DateTimeOffset.UtcNow
+        };
     }
 
     /// <summary>
@@ -86,7 +93,14 @@ public class TranslationEntityTest : DependencyLocalizationDataTest<TranslationE
     {
         // set not-existent id to prevent successful update
         return new TranslationEntity
-            {Id = 100, LanguageId = Language1.Id, ResourceId = Resource.Id, Value = "NO-UPDATE"};
+        {
+            Id = 100, 
+            LanguageId = Language1.Id, 
+            ResourceId = Resource.Id, 
+            Value = "NO-UPDATE",
+            AuthorId = Author.Id,
+            ModificationDate = DateTimeOffset.UtcNow
+        };
     }
 
     /// <summary>
@@ -99,8 +113,22 @@ public class TranslationEntityTest : DependencyLocalizationDataTest<TranslationE
     {
         return new[]
         {
-            new TranslationEntity {LanguageId = Language1.Id, ResourceId = Resource.Id, Value = "deutsch"},
-            new TranslationEntity {LanguageId = Language2.Id, ResourceId = Resource.Id, Value = "english"}
+            new TranslationEntity
+            {
+                LanguageId = Language1.Id, 
+                ResourceId = Resource.Id, 
+                Value = "deutsch",
+                AuthorId = Author.Id,
+                ModificationDate = DateTimeOffset.UtcNow
+            },
+            new TranslationEntity
+            {
+                LanguageId = Language2.Id, 
+                ResourceId = Resource.Id, 
+                Value = "english",
+                AuthorId = Author.Id,
+                ModificationDate = DateTimeOffset.UtcNow
+            }
         };
     }
 

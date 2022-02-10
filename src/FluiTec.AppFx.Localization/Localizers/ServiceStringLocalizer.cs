@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using FluiTec.AppFx.Localization.Models;
 using FluiTec.AppFx.Localization.Services;
 using Microsoft.Extensions.Localization;
 
@@ -13,11 +14,16 @@ namespace FluiTec.AppFx.Localization.Localizers
     public class ServiceStringLocalizer : IStringLocalizer
     {
         /// <summary>
+        /// (Immutable) the culture.
+        /// </summary>
+        private readonly CultureInfo _culture;
+
+        /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="localizationService">  The localization service. </param>
         public ServiceStringLocalizer(ILocalizationService localizationService)
-            : this(localizationService, CultureInfo.CurrentUICulture)
+            : this(localizationService, null)
         {
         }
 
@@ -37,7 +43,7 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// <param name="resource">             The resource. </param>
         /// <param name="localizationService">  The localization service. </param>
         public ServiceStringLocalizer(Type resource, ILocalizationService localizationService)
-            : this(resource.FullName, localizationService, CultureInfo.CurrentUICulture)
+            : this(resource.FullName, localizationService, null)
         {
         }
 
@@ -47,7 +53,7 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// <param name="baseName">             The name of the base. </param>
         /// <param name="localizationService">  The localization service. </param>
         public ServiceStringLocalizer(string baseName, ILocalizationService localizationService)
-            : this(baseName, localizationService, CultureInfo.CurrentUICulture)
+            : this(baseName, localizationService, null)
         {
         }
 
@@ -77,11 +83,9 @@ namespace FluiTec.AppFx.Localization.Localizers
             BaseName = baseName;
             HasBaseName = !string.IsNullOrWhiteSpace(baseName);
             LocalizationService = localizationService ?? throw new ArgumentNullException(nameof(localizationService));
-            Culture = culture ?? CultureInfo.CurrentUICulture;
+            _culture = culture;
 
-            LocalizedStrings = new Lazy<List<LocalizedString>>(() => HasBaseName
-                ? localizationService.ByBaseName(BaseName, Culture).ToList()
-                : new List<LocalizedString>());
+            LocalizedStrings = new Dictionary<CultureInfo, List<LocalizedStringEx>>();
         }
 
         /// <summary>
@@ -114,7 +118,7 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// <value>
         ///     The culture.
         /// </value>
-        public CultureInfo Culture { get; }
+        public CultureInfo Culture => _culture ?? CultureInfo.CurrentUICulture;
 
         /// <summary>
         ///     Gets the localized strings.
@@ -122,7 +126,7 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// <value>
         ///     The localized strings.
         /// </value>
-        protected Lazy<List<LocalizedString>> LocalizedStrings { get; }
+        protected Dictionary<CultureInfo, List<LocalizedStringEx>> LocalizedStrings { get; }
 
         /// <summary>
         ///     Gets all string resources.
@@ -136,7 +140,11 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// </returns>
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
-            return LocalizedStrings.Value;
+            if (LocalizedStrings.ContainsKey(Culture))
+                return LocalizedStrings[Culture];
+
+            LocalizedStrings.Add(Culture, GetLocalizedStrings(Culture));
+            return LocalizedStrings[Culture];
         }
 
         /// <summary>
@@ -166,7 +174,13 @@ namespace FluiTec.AppFx.Localization.Localizers
             get
             {
                 if (!HasBaseName) return LocalizationService.ByName(name, Culture);
-                var existing = LocalizedStrings.Value.SingleOrDefault(s => s.Name == name);
+
+                var fName = $"{BaseName}.{name}";
+
+                if (!LocalizedStrings.ContainsKey(Culture))
+                    LocalizedStrings.Add(Culture, GetLocalizedStrings(Culture));
+
+                var existing = LocalizedStrings[Culture].SingleOrDefault(s => s.Name == fName);
                 return existing ?? LocalizationService.ByName(name, Culture);
             }
         }
@@ -188,6 +202,91 @@ namespace FluiTec.AppFx.Localization.Localizers
                     ? localized
                     : new LocalizedString(name, string.Format(localized.Value, arguments));
             }
+        }
+
+        /// <summary>
+        /// Gets localized strings.
+        /// </summary>
+        ///
+        /// <param name="culture">  The culture. </param>
+        ///
+        /// <returns>
+        /// The localized strings.
+        /// </returns>
+        protected List<LocalizedStringEx> GetLocalizedStrings(CultureInfo culture)
+        {
+            return HasBaseName 
+                ? LocalizationService.ByBaseName(BaseName, culture).ToList() 
+                : new List<LocalizedStringEx>();
+        }
+    }
+
+    /// <summary>
+    /// A service string localizer.
+    /// </summary>
+    ///
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    public class ServiceStringLocalizer<T> : ServiceStringLocalizer, IStringLocalizer<T>
+    {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        ///
+        /// <param name="localizationService">  The localization service. </param>
+        public ServiceStringLocalizer(ILocalizationService localizationService) : base(typeof(T), localizationService)
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        ///
+        /// <param name="localizationService">  The localization service. </param>
+        /// <param name="culture">              The culture. </param>
+        public ServiceStringLocalizer(ILocalizationService localizationService, CultureInfo culture) : base(localizationService, culture)
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        ///
+        /// <param name="resource">             The resource. </param>
+        /// <param name="localizationService">  The localization service. </param>
+        public ServiceStringLocalizer(Type resource, ILocalizationService localizationService) : base(resource, localizationService)
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        ///
+        /// <param name="baseName">             The name of the base. </param>
+        /// <param name="localizationService">  The localization service. </param>
+        public ServiceStringLocalizer(string baseName, ILocalizationService localizationService) : base(baseName, localizationService)
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        ///
+        /// <param name="resource">             The resource. </param>
+        /// <param name="localizationService">  The localization service. </param>
+        /// <param name="culture">              The culture. </param>
+        public ServiceStringLocalizer(Type resource, ILocalizationService localizationService, CultureInfo culture) : base(resource, localizationService, culture)
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        ///
+        /// <param name="baseName">             The name of the base. </param>
+        /// <param name="localizationService">  The localization service. </param>
+        /// <param name="culture">              The culture. </param>
+        public ServiceStringLocalizer(string baseName, ILocalizationService localizationService, CultureInfo culture) : base(baseName, localizationService, culture)
+        {
         }
     }
 }

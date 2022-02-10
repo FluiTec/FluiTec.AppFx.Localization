@@ -38,7 +38,7 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// </returns>
         public IStringLocalizer Create(Type resourceSource)
         {
-            return new ServiceStringLocalizer(resourceSource, LocalizationService, CultureInfo.CurrentUICulture);
+            return new ServiceStringLocalizer(resourceSource, LocalizationService);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// </returns>
         public IStringLocalizer Create(string baseName, string location)
         {
-            return new ServiceStringLocalizer(baseName, LocalizationService, CultureInfo.CurrentUICulture);
+            return new ServiceStringLocalizer(baseName, LocalizationService);
         }
     }
 }

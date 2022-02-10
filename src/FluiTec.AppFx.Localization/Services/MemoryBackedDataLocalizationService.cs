@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using FluiTec.AppFx.Localization.Configuration;
+using FluiTec.AppFx.Localization.Models;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 
 namespace FluiTec.AppFx.Localization.Services
 {
@@ -24,15 +25,6 @@ namespace FluiTec.AppFx.Localization.Services
         protected override string SourceName { get; }
 
         /// <summary>
-        /// Gets options for controlling the operation.
-        /// </summary>
-        ///
-        /// <value>
-        /// The options.
-        /// </value>
-        public ServiceLocalizationOptions Options { get; }
-
-        /// <summary>
         /// Gets the cache.
         /// </summary>
         ///
@@ -48,17 +40,18 @@ namespace FluiTec.AppFx.Localization.Services
         /// <summary>
         /// Constructor.
         /// </summary>
-        ///
+        /// 
         /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
         ///                                             null. </exception>
-        ///
-        /// <param name="options">      Options for controlling the operation. </param>
-        /// <param name="cache">        The cache. </param>
-        /// <param name="dataService">  The data service. </param>
-        public MemoryBackedDataLocalizationService(ServiceLocalizationOptions options, IMemoryCache cache, ILocalizationDataService dataService)
-            : base(dataService)
+        /// 
+        /// <param name="options">                      Options for controlling the operation. </param>
+        /// <param name="cache">                        The cache. </param>
+        /// <param name="dataService">                  The data service. </param>
+        /// <param name="translationPickingService">    The translation picking service. </param>
+        /// <param name="logger"></param>
+        public MemoryBackedDataLocalizationService(ServiceLocalizationOptions options, IMemoryCache cache, ILocalizationDataService dataService, ITranslationPickingService translationPickingService, ILogger<DataLocalizationService> logger)
+            : base(dataService, translationPickingService, options, logger)
         {
-            Options = options ?? throw new ArgumentNullException(nameof(options));
             Cache = cache ?? throw new ArgumentNullException(nameof(cache));
             SourceName = $"MemoryCache/{dataService.Name}";
         }
@@ -77,7 +70,7 @@ namespace FluiTec.AppFx.Localization.Services
         /// <returns>
         /// A LocalizedString.
         /// </returns>
-        public override LocalizedString ByName(string name, CultureInfo culture)
+        public override LocalizedStringEx ByName(string name, CultureInfo culture)
         {
             return GetOrCreateWithPolicy(Cache, $"{name}+{culture.Name}", cacheEntry => base.ByName(name, culture), Options.MemoryCacheEntryOptions);
         }
@@ -92,7 +85,7 @@ namespace FluiTec.AppFx.Localization.Services
         /// <returns>
         /// An enumerator that allows foreach to be used to process by base name in this collection.
         /// </returns>
-        public override IEnumerable<LocalizedString> ByBaseName(string baseName, CultureInfo culture)
+        public override IEnumerable<LocalizedStringEx> ByBaseName(string baseName, CultureInfo culture)
         {
             return GetOrCreateWithPolicy(Cache, $"{baseName}+{culture.Name}", cacheEntry => base.ByBaseName(baseName, culture), Options.MemoryCacheEntryOptions);
         }
