@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using FluiTec.AppFx.Localization.Services;
 using Microsoft.Extensions.Localization;
 

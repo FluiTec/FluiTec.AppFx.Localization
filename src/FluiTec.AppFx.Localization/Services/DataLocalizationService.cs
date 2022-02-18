@@ -5,7 +5,6 @@ using System.Linq;
 using FluiTec.AppFx.Localization.Configuration;
 using FluiTec.AppFx.Localization.Exceptions;
 using FluiTec.AppFx.Localization.Models;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace FluiTec.AppFx.Localization.Services

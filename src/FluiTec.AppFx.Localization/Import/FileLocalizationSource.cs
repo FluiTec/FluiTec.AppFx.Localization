@@ -68,11 +68,7 @@ namespace FluiTec.AppFx.Localization.Import
         /// </returns>
         public virtual bool CanHandle(string fileName)
         {
-            if (!File.Exists(fileName))
-                return false;
-
-            var fi = new FileInfo(fileName);
-            return string.Equals(new FileInfo(fileName).Extension, FileExtension, StringComparison.CurrentCultureIgnoreCase);
+            return File.Exists(fileName) && string.Equals(new FileInfo(fileName).Extension, FileExtension, StringComparison.CurrentCultureIgnoreCase);
         }
 
         /// <summary>

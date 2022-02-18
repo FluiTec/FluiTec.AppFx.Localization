@@ -45,16 +45,7 @@ namespace FluiTec.AppFx.Localization.Import
         /// The member scanner.
         /// </value>
         public IMemberScanner MemberScanner { get; }
-
-        /// <summary>
-        /// Gets options for controlling the import.
-        /// </summary>
-        ///
-        /// <value>
-        /// Options that control the import.
-        /// </value>
-        public ServiceLocalizationImportOptions ImportOptions { get; }
-
+        
         /// <summary>
         /// Constructor.
         /// </summary>

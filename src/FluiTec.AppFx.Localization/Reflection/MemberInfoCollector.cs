@@ -36,15 +36,5 @@ namespace FluiTec.AppFx.Localization.Reflection
             var typeName = mi.DeclaringType?.FullName;
             return !string.IsNullOrWhiteSpace(typeName) ? $"{typeName}.{mi.Name}" : mi.Name;
         }
-
-        /// <summary>
-        /// Information about the display translation attribute.
-        /// </summary>
-        public class DisplayTranslationAttributeInfo
-        {
-            public string Translation { get; set; }
-
-            public string Language { get; set; }
-        }
     }
 }

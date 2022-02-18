@@ -1,28 +1,10 @@
 ﻿namespace FluiTec.AppFx.Localization.Import
 {
     /// <summary>
-    /// A localization resource.
+    /// A file localization translation.
     /// </summary>
-    public class LocalizationResource : ILocalizationResource
+    public class FileLocalizationTranslation
     {
-        /// <summary>
-        /// Gets or sets the resource key.
-        /// </summary>
-        ///
-        /// <value>
-        /// The resource key.
-        /// </value>
-        public string ResourceKey { get; set; }
-
-        /// <summary>
-        /// Gets or sets the author.
-        /// </summary>
-        ///
-        /// <value>
-        /// The author.
-        /// </value>
-        public string Author { get; set; }
-
         /// <summary>
         /// Gets or sets the language.
         /// </summary>

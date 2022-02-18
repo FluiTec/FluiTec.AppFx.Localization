@@ -1,7 +1,6 @@
 ﻿using FluiTec.AppFx.Localization.WebSample.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Microsoft.Extensions.Localization;
 
 namespace FluiTec.AppFx.Localization.WebSample.Controllers
 {

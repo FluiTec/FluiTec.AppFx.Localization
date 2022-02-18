@@ -76,7 +76,7 @@ public class Startup
     public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory, IHostApplicationLifetime appLifetime,
         IServiceProvider serviceProvider)
     {
-        var changes = serviceProvider.GetRequiredService<ILocalizationImportService>().Import();
+        var changes = serviceProvider.GetRequiredService<ILocalizationImportService>().ImportAsync().Result;
         var res = serviceProvider.GetRequiredService<ILocalizationDataService>().BeginUnitOfWork().ResourceRepository.GetAll();
         
         // Configure the HTTP request pipeline.
@@ -92,7 +92,7 @@ public class Startup
         app.UseAuthorization();
 
         // IMPORTANT
-        app.UseRequestLocalization(app.ApplicationServices.GetRequiredService<ServiceLocalizationOptions>().GetRequestLocalizationOptions());
+        app.UseRequestLocalization(serviceProvider.GetRequiredService<ServiceLocalizationOptions>().GetRequestLocalizationOptions());
         // IMPORTANT
 
         app.UseEndpoints(endpoints =>
