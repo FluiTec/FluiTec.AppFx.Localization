@@ -33,8 +33,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.0"></PackageReference>
-    <PackageReference Include="FluiTec.AppFx.Data.Dapper" Version="1.1.0"></PackageReference>
+    <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.1"></PackageReference>
+    <PackageReference Include="FluiTec.AppFx.Data.Dapper" Version="1.1.1"></PackageReference>
   </ItemGroup>
 
 </Project>
