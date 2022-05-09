@@ -1,4 +1,4 @@
-﻿using FluiTec.AppFx.Data.Dapper.Migration;
+﻿using FluiTec.AppFx.Data.Migration;
 using FluentMigrator;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Localization.Entities;
@@ -9,7 +9,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
     /// <summary>
     /// A resource entity.
     /// </summary>
-    [DapperMigration(2021, 09, 22, 15, 08, "Achim Schnell")]
+    [ExtendedMigration(2021, 09, 22, 15, 08, "Achim Schnell")]
     public class ResourceMigration : Migration
     {
         /// <summary>

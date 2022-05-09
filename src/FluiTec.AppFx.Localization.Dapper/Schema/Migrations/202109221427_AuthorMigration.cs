@@ -1,15 +1,15 @@
-﻿using FluiTec.AppFx.Data.Dapper.Migration;
-using FluentMigrator;
+﻿using FluentMigrator;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Data.Dapper.Extensions;
+using FluiTec.AppFx.Data.Migration;
 
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 {
     /// <summary>
     /// An author migration.
     /// </summary>
-    [DapperMigration(2021, 09, 22, 14, 27, "Achim Schnell")]
+    [ExtendedMigrationAttribute(2021, 09, 22, 14, 27, "Achim Schnell")]
     public class AuthorMigration : Migration
     {
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿using FluentMigrator;
-using FluiTec.AppFx.Data.Dapper.Migration;
+using FluiTec.AppFx.Data.Migration;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Data.Dapper.Extensions;
@@ -9,7 +9,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
     /// <summary>
     /// A translation migration 2.
     /// </summary>
-    [DapperMigration(2022, 02, 09, 13, 55, "Achim Schnell")]
+    [ExtendedMigration(2022, 02, 09, 13, 55, "Achim Schnell")]
     public class TranslationMigration2 : Migration
     {
         /// <summary>

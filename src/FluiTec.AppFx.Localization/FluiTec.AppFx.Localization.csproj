@@ -36,10 +36,12 @@
 
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data\FluiTec.AppFx.Data.csproj" />
+    <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Migration\FluiTec.AppFx.Data.Migration.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.1"></PackageReference>
+    <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.2"></PackageReference>
+	  <PackageReference Include="FluiTec.AppFx.Data.Migration" Version="1.1.2"></PackageReference>
   </ItemGroup>
 
   <ItemGroup>

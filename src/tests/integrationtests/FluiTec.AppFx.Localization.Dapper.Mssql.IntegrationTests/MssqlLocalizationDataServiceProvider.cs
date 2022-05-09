@@ -6,7 +6,7 @@ namespace FluiTec.AppFx.Localization.Dapper.Mssql.IntegrationTests;
 ///     A mssql localization data service provider.
 /// </summary>
 public class
-    MssqlLocalizationDataServiceProvider : MssqlDataServiceProvider<ILocalizationDataService,
+    MssqlLocalizationDataServiceProvider : MssqlDapperDataServiceProvider<ILocalizationDataService,
         ILocalizationUnitOfWork>
 {
     /// <summary>

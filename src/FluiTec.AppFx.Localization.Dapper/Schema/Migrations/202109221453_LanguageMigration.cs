@@ -1,15 +1,15 @@
-﻿using FluiTec.AppFx.Data.Dapper.Migration;
-using FluentMigrator;
+﻿using FluentMigrator;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Data.Dapper.Extensions;
+using FluiTec.AppFx.Data.Migration;
 
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 {
     /// <summary>
     /// A language migration.
     /// </summary>
-    [DapperMigration(2021, 09, 22, 14, 53, "Achim Schnell")]
+    [ExtendedMigration(2021, 09, 22, 14, 53, "Achim Schnell")]
     public class LanguageMigration : Migration
     {
         /// <summary>
