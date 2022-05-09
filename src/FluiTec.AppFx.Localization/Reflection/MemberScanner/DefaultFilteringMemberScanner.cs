@@ -101,13 +101,7 @@ namespace FluiTec.AppFx.Localization.Reflection.MemberScanner
         /// </returns>
         protected virtual bool FilterClassMember(Type type, MemberInfo member)
         {
-            if ((member.MemberType & MemberTypes.Property) != 0)
-            {
-                var propertyInfo = (PropertyInfo) member;
-                return true;
-            }
-
-            return false;
+            return (member.MemberType & MemberTypes.Property) != 0;
         }
     }
 }

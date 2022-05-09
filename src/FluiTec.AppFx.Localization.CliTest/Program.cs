@@ -31,9 +31,10 @@ namespace FluiTec.AppFx.Localization.CliTest
         /// <param name="args"> An array of command-line argument strings. </param>
         private static void Main(string[] args)
         {
-            TestScanner();
-            TestStringLocalizer();
+            //TestScanner();
+            //TestStringLocalizer();
             TestStringImporter();
+            System.Console.ReadLine();
         }
 
         /// <summary>
@@ -84,7 +85,8 @@ namespace FluiTec.AppFx.Localization.CliTest
             var sp = GetServiceProvider();
 
             var importService = sp.GetRequiredService<ILocalizationImportService>();
-            importService.Import();
+            var count = importService.Import();
+            var added = sp.GetRequiredService<ILocalizationDataService>().BeginUnitOfWork().TranslationRepository.GetAll();
         }
 
         /// <summary>
@@ -123,7 +125,7 @@ namespace FluiTec.AppFx.Localization.CliTest
                 })
                 .Build();
 
-            var manager = new ConsoleReportingConfigurationManager(config);
+            var manager = new ValidatingConfigurationManager(config);
             var services = new ServiceCollection();
             
             services.ConfigureDynamicLocalizationDataProvider(manager);
@@ -175,27 +177,42 @@ namespace FluiTec.AppFx.Localization.CliTest
     [Localized]
     public class Simple
     {
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         public string Name { get; set; }
     }
 
     [Localized]
     public class Inherited : Simple
     {
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         public string Name2 { get; set; }
     }
 
     [Localized(Inherited = false)]
     public class InheritedFalse : Simple
     {
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         public string Name2 { get; set; }
     }
 
     [Localized(OnlyIncluded = true)]
     public class OnlyIncluded
     {
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         public string Name { get; set; }
 
         [Include]
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         public string Name2 { get; set; }
     }
 
@@ -203,6 +220,9 @@ namespace FluiTec.AppFx.Localization.CliTest
     public class OnlyIncludedInheritedTrue : OnlyIncluded
     {
         [Include]
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         public string Name3 { get; set; }
     }
 
@@ -210,13 +230,22 @@ namespace FluiTec.AppFx.Localization.CliTest
     public class OnlyIncludedInheritedFalse : OnlyIncluded
     {
         [Include]
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         public string Name4 { get; set; }
     }
 
     [Localized]
     public enum Enum
     {
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         Var1,
+        [Translation("iv", "Invariant")]
+        [Translation("de", "Deutsch")]
+        [Translation("de-DE", "Deutsch (Deutschland)")]
         Var2
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
-using Microsoft.Extensions.Localization;
+using FluiTec.AppFx.Localization.Models;
 
 namespace FluiTec.AppFx.Localization.Services
 {
@@ -17,8 +17,20 @@ namespace FluiTec.AppFx.Localization.Services
         /// <returns>
         ///     A LocalizedString.
         /// </returns>
-        LocalizedString ByName(string name, CultureInfo culture);
+        LocalizedStringEx ByName(string name, CultureInfo culture);
 
+        /// <summary>
+        /// By name not found.
+        /// </summary>
+        ///
+        /// <param name="name">     The name. </param>
+        /// <param name="culture">  The culture. </param>
+        ///
+        /// <returns>
+        /// A LocalizedStringEx.
+        /// </returns>
+        LocalizedStringEx ByNameNotFound(string name, CultureInfo culture);
+        
         /// <summary>
         ///     Enumerates by base name in this collection.
         /// </summary>
@@ -27,6 +39,6 @@ namespace FluiTec.AppFx.Localization.Services
         /// <returns>
         ///     An enumerator that allows foreach to be used to process by base name in this collection.
         /// </returns>
-        IEnumerable<LocalizedString> ByBaseName(string baseName, CultureInfo culture);
+        IEnumerable<LocalizedStringEx> ByBaseName(string baseName, CultureInfo culture);
     }
 }

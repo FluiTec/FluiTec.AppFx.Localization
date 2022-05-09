@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Globalization;
 using FluiTec.AppFx.Localization.Services;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 
 namespace FluiTec.AppFx.Localization.Localizers
 {
@@ -11,12 +11,15 @@ namespace FluiTec.AppFx.Localization.Localizers
     public class ServiceStringLocalizerFactory : IStringLocalizerFactory
     {
         /// <summary>
-        ///     Constructor.
+        /// Constructor.
         /// </summary>
+        ///
         /// <param name="localizationService">  The localization service. </param>
-        public ServiceStringLocalizerFactory(ILocalizationService localizationService)
+        /// <param name="loggerFactory">        The logger factory. </param>
+        public ServiceStringLocalizerFactory(ILocalizationService localizationService, ILoggerFactory loggerFactory)
         {
             LocalizationService = localizationService;
+            LoggerFactory = loggerFactory;
         }
 
         /// <summary>
@@ -26,6 +29,15 @@ namespace FluiTec.AppFx.Localization.Localizers
         ///     The localization service.
         /// </value>
         public ILocalizationService LocalizationService { get; }
+
+        /// <summary>
+        /// Gets the logger factory.
+        /// </summary>
+        ///
+        /// <value>
+        /// The logger factory.
+        /// </value>
+        public ILoggerFactory LoggerFactory { get; }
 
         /// <summary>
         ///     Creates an <see cref="T:Microsoft.Extensions.Localization.IStringLocalizer" /> using the
@@ -38,7 +50,7 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// </returns>
         public IStringLocalizer Create(Type resourceSource)
         {
-            return new ServiceStringLocalizer(resourceSource, LocalizationService, CultureInfo.CurrentUICulture);
+            return new ServiceStringLocalizer(resourceSource, LocalizationService, LoggerFactory?.CreateLogger<ServiceStringLocalizer>());
         }
 
         /// <summary>
@@ -51,7 +63,7 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// </returns>
         public IStringLocalizer Create(string baseName, string location)
         {
-            return new ServiceStringLocalizer(baseName, LocalizationService, CultureInfo.CurrentUICulture);
+            return new ServiceStringLocalizer(baseName, LocalizationService, LoggerFactory?.CreateLogger<ServiceStringLocalizer>());
         }
     }
 }

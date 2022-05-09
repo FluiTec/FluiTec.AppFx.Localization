@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Microsoft.Extensions.Localization;
+using FluiTec.AppFx.Localization.Configuration;
+using FluiTec.AppFx.Localization.Exceptions;
+using FluiTec.AppFx.Localization.Models;
+using Microsoft.Extensions.Logging;
 
 namespace FluiTec.AppFx.Localization.Services
 {
@@ -30,24 +33,61 @@ namespace FluiTec.AppFx.Localization.Services
         /// </value>
         public ILocalizationDataService DataService { get; }
 
+        /// <summary>
+        /// Gets the translation picking service.
+        /// </summary>
+        ///
+        /// <value>
+        /// The translation picking service.
+        /// </value>
+        public ITranslationPickingService TranslationPickingService { get; }
+
+        /// <summary>
+        /// Gets options for controlling the operation.
+        /// </summary>
+        ///
+        /// <value>
+        /// The options.
+        /// </value>
+        public ServiceLocalizationOptions Options { get; }
+
+        /// <summary>
+        /// Gets the logger.
+        /// </summary>
+        ///
+        /// <value>
+        /// The logger.
+        /// </value>
+        public ILogger<DataLocalizationService> Logger { get; }
+
         #endregion
 
         #region Constructors
 
         /// <summary>
-        ///     Constructor.
+        /// Constructor.
         /// </summary>
-        /// <param name="dataService">  The data service. </param>
-        public DataLocalizationService(ILocalizationDataService dataService)
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <param name="dataService">                  The data service. </param>
+        /// <param name="translationPickingService">    The translation picking service. </param>
+        /// <param name="options">                      Options for controlling the operation. </param>
+        /// <param name="logger">                       The logger. </param>
+        public DataLocalizationService(ILocalizationDataService dataService, ITranslationPickingService translationPickingService, ServiceLocalizationOptions options, ILogger<DataLocalizationService> logger)
         {
             DataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+            TranslationPickingService = translationPickingService ?? throw new ArgumentNullException(nameof(translationPickingService));
+            Options = options ?? throw new ArgumentNullException(nameof(options));
+            Logger = logger;
             SourceName = DataService.Name;
         }
 
         #endregion
 
         #region ILocalizationService
-
+        
         /// <summary>
         ///     By name.
         /// </summary>
@@ -56,7 +96,7 @@ namespace FluiTec.AppFx.Localization.Services
         /// <returns>
         ///     A LocalizedString.
         /// </returns>
-        public virtual LocalizedString ByName(string name, CultureInfo culture)
+        public virtual LocalizedStringEx ByName(string name, CultureInfo culture)
         {
             using var uow = DataService.BeginUnitOfWork();
 
@@ -64,20 +104,22 @@ namespace FluiTec.AppFx.Localization.Services
                 .GetByResourceCompound(name)
                 .ToList();
 
-            if (!translations.Any())
-                return new LocalizedString(name, name, true, SourceName);
-
-            var perfectFit = translations.SingleOrDefault(t => t.Language.IsoName == culture.Name);
-            if (perfectFit != null) 
-                return new LocalizedString(name, perfectFit.Translation.Value, false, SourceName);
-
-            var baseFit =
-                translations.SingleOrDefault(t => t.Language.IsoName[..2] == culture.TwoLetterISOLanguageName);
-
-            return baseFit != null
-                ? new LocalizedString(name, baseFit.Translation.Value, false, SourceName)
-                : new LocalizedString(name, name, true, SourceName);
+            return TranslationPickingService.Pick(translations, culture, SourceName)
+                   ?? CreateNotFoundLocalizedString(name, culture);
         }
+
+        /// <summary>
+        /// By name not found.
+        /// </summary>
+        ///
+        /// <param name="name">     The name. </param>
+        /// <param name="culture">  The culture. </param>
+        ///
+        /// <returns>
+        /// A LocalizedStringEx.
+        /// </returns>
+        public virtual LocalizedStringEx ByNameNotFound(string name, CultureInfo culture) =>
+            CreateNotFoundLocalizedString(name, culture);
 
         /// <summary>
         ///     Enumerates by base name in this collection.
@@ -87,26 +129,53 @@ namespace FluiTec.AppFx.Localization.Services
         /// <returns>
         ///     An enumerator that allows foreach to be used to process by base name in this collection.
         /// </returns>
-        public virtual IEnumerable<LocalizedString> ByBaseName(string baseName, CultureInfo culture)
+        public virtual IEnumerable<LocalizedStringEx> ByBaseName(string baseName, CultureInfo culture)
         {
             using var uow = DataService.BeginUnitOfWork();
 
             var translations = uow.TranslationRepository
-                .GetByResourceSuffixCompound(baseName)
-                .ToList();
+                    .GetByResourceSuffixCompound(baseName)
+                    .OrderBy(t => t.Resource.ResourceKey)
+                    .GroupBy(t => t.Resource.ResourceKey)
+                    .ToList();
 
-            var grouped = translations
-                .OrderBy(t => t.Resource.ResourceKey)
-                .ThenByDescending(t => t.Language.IsoName.Length)
-                .GroupBy(t => t.Resource.ResourceKey);
+            return TranslationPickingService.Pick(translations, culture, SourceName);
+        }
 
-            var filtered = grouped
-                .Select(g => g.First());
+        #endregion
 
-            return filtered
-                .Select(f => 
-                    new LocalizedString(f.Resource.ResourceKey, f.Translation.Value, false, SourceName))
-                .ToList();
+        #region Methods
+
+        /// <summary>
+        /// Creates not found localized string.
+        /// </summary>
+        ///
+        /// <exception cref="MissingLocalizationException"> Thrown when a Missing Localization error
+        ///                                                 condition occurs. </exception>
+        /// <exception cref="ArgumentOutOfRangeException">  Thrown when one or more arguments are outside
+        ///                                                 the required range. </exception>
+        ///
+        /// <param name="name">     The name. </param>
+        /// <param name="culture">  The culture. </param>
+        ///
+        /// <returns>
+        /// The new not found localized string.
+        /// </returns>
+        protected LocalizedStringEx CreateNotFoundLocalizedString(string name, CultureInfo culture)
+        {
+            switch (Options.MissingLocalizationBehavior)
+            {
+                case MissingLocalizationBehavior.Ignore:
+                    return new LocalizedStringEx(name, name, true, SourceName, !string.IsNullOrWhiteSpace(culture.Name) ? culture.Name : culture.TwoLetterISOLanguageName);
+                case MissingLocalizationBehavior.Log:
+                    Logger?.LogWarning($"Missing localization, name: {name}, culture: {culture.Name}|{culture.TwoLetterISOLanguageName}");
+                    return new LocalizedStringEx(name, name, true, SourceName, !string.IsNullOrWhiteSpace(culture.Name) ? culture.Name : culture.TwoLetterISOLanguageName);
+                case MissingLocalizationBehavior.Throw:
+                    throw new MissingLocalizationException(name, culture);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Options.MissingLocalizationBehavior));
+            }
+            
         }
 
         #endregion

@@ -44,6 +44,8 @@
 
   <ItemGroup>
     <Folder Include="Import\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Extensions\" />
     <Folder Include="Reflection\MemberScanner\" />
   </ItemGroup>
 
