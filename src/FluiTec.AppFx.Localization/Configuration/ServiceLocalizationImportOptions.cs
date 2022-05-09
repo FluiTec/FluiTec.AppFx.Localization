@@ -33,11 +33,6 @@ namespace FluiTec.AppFx.Localization.Configuration
         /// </summary>
         public ServiceLocalizationImportOptions()
         {
-            UpdateableAuthors = new List<string>(new[]
-            {
-                CodeLocalizationSource.CodeAuthor,
-                FileLocalizationSource.FileAuthor
-            });
         }
     }
 }

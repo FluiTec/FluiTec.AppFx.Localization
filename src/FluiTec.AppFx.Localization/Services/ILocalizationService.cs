@@ -18,6 +18,18 @@ namespace FluiTec.AppFx.Localization.Services
         ///     A LocalizedString.
         /// </returns>
         LocalizedStringEx ByName(string name, CultureInfo culture);
+
+        /// <summary>
+        /// By name not found.
+        /// </summary>
+        ///
+        /// <param name="name">     The name. </param>
+        /// <param name="culture">  The culture. </param>
+        ///
+        /// <returns>
+        /// A LocalizedStringEx.
+        /// </returns>
+        LocalizedStringEx ByNameNotFound(string name, CultureInfo culture);
         
         /// <summary>
         ///     Enumerates by base name in this collection.
