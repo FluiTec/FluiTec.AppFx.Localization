@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
-    <PackageReference Include="coverlet.collector" Version="3.1.1">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -27,8 +27,8 @@
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <ProjectReference Include="..\..\..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj" />
     <ProjectReference Include="..\..\FluiTec.AppFx.Localization.TestLibrary\FluiTec.AppFx.Localization.TestLibrary.csproj" />
-    <PackageReference Include="FluiTec.AppFx.Options" Version="1.1.81"></PackageReference>
-    <PackageReference Include="FluiTec.AppFx.Data.Dapper.Mssql" Version="1.0.101"></PackageReference>
+    <PackageReference Include="FluiTec.AppFx.Options" Version="1.1.82"></PackageReference>
+    <PackageReference Include="FluiTec.AppFx.Data.Dapper.Mssql" Version="1.1.5"></PackageReference>
   </ItemGroup>
 
   <ItemGroup>

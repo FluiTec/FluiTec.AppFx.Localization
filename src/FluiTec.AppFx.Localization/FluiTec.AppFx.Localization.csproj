@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
   </ItemGroup>
@@ -40,8 +40,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.4"></PackageReference>
-	  <PackageReference Include="FluiTec.AppFx.Data.Migration" Version="1.1.4"></PackageReference>
+    <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.5"></PackageReference>
+	  <PackageReference Include="FluiTec.AppFx.Data.Migration" Version="1.1.5"></PackageReference>
   </ItemGroup>
 
   <ItemGroup>

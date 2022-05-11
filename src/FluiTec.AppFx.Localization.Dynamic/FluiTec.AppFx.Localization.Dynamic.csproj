@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="FluiTec.AppFx.Data.Dynamic" Version="1.1.4"></PackageReference>
+    <PackageReference Include="FluiTec.AppFx.Data.Dynamic" Version="1.1.5"></PackageReference>
   </ItemGroup>
 
   <ItemGroup>
