@@ -248,6 +248,7 @@ Which gives you a possibility to translation precise error messages shown when p
 this model.
 
 You can also specify default translation for error message within attribute
+
 - `[Required(ErrorMessage = "Sample property is required!")]`.
 
 Both `[Display(Name = "...")]` and `[DisplayName]` attributes are supported.
