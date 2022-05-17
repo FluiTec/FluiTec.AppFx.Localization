@@ -2,12 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PackageProjectUrl>https://www.nuget.org/packages/FluiTec.AppFx.Localization/</PackageProjectUrl>
         <RepositoryUrl>https://github.com/FluiTec/FluiTec.AppFx.Localization</RepositoryUrl>
         <NeutralLanguage>en</NeutralLanguage>
-        <PostBuildEvent></PostBuildEvent>
-        <PreBuildEvent></PreBuildEvent>
+        <PostBuildEvent />
+        <PreBuildEvent />
         <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
         <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     </PropertyGroup>
@@ -15,11 +15,11 @@
     <ItemGroup>
         <None Include="..\..\LICENSE.md">
             <Pack>True</Pack>
-            <PackagePath></PackagePath>
+            <PackagePath />
         </None>
         <None Include="..\..\THIRD_PARTY_LICENSES.md">
             <Pack>True</Pack>
-            <PackagePath></PackagePath>
+            <PackagePath />
         </None>
     </ItemGroup>
 
@@ -30,18 +30,16 @@
         <PackageReference Include="System.Linq.Expressions" Version="4.3.0"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj"/>
-    </ItemGroup>
-
     <ItemGroup Condition="'$(Configuration)'=='Debug'">
+        <ProjectReference Include="..\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj"/>
         <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data\FluiTec.AppFx.Data.csproj"/>
         <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Migration\FluiTec.AppFx.Data.Migration.csproj"/>
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)'=='Release'">
-        <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.7"></PackageReference>
-        <PackageReference Include="FluiTec.AppFx.Data.Migration" Version="1.1.7"></PackageReference>
+        <PackageReference Include="FluiTec.AppFx.Options" Version="1.1.82" />
+        <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.7" />
+        <PackageReference Include="FluiTec.AppFx.Data.Migration" Version="1.1.7" />
     </ItemGroup>
 
     <ItemGroup>

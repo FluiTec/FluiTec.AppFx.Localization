@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net6</TargetFramework>
-        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <PackageProjectUrl>https://www.nuget.org/packages/FluiTec.AppFx.Localization/</PackageProjectUrl>
         <RepositoryUrl>https://github.com/FluiTec/FluiTec.AppFx.Localization</RepositoryUrl>
         <NeutralLanguage>en</NeutralLanguage>
