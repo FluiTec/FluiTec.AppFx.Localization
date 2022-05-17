@@ -3,6 +3,7 @@ using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Data.Dapper.Extensions;
 using FluiTec.AppFx.Data.Migration;
+using FluiTec.AppFx.Data.Migration.NameGenerators;
 
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 {
@@ -12,10 +13,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
     [ExtendedMigrationAttribute(2021, 09, 22, 14, 27, "Achim Schnell")]
     public class AuthorMigration : Migration
     {
-        /// <summary>
-        /// (Immutable) the unique name constraint.
-        /// </summary>
-        private const string UniqueNameConstraint = "UX_Author_Name";
+        private static readonly string UniqueNameConstraint = 
+            UniqueIndexNameGenerator.CreateName(SchemaGlobals.Schema, SchemaGlobals.AuthorTable, nameof(AuthorEntity.Name));
 
         /// <summary>
         /// Collect the UP migration expressions.

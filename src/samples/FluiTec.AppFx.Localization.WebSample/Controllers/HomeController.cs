@@ -1,29 +1,24 @@
-﻿using FluiTec.AppFx.Localization.WebSample.Models;
+﻿using System.Diagnostics;
+using FluiTec.AppFx.Localization.WebSample.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
-namespace FluiTec.AppFx.Localization.WebSample.Controllers
+namespace FluiTec.AppFx.Localization.WebSample.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    public IActionResult Index()
     {
-        public HomeController()
-        {
-        }
+        return View(new TestModel());
+    }
 
-        public IActionResult Index()
-        {
-            return View(new TestModel());
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
     }
 }

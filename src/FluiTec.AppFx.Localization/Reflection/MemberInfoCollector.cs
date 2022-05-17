@@ -3,18 +3,16 @@
 namespace FluiTec.AppFx.Localization.Reflection
 {
     /// <summary>
-    /// A member information collector.
+    ///     A member information collector.
     /// </summary>
     public static class MemberInfoCollector
     {
         /// <summary>
-        /// Gets resource key.
+        ///     Gets resource key.
         /// </summary>
-        ///
         /// <param name="mi">   The mi. </param>
-        ///
         /// <returns>
-        /// The resource key.
+        ///     The resource key.
         /// </returns>
         public static string GetResourceKey(MemberInfo mi)
         {
@@ -23,13 +21,11 @@ namespace FluiTec.AppFx.Localization.Reflection
         }
 
         /// <summary>
-        /// Gets full name.
+        ///     Gets full name.
         /// </summary>
-        ///
         /// <param name="mi">   The mi. </param>
-        ///
         /// <returns>
-        /// The full name.
+        ///     The full name.
         /// </returns>
         public static string GetFullName(MemberInfo mi)
         {

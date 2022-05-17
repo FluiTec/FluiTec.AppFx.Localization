@@ -1,4 +1,5 @@
 ﻿using FluiTec.AppFx.Data.Migration;
+using FluiTec.AppFx.Data.Migration.NameGenerators;
 using FluentMigrator;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Localization.Entities;
@@ -15,12 +16,14 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
         /// <summary>
         /// (Immutable) the foreign key resource.
         /// </summary>
-        private const string ForeignKeyResource = "FK_Resource_Translation";
+        private static readonly string ForeignKeyResource = 
+                ForeignKeyIndexNameGenerator.CreateName(SchemaGlobals.Schema, SchemaGlobals.ResourceTable, SchemaGlobals.TranslationTable);
 
         /// <summary>
         /// (Immutable) the foreign key language.
         /// </summary>
-        private const string ForeignKeyLanguage = "FK_Language_Translation";
+        private static readonly string ForeignKeyLanguage = 
+                ForeignKeyIndexNameGenerator.CreateName(SchemaGlobals.Schema, SchemaGlobals.LanguageTable, SchemaGlobals.TranslationTable);
 
         /// <summary>
         /// Collect the UP migration expressions.

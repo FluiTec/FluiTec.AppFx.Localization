@@ -19,8 +19,8 @@ namespace MySampleProject {
 
 ## Registering for Other Languages
 
-
-If you need to register resources for other languages as well (not only for default one), it's possible using following attribute:
+If you need to register resources for other languages as well (not only for default one), it's possible using following
+attribute:
 
 ```csharp
 namespace DbLocalizationProvider.Demo
@@ -36,8 +36,8 @@ namespace DbLocalizationProvider.Demo
 ```
 
 **NB!** If there will be duplicate resource translations for the same language - an exception will be thrown.
-Which also means - that theoretically an exception might be thrown if your default language is let's say "en" and you have additional translations via attribute also set to "en". So be careful.
-
+Which also means - that theoretically an exception might be thrown if your default language is let's say "en" and you
+have additional translations via attribute also set to "en". So be careful.
 
 ## Translating in Markup (.cshtml)
 
@@ -62,9 +62,10 @@ Retrieve translation by specific culture ("Norsk" in this case):
 </div>
 ```
 
-
 ### Accessing [Display(Description = "...")]
-Also small addition to `ModelMetadataProvider` infrastructure available for Asp.Net Mvc pipeline. Now you can also localize description for the property via `DataAnnotations` attributes:
+
+Also small addition to `ModelMetadataProvider` infrastructure available for Asp.Net Mvc pipeline. Now you can also
+localize description for the property via `DataAnnotations` attributes:
 
 ```csharp
 namespace MyProject
@@ -77,10 +78,10 @@ namespace MyProject
 }
 ```
 
-Will generate following resource `MyProject.MyViewModel.Username-Description` *only* if `Description` property of `Display` attribute will not be `string.Empty()`. You can localize it via AdminUI and set new value if needed.
+Will generate following resource `MyProject.MyViewModel.Username-Description` *only* if `Description` property
+of `Display` attribute will not be `string.Empty()`. You can localize it via AdminUI and set new value if needed.
 
 When you need to use this value in your display or editor templates you can access it via `ViewData`:
-
 
 ```
 <div>
@@ -89,7 +90,6 @@ When you need to use this value in your display or editor templates you can acce
     ...
 </div>
 ```
-
 
 ## Translating in C#
 
@@ -111,11 +111,13 @@ var t2 = LocalizationProvider.Current.GetStringByCulture(
     CultureInfo.GetCultureInfo("no"));
 ```
 
-
 ## Translations with Placeholders
 
-Index based `string.Format()` style arguments for localized message is very nice and flexible approach. However - it's readable most probably only by developer or somebody who understands why first element starts with `{0}` and not `{1}`.
-When you need to give access to the resources to editors or anybody else with even enough technical background, you might receive questions back - "What is `{0}` and what will be placed in `{4}`?" Pretty tricky question if you need to open source code and look for passed in format arguments.
+Index based `string.Format()` style arguments for localized message is very nice and flexible approach. However - it's
+readable most probably only by developer or somebody who understands why first element starts with `{0}` and not `{1}`.
+When you need to give access to the resources to editors or anybody else with even enough technical background, you
+might receive questions back - "What is `{0}` and what will be placed in `{4}`?" Pretty tricky question if you need to
+open source code and look for passed in format arguments.
 Now you can pass in anonymous object with named properties and use those in your localization.
 
 For example, greeting message for end-users:

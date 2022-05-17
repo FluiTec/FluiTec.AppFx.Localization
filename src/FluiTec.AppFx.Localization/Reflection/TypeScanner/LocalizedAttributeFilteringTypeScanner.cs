@@ -8,34 +8,32 @@ using FluiTec.AppFx.Localization.Reflection.Helpers;
 namespace FluiTec.AppFx.Localization.Reflection.TypeScanner
 {
     /// <summary>
-    /// A localized attribute filtering type scanner.
+    ///     A localized attribute filtering type scanner.
     /// </summary>
     public class LocalizedAttributeFilteringTypeScanner : AttributeFilteringTypeScanner
     {
         /// <summary>
-        /// Gets the filter attributes.
+        ///     Constructor.
         /// </summary>
-        ///
+        /// <param name="helper">   The helper. </param>
+        public LocalizedAttributeFilteringTypeScanner(ReflectionHelper helper) : base(helper)
+        {
+        }
+
+        /// <summary>
+        ///     Gets the filter attributes.
+        /// </summary>
         /// <value>
-        /// The filter attributes.
+        ///     The filter attributes.
         /// </value>
         public override IEnumerable<Type> FilterAttributes { get; } = new[] {typeof(LocalizedAttribute)};
 
         /// <summary>
-        /// Constructor.
+        ///     Gets the types in this collection.
         /// </summary>
-        ///
-        /// <param name="helper">   The helper. </param>
-        public LocalizedAttributeFilteringTypeScanner(ReflectionHelper helper) : base(helper) {}
-
-        /// <summary>
-        /// Gets the types in this collection.
-        /// </summary>
-        ///
         /// <param name="assembly"> The assembly. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the types in this collection.
+        ///     An enumerator that allows foreach to be used to process the types in this collection.
         /// </returns>
         public override IEnumerable<Type> GetTypes(Assembly assembly)
         {
@@ -45,9 +43,8 @@ namespace FluiTec.AppFx.Localization.Reflection.TypeScanner
         }
 
         /// <summary>
-        /// Executes the 'type attribute detected' action.
+        ///     Executes the 'type attribute detected' action.
         /// </summary>
-        ///
         /// <param name="type">             The type. </param>
         /// <param name="attributeType">    Type of the attribute. </param>
         /// <param name="attribute">        The attribute. </param>
@@ -56,11 +53,9 @@ namespace FluiTec.AppFx.Localization.Reflection.TypeScanner
             base.OnTypeAttributeDetected(type, attributeType, attribute);
 
             if (attributeType == typeof(LocalizedAttribute))
-            {
-                Helper.LocalizedTypeInfo.AddOrUpdate(type, 
-                    tx => attribute as LocalizedAttribute, 
+                Helper.LocalizedTypeInfo.AddOrUpdate(type,
+                    tx => attribute as LocalizedAttribute,
                     (ty, localizedAttribute) => attribute as LocalizedAttribute);
-            }
         }
     }
 }

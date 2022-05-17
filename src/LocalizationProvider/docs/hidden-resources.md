@@ -44,4 +44,5 @@ public enum SomeEnumWithAllHiddenResources
 ```
 
 Translation still works even for hidden resources.
-Also, `[Hidden]` attribute can be applied to existing resources - metadata in the database will be updated to match the source code.
+Also, `[Hidden]` attribute can be applied to existing resources - metadata in the database will be updated to match the
+source code.

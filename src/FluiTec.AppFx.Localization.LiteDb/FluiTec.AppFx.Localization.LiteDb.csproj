@@ -1,42 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://www.nuget.org/packages/FluiTec.AppFx.Localization/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/FluiTec/FluiTec.AppFx.Localization</RepositoryUrl>
-    <NeutralLanguage>en</NeutralLanguage>
-    <PostBuildEvent></PostBuildEvent>
-    <PreBuildEvent></PreBuildEvent>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <PackageProjectUrl>https://www.nuget.org/packages/FluiTec.AppFx.Localization/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FluiTec/FluiTec.AppFx.Localization</RepositoryUrl>
+        <NeutralLanguage>en</NeutralLanguage>
+        <PostBuildEvent></PostBuildEvent>
+        <PreBuildEvent></PreBuildEvent>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+        <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\..\LICENSE.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\THIRD_PARTY_LICENSES.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.md">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+        <None Include="..\..\THIRD_PARTY_LICENSES.md">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj"/>
+    </ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)'=='Debug'">
-		<ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.LiteDb\FluiTec.AppFx.Data.LiteDb.csproj" />
-	</ItemGroup>
+    <ItemGroup Condition="'$(Configuration)'=='Debug'">
+        <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.LiteDb\FluiTec.AppFx.Data.LiteDb.csproj"/>
+    </ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)'=='Release'">
-		<PackageReference Include="FluiTec.AppFx.Data.LiteDb" Version="1.1.5"></PackageReference>
-	</ItemGroup>
+    <ItemGroup Condition="'$(Configuration)'=='Release'">
+        <PackageReference Include="FluiTec.AppFx.Data.LiteDb" Version="1.1.7"></PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Repositories\"/>
+    </ItemGroup>
 
 </Project>

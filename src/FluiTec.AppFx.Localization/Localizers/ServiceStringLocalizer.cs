@@ -99,7 +99,8 @@ namespace FluiTec.AppFx.Localization.Localizers
             _culture = culture;
             LocalizedStrings = new Dictionary<CultureInfo, List<LocalizedStringEx>>();
 
-            Logger?.LogTrace("New ServiceStringLocalizer / (BaseName='{BaseName}', Culture='{culture}')", BaseName, culture);
+            Logger?.LogTrace("New ServiceStringLocalizer / (BaseName='{BaseName}', Culture='{culture}')", BaseName,
+                culture);
         }
 
         /// <summary>
@@ -162,7 +163,8 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// </returns>
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
-            Logger?.LogTrace("GetAllStrings({includeParentCultures}) / (BaseName='{BaseName}', Culture='{culture}'))", includeParentCultures, BaseName, Culture);
+            Logger?.LogTrace("GetAllStrings({includeParentCultures}) / (BaseName='{BaseName}', Culture='{culture}'))",
+                includeParentCultures, BaseName, Culture);
 
             if (LocalizedStrings.ContainsKey(Culture))
             {

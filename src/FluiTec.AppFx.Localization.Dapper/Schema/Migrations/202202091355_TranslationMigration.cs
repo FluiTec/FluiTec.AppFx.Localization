@@ -1,5 +1,6 @@
 ﻿using FluentMigrator;
 using FluiTec.AppFx.Data.Migration;
+using FluiTec.AppFx.Data.Migration.NameGenerators;
 using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Data.Dapper.Extensions;
@@ -15,7 +16,8 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
         /// <summary>
         /// (Immutable) the foreign key author.
         /// </summary>
-        private const string ForeignKeyAuthor = "FK_Author_Translation";
+        private static readonly string ForeignKeyAuthor = 
+            ForeignKeyIndexNameGenerator.CreateName(SchemaGlobals.Schema, SchemaGlobals.AuthorTable, SchemaGlobals.TranslationTable);
 
         /// <summary>
         /// Collect the UP migration expressions.

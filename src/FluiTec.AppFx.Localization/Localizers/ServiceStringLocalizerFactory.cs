@@ -11,9 +11,8 @@ namespace FluiTec.AppFx.Localization.Localizers
     public class ServiceStringLocalizerFactory : IStringLocalizerFactory
     {
         /// <summary>
-        /// Constructor.
+        ///     Constructor.
         /// </summary>
-        ///
         /// <param name="localizationService">  The localization service. </param>
         /// <param name="loggerFactory">        The logger factory. </param>
         public ServiceStringLocalizerFactory(ILocalizationService localizationService, ILoggerFactory loggerFactory)
@@ -31,11 +30,10 @@ namespace FluiTec.AppFx.Localization.Localizers
         public ILocalizationService LocalizationService { get; }
 
         /// <summary>
-        /// Gets the logger factory.
+        ///     Gets the logger factory.
         /// </summary>
-        ///
         /// <value>
-        /// The logger factory.
+        ///     The logger factory.
         /// </value>
         public ILoggerFactory LoggerFactory { get; }
 
@@ -50,7 +48,8 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// </returns>
         public IStringLocalizer Create(Type resourceSource)
         {
-            return new ServiceStringLocalizer(resourceSource, LocalizationService, LoggerFactory?.CreateLogger<ServiceStringLocalizer>());
+            return new ServiceStringLocalizer(resourceSource, LocalizationService,
+                LoggerFactory?.CreateLogger<ServiceStringLocalizer>());
         }
 
         /// <summary>
@@ -63,7 +62,8 @@ namespace FluiTec.AppFx.Localization.Localizers
         /// </returns>
         public IStringLocalizer Create(string baseName, string location)
         {
-            return new ServiceStringLocalizer(baseName, LocalizationService, LoggerFactory?.CreateLogger<ServiceStringLocalizer>());
+            return new ServiceStringLocalizer(baseName, LocalizationService,
+                LoggerFactory?.CreateLogger<ServiceStringLocalizer>());
         }
     }
 }

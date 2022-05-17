@@ -6,28 +6,15 @@ using FluiTec.AppFx.Options.Managers;
 namespace FluiTec.AppFx.Localization.WebSample;
 
 /// <summary>
-/// A startup.
+///     A startup.
 /// </summary>
 public class Startup
 {
-    #region Properties
-
-    /// <summary>	Gets the configuration. </summary>
-    /// <value>	The configuration. </value>
-    public IConfigurationRoot Configuration { get; }
-
-    /// <summary>Gets the environment.</summary>
-    /// <value>The environment.</value>
-    public IWebHostEnvironment Environment { get; }
-
-    #endregion
-
     #region Constructors
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
-    ///
     /// <param name="environment">  The environment. </param>
     public Startup(IWebHostEnvironment environment)
     {
@@ -45,12 +32,23 @@ public class Startup
 
     #endregion
 
+    #region Properties
+
+    /// <summary>	Gets the configuration. </summary>
+    /// <value>	The configuration. </value>
+    public IConfigurationRoot Configuration { get; }
+
+    /// <summary>Gets the environment.</summary>
+    /// <value>The environment.</value>
+    public IWebHostEnvironment Environment { get; }
+
+    #endregion
+
     #region Methods
 
     /// <summary>
-    /// Configure services.
+    ///     Configure services.
     /// </summary>
-    ///
     /// <param name="services"> The services. </param>
     public void ConfigureServices(IServiceCollection services)
     {
@@ -66,9 +64,8 @@ public class Startup
     }
 
     /// <summary>
-    /// Configure application.
+    ///     Configure application.
     /// </summary>
-    ///
     /// <param name="app">              The application. </param>
     /// <param name="loggerFactory">    The logger factory. </param>
     /// <param name="appLifetime">      The application lifetime. </param>
@@ -77,13 +74,11 @@ public class Startup
         IServiceProvider serviceProvider)
     {
         var changes = serviceProvider.GetRequiredService<ILocalizationImportService>().ImportAsync().Result;
-        var res = serviceProvider.GetRequiredService<ILocalizationDataService>().BeginUnitOfWork().ResourceRepository.GetAll();
-        
+        var res = serviceProvider.GetRequiredService<ILocalizationDataService>().BeginUnitOfWork().ResourceRepository
+            .GetAll();
+
         // Configure the HTTP request pipeline.
-        if (!Environment.IsDevelopment())
-        {
-            app.UseExceptionHandler("/Home/Error");
-        }
+        if (!Environment.IsDevelopment()) app.UseExceptionHandler("/Home/Error");
 
         app.UseStaticFiles();
 
@@ -92,13 +87,11 @@ public class Startup
         app.UseAuthorization();
 
         // IMPORTANT
-        app.UseRequestLocalization(serviceProvider.GetRequiredService<ServiceLocalizationOptions>().GetRequestLocalizationOptions());
+        app.UseRequestLocalization(serviceProvider.GetRequiredService<ServiceLocalizationOptions>()
+            .GetRequestLocalizationOptions());
         // IMPORTANT
 
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapDefaultControllerRoute();
-        });
+        app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
     }
 
     #endregion

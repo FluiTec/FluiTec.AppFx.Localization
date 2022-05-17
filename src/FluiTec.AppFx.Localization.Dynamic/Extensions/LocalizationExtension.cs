@@ -7,18 +7,16 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FluiTec.AppFx.Localization.Dynamic.Extensions
 {
     /// <summary>
-    /// A localization extension.
+    ///     A localization extension.
     /// </summary>
     public static class LocalizationExtension
     {
         /// <summary>
-        /// An IServiceCollection extension method that configure localization services.
+        ///     An IServiceCollection extension method that configure localization services.
         /// </summary>
-        ///
         /// <param name="services"> The services to act on. </param>
-        ///
         /// <returns>
-        /// An IServiceCollection.
+        ///     An IServiceCollection.
         /// </returns>
         public static IServiceCollection ConfigureLocalizationServices(this IServiceCollection services)
         {
@@ -30,14 +28,12 @@ namespace FluiTec.AppFx.Localization.Dynamic.Extensions
         }
 
         /// <summary>
-        /// An IServiceCollection extension method that configure localization.
+        ///     An IServiceCollection extension method that configure localization.
         /// </summary>
-        ///
         /// <param name="services"> The services to act on. </param>
         /// <param name="manager">  The manager. </param>
-        ///
         /// <returns>
-        /// An IServiceCollection.
+        ///     An IServiceCollection.
         /// </returns>
         public static IServiceCollection ConfigureLocalization(this IServiceCollection services,
             ConfigurationManager manager)

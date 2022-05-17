@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <NeutralLanguage>en</NeutralLanguage>
-    <Description>Abstractions for Database driven localization provider.</Description>
-    <Company>Valdis Iljuconoks, https://tech-fellow.net</Company>
-    <Product>DbLocalizationProvider</Product>
-    <Authors>Valdis Iljuconoks, https://tech-fellow.net</Authors>
-    <Copyright>Tech Fellow Consulting, Copyright © 2018</Copyright>
-    <PackageProjectUrl>https://projects-epi-localization.tech-fellow.net/</PackageProjectUrl>
-    <PackageTags>Localization Provider DbLocalization DbLocalizationProvider LocalizationProvider Database Driven</PackageTags>
-    <PackageLicenseUrl>https://github.com/valdisiljuconoks/LocalizationProvider/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageId>FluiTec.DbLocalizationProvider.Abstractions</PackageId>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <RepositoryUrl>https://github.com/IInvocation/AppFx</RepositoryUrl>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>False</GenerateDocumentationFile>
+        <NeutralLanguage>en</NeutralLanguage>
+        <Description>Abstractions for Database driven localization provider.</Description>
+        <Company>Valdis Iljuconoks, https://tech-fellow.net</Company>
+        <Product>DbLocalizationProvider</Product>
+        <Authors>Valdis Iljuconoks, https://tech-fellow.net</Authors>
+        <Copyright>Tech Fellow Consulting, Copyright © 2018</Copyright>
+        <PackageProjectUrl>https://projects-epi-localization.tech-fellow.net/</PackageProjectUrl>
+        <PackageTags>Localization Provider DbLocalization DbLocalizationProvider LocalizationProvider Database Driven</PackageTags>
+        <PackageLicenseUrl>https://github.com/valdisiljuconoks/LocalizationProvider/blob/master/LICENSE</PackageLicenseUrl>
+        <PackageId>FluiTec.DbLocalizationProvider.Abstractions</PackageId>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+        <RepositoryUrl>https://github.com/IInvocation/AppFx</RepositoryUrl>
+    </PropertyGroup>
 
 </Project>

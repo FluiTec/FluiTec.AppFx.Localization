@@ -6,23 +6,13 @@ using FluiTec.AppFx.Localization.Reflection.Helpers;
 namespace FluiTec.AppFx.Localization.Reflection.MemberScanner
 {
     /// <summary>
-    /// A default member scanner.
+    ///     A default member scanner.
     /// </summary>
     public class DefaultMemberScanner : IMemberScanner
     {
         /// <summary>
-        /// Gets the helper.
+        ///     Constructor.
         /// </summary>
-        ///
-        /// <value>
-        /// The helper.
-        /// </value>
-        public ReflectionHelper Helper { get; }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        ///
         /// <param name="helper">   The helper. </param>
         public DefaultMemberScanner(ReflectionHelper helper)
         {
@@ -30,13 +20,19 @@ namespace FluiTec.AppFx.Localization.Reflection.MemberScanner
         }
 
         /// <summary>
-        /// Gets the members in this collection.
+        ///     Gets the helper.
         /// </summary>
-        ///
+        /// <value>
+        ///     The helper.
+        /// </value>
+        public ReflectionHelper Helper { get; }
+
+        /// <summary>
+        ///     Gets the members in this collection.
+        /// </summary>
         /// <param name="type"> The type. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the members in this collection.
+        ///     An enumerator that allows foreach to be used to process the members in this collection.
         /// </returns>
         public virtual IEnumerable<MemberInfo> GetMembers(Type type)
         {
@@ -44,13 +40,11 @@ namespace FluiTec.AppFx.Localization.Reflection.MemberScanner
         }
 
         /// <summary>
-        /// Gets the members in this collection.
+        ///     Gets the members in this collection.
         /// </summary>
-        ///
         /// <param name="types">    The types. </param>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the members in this collection.
+        ///     An enumerator that allows foreach to be used to process the members in this collection.
         /// </returns>
         public virtual IEnumerable<MemberInfo> GetMembers(IEnumerable<Type> types)
         {

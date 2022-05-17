@@ -3,6 +3,7 @@ using FluiTec.AppFx.Localization.Schema;
 using FluiTec.AppFx.Localization.Entities;
 using FluiTec.AppFx.Data.Dapper.Extensions;
 using FluiTec.AppFx.Data.Migration;
+using FluiTec.AppFx.Data.Migration.NameGenerators;
 
 namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
 {
@@ -15,12 +16,14 @@ namespace FluiTec.AppFx.Localization.Dapper.Schema.Migrations
         /// <summary>
         /// (Immutable) the unique name constraint.
         /// </summary>
-        private const string UniqueNameConstraint = "UX_Language_Name";
+        private static readonly string UniqueNameConstraint =
+            UniqueIndexNameGenerator.CreateName(SchemaGlobals.Schema, SchemaGlobals.LanguageTable, nameof(LanguageEntity.Name));
 
         /// <summary>
         /// (Immutable) the unique ISO name constraint.
         /// </summary>
-        private const string UniqueIsoNameConstraint = "UX_Language_IsoName";
+        private static readonly string UniqueIsoNameConstraint = 
+                UniqueIndexNameGenerator.CreateName(SchemaGlobals.Schema, SchemaGlobals.LanguageTable, nameof(LanguageEntity.IsoName));
 
         /// <summary>
         /// Collect the UP migration expressions.

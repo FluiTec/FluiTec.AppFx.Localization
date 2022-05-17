@@ -3,17 +3,16 @@
 namespace FluiTec.AppFx.Localization.Tests.Reflection.Models
 {
     /// <summary>
-    /// A data Model for the localized.
+    ///     A data Model for the localized.
     /// </summary>
     [Localized]
     public class LocalizedModel
     {
         /// <summary>
-        /// Gets or sets the name.
+        ///     Gets or sets the name.
         /// </summary>
-        ///
         /// <value>
-        /// The name.
+        ///     The name.
         /// </value>
         public string Name { get; set; }
     }

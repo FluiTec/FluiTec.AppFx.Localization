@@ -14,14 +14,79 @@ namespace FluiTec.AppFx.Localization.Services
     /// </summary>
     public class DataLocalizationService : ILocalizationService
     {
+        #region Constructors
+
+        /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when one or more required arguments are
+        ///     null.
+        /// </exception>
+        /// <param name="dataService">                  The data service. </param>
+        /// <param name="translationPickingService">    The translation picking service. </param>
+        /// <param name="options">                      Options for controlling the operation. </param>
+        /// <param name="logger">                       The logger. </param>
+        public DataLocalizationService(ILocalizationDataService dataService,
+            ITranslationPickingService translationPickingService, ServiceLocalizationOptions options,
+            ILogger<DataLocalizationService> logger)
+        {
+            DataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
+            TranslationPickingService = translationPickingService ??
+                                        throw new ArgumentNullException(nameof(translationPickingService));
+            Options = options ?? throw new ArgumentNullException(nameof(options));
+            Logger = logger;
+            SourceName = DataService.Name;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Creates not found localized string.
+        /// </summary>
+        /// <exception cref="MissingLocalizationException">
+        ///     Thrown when a Missing Localization error
+        ///     condition occurs.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///     Thrown when one or more arguments are outside
+        ///     the required range.
+        /// </exception>
+        /// <param name="name">     The name. </param>
+        /// <param name="culture">  The culture. </param>
+        /// <returns>
+        ///     The new not found localized string.
+        /// </returns>
+        protected LocalizedStringEx CreateNotFoundLocalizedString(string name, CultureInfo culture)
+        {
+            switch (Options.MissingLocalizationBehavior)
+            {
+                case MissingLocalizationBehavior.Ignore:
+                    return new LocalizedStringEx(name, name, true, SourceName,
+                        !string.IsNullOrWhiteSpace(culture.Name) ? culture.Name : culture.TwoLetterISOLanguageName);
+                case MissingLocalizationBehavior.Log:
+                    Logger?.LogWarning(
+                        $"Missing localization, name: {name}, culture: {culture.Name}|{culture.TwoLetterISOLanguageName}");
+                    return new LocalizedStringEx(name, name, true, SourceName,
+                        !string.IsNullOrWhiteSpace(culture.Name) ? culture.Name : culture.TwoLetterISOLanguageName);
+                case MissingLocalizationBehavior.Throw:
+                    throw new MissingLocalizationException(name, culture);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Options.MissingLocalizationBehavior));
+            }
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
-        /// Gets the name of the source.
+        ///     Gets the name of the source.
         /// </summary>
-        ///
         /// <value>
-        /// The name of the source.
+        ///     The name of the source.
         /// </value>
         protected virtual string SourceName { get; }
 
@@ -34,60 +99,33 @@ namespace FluiTec.AppFx.Localization.Services
         public ILocalizationDataService DataService { get; }
 
         /// <summary>
-        /// Gets the translation picking service.
+        ///     Gets the translation picking service.
         /// </summary>
-        ///
         /// <value>
-        /// The translation picking service.
+        ///     The translation picking service.
         /// </value>
         public ITranslationPickingService TranslationPickingService { get; }
 
         /// <summary>
-        /// Gets options for controlling the operation.
+        ///     Gets options for controlling the operation.
         /// </summary>
-        ///
         /// <value>
-        /// The options.
+        ///     The options.
         /// </value>
         public ServiceLocalizationOptions Options { get; }
 
         /// <summary>
-        /// Gets the logger.
+        ///     Gets the logger.
         /// </summary>
-        ///
         /// <value>
-        /// The logger.
+        ///     The logger.
         /// </value>
         public ILogger<DataLocalizationService> Logger { get; }
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        ///
-        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-        ///                                             null. </exception>
-        ///
-        /// <param name="dataService">                  The data service. </param>
-        /// <param name="translationPickingService">    The translation picking service. </param>
-        /// <param name="options">                      Options for controlling the operation. </param>
-        /// <param name="logger">                       The logger. </param>
-        public DataLocalizationService(ILocalizationDataService dataService, ITranslationPickingService translationPickingService, ServiceLocalizationOptions options, ILogger<DataLocalizationService> logger)
-        {
-            DataService = dataService ?? throw new ArgumentNullException(nameof(dataService));
-            TranslationPickingService = translationPickingService ?? throw new ArgumentNullException(nameof(translationPickingService));
-            Options = options ?? throw new ArgumentNullException(nameof(options));
-            Logger = logger;
-            SourceName = DataService.Name;
-        }
-
-        #endregion
-
         #region ILocalizationService
-        
+
         /// <summary>
         ///     By name.
         /// </summary>
@@ -109,17 +147,17 @@ namespace FluiTec.AppFx.Localization.Services
         }
 
         /// <summary>
-        /// By name not found.
+        ///     By name not found.
         /// </summary>
-        ///
         /// <param name="name">     The name. </param>
         /// <param name="culture">  The culture. </param>
-        ///
         /// <returns>
-        /// A LocalizedStringEx.
+        ///     A LocalizedStringEx.
         /// </returns>
-        public virtual LocalizedStringEx ByNameNotFound(string name, CultureInfo culture) =>
-            CreateNotFoundLocalizedString(name, culture);
+        public virtual LocalizedStringEx ByNameNotFound(string name, CultureInfo culture)
+        {
+            return CreateNotFoundLocalizedString(name, culture);
+        }
 
         /// <summary>
         ///     Enumerates by base name in this collection.
@@ -134,48 +172,12 @@ namespace FluiTec.AppFx.Localization.Services
             using var uow = DataService.BeginUnitOfWork();
 
             var translations = uow.TranslationRepository
-                    .GetByResourceSuffixCompound(baseName)
-                    .OrderBy(t => t.Resource.ResourceKey)
-                    .GroupBy(t => t.Resource.ResourceKey)
-                    .ToList();
+                .GetByResourceSuffixCompound(baseName)
+                .OrderBy(t => t.Resource.ResourceKey)
+                .GroupBy(t => t.Resource.ResourceKey)
+                .ToList();
 
             return TranslationPickingService.Pick(translations, culture, SourceName);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Creates not found localized string.
-        /// </summary>
-        ///
-        /// <exception cref="MissingLocalizationException"> Thrown when a Missing Localization error
-        ///                                                 condition occurs. </exception>
-        /// <exception cref="ArgumentOutOfRangeException">  Thrown when one or more arguments are outside
-        ///                                                 the required range. </exception>
-        ///
-        /// <param name="name">     The name. </param>
-        /// <param name="culture">  The culture. </param>
-        ///
-        /// <returns>
-        /// The new not found localized string.
-        /// </returns>
-        protected LocalizedStringEx CreateNotFoundLocalizedString(string name, CultureInfo culture)
-        {
-            switch (Options.MissingLocalizationBehavior)
-            {
-                case MissingLocalizationBehavior.Ignore:
-                    return new LocalizedStringEx(name, name, true, SourceName, !string.IsNullOrWhiteSpace(culture.Name) ? culture.Name : culture.TwoLetterISOLanguageName);
-                case MissingLocalizationBehavior.Log:
-                    Logger?.LogWarning($"Missing localization, name: {name}, culture: {culture.Name}|{culture.TwoLetterISOLanguageName}");
-                    return new LocalizedStringEx(name, name, true, SourceName, !string.IsNullOrWhiteSpace(culture.Name) ? culture.Name : culture.TwoLetterISOLanguageName);
-                case MissingLocalizationBehavior.Throw:
-                    throw new MissingLocalizationException(name, culture);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(Options.MissingLocalizationBehavior));
-            }
-            
         }
 
         #endregion

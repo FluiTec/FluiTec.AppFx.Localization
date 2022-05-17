@@ -12,21 +12,20 @@ using Microsoft.Extensions.Localization;
 namespace FluiTec.AppFx.Localization.Extensions
 {
     /// <summary>
-    /// A localization extension.
+    ///     A localization extension.
     /// </summary>
     public static class LocalizationExtension
     {
         /// <summary>
-        /// An IServiceCollection extension method that configure localization options.
+        ///     An IServiceCollection extension method that configure localization options.
         /// </summary>
-        ///
         /// <param name="services"> The services to act on. </param>
         /// <param name="manager">  The manager. </param>
-        ///
         /// <returns>
-        /// An IServiceCollection.
+        ///     An IServiceCollection.
         /// </returns>
-        public static IServiceCollection ConfigureLocalizationOptions(this IServiceCollection services, ConfigurationManager manager)
+        public static IServiceCollection ConfigureLocalizationOptions(this IServiceCollection services,
+            ConfigurationManager manager)
         {
             services.Configure<ServiceLocalizationOptions>(manager, true);
             services.Configure<ServiceLocalizationImportOptions>(manager, true);
@@ -35,13 +34,11 @@ namespace FluiTec.AppFx.Localization.Extensions
         }
 
         /// <summary>
-        /// An IServiceCollection extension method that configure localization reflection.
+        ///     An IServiceCollection extension method that configure localization reflection.
         /// </summary>
-        ///
         /// <param name="services"> The services to act on. </param>
-        ///
         /// <returns>
-        /// An IServiceCollection.
+        ///     An IServiceCollection.
         /// </returns>
         public static IServiceCollection ConfigureLocalizationReflection(this IServiceCollection services)
         {
@@ -54,13 +51,11 @@ namespace FluiTec.AppFx.Localization.Extensions
         }
 
         /// <summary>
-        /// An IServiceCollection extension method that configure localizers.
+        ///     An IServiceCollection extension method that configure localizers.
         /// </summary>
-        ///
         /// <param name="services"> The services to act on. </param>
-        ///
         /// <returns>
-        /// An IServiceCollection.
+        ///     An IServiceCollection.
         /// </returns>
         public static IServiceCollection ConfigureLocalizers(this IServiceCollection services)
         {
@@ -72,13 +67,11 @@ namespace FluiTec.AppFx.Localization.Extensions
         }
 
         /// <summary>
-        /// An IServiceCollection extension method that configure localization import.
+        ///     An IServiceCollection extension method that configure localization import.
         /// </summary>
-        ///
         /// <param name="services"> The services to act on. </param>
-        ///
         /// <returns>
-        /// An IServiceCollection.
+        ///     An IServiceCollection.
         /// </returns>
         public static IServiceCollection ConfigureLocalizationImport(this IServiceCollection services)
         {

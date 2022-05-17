@@ -32,7 +32,8 @@ namespace FluiTec.AppFx.Localization.Dynamic
         public static IServiceCollection ConfigureDynamicLocalizationDataProvider(this IServiceCollection services,
             ConfigurationManager configurationManager)
         {
-            services.ConfigureDynamicDataProvider<ILocalizationDataService, LocalizationDynamicDataOptions>(configurationManager,
+            services.ConfigureDynamicDataProvider<ILocalizationDataService, LocalizationDynamicDataOptions>(
+                configurationManager,
                 (options, provider) =>
                 {
                     return options.CurrentValue.Provider switch

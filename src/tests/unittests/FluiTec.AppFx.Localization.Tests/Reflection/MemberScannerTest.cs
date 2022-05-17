@@ -10,13 +10,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FluiTec.AppFx.Localization.Tests.Reflection
 {
     /// <summary>
-    /// (Unit Test Class) a member scanner test.
+    ///     (Unit Test Class) a member scanner test.
     /// </summary>
     [TestClass]
     public class MemberScannerTest
     {
         /// <summary>
-        /// Can find property.
+        ///     Can find property.
         /// </summary>
         [TestMethod]
         public void CanFindProperty()
@@ -34,7 +34,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find inherited propery.
+        ///     Can find inherited propery.
         /// </summary>
         [TestMethod]
         public void CanFindProperyInInheritingType()
@@ -57,7 +57,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find inherited propery.
+        ///     Can find inherited propery.
         /// </summary>
         [TestMethod]
         public void CanFindProperyInNonInheritingType()
@@ -80,7 +80,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find only included property.
+        ///     Can find only included property.
         /// </summary>
         [TestMethod]
         public void CanFindOnlyIncludedProperty()
@@ -103,7 +103,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find only included property in inherinting class.
+        ///     Can find only included property in inherinting class.
         /// </summary>
         [TestMethod]
         public void CanFindOnlyIncludedPropertyInInherintingClass()
@@ -131,7 +131,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find only included property in non inherinting class.
+        ///     Can find only included property in non inherinting class.
         /// </summary>
         [TestMethod]
         public void CanFindOnlyIncludedPropertyInNonInherintingClass()
@@ -154,7 +154,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find properties.
+        ///     Can find properties.
         /// </summary>
         [TestMethod]
         public void CanFindProperties()
@@ -176,7 +176,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find enum value.
+        ///     Can find enum value.
         /// </summary>
         [TestMethod]
         public void CanFindEnumValue()
@@ -194,7 +194,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find enum values.
+        ///     Can find enum values.
         /// </summary>
         [TestMethod]
         public void CanFindEnumValues()

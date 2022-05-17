@@ -4,11 +4,10 @@ using FluiTec.AppFx.Options.Attributes;
 namespace FluiTec.AppFx.Localization.Dynamic
 {
     /// <summary>
-    /// A localization dynamic data options.
+    ///     A localization dynamic data options.
     /// </summary>
     [ConfigurationKey(nameof(LocalizationDynamicDataOptions))]
     public class LocalizationDynamicDataOptions : DynamicDataOptions
     {
-
     }
 }

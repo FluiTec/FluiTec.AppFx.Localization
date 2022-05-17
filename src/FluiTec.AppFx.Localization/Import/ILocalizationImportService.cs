@@ -3,25 +3,23 @@
 namespace FluiTec.AppFx.Localization.Import
 {
     /// <summary>
-    /// Interface for localization import service.
+    ///     Interface for localization import service.
     /// </summary>
     public interface ILocalizationImportService
     {
         /// <summary>
-        /// Gets the import.
+        ///     Gets the import.
         /// </summary>
-        ///
         /// <returns>
-        /// An int.
+        ///     An int.
         /// </returns>
         int Import();
 
         /// <summary>
-        /// Import asynchronous.
+        ///     Import asynchronous.
         /// </summary>
-        ///
         /// <returns>
-        /// The import.
+        ///     The import.
         /// </returns>
         Task<int> ImportAsync();
     }

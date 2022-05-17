@@ -4,32 +4,30 @@ using FluiTec.AppFx.Localization.Reflection.Attributes;
 namespace FluiTec.AppFx.Localization.WebSample.Models;
 
 /// <summary>
-/// A data Model for the test.
+///     A data Model for the test.
 /// </summary>
 [Localized]
 public class TestModel
 {
     /// <summary>
-    /// Gets or sets the name.
+    ///     Gets or sets the name.
     /// </summary>
-    ///
     /// <value>
-    /// The name.
+    ///     The name.
     /// </value>
-    [Display(Name=nameof(Name))]
+    [Display(Name = nameof(Name))]
     [Translation("iv", "Invariant")]
     [Translation("de", "Deutsch")]
     [Translation("de-DE", "Deutsch (Deutschland)")]
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the test.
+    ///     Gets or sets the test.
     /// </summary>
-    ///
     /// <value>
-    /// The test.
+    ///     The test.
     /// </value>
-    [Display(Name=nameof(Test))]
+    [Display(Name = nameof(Test))]
     [Translation("iv", "Invariant")]
     [Translation("de", "Deutsch")]
     [Translation("de-DE", "Deutsch (Deutschland)")]

@@ -1,56 +1,56 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6</TargetFramework>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <PackageProjectUrl>https://www.nuget.org/packages/FluiTec.AppFx.Localization/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/FluiTec/FluiTec.AppFx.Localization</RepositoryUrl>
-    <NeutralLanguage>en</NeutralLanguage>
-    <PostBuildEvent></PostBuildEvent>
-    <PreBuildEvent></PreBuildEvent>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6</TargetFramework>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <PackageProjectUrl>https://www.nuget.org/packages/FluiTec.AppFx.Localization/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FluiTec/FluiTec.AppFx.Localization</RepositoryUrl>
+        <NeutralLanguage>en</NeutralLanguage>
+        <PostBuildEvent></PostBuildEvent>
+        <PreBuildEvent></PreBuildEvent>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+        <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <LangVersion>8</LangVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\..\LICENSE.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-    <None Include="..\..\THIRD_PARTY_LICENSES.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE.md">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+        <None Include="..\..\THIRD_PARTY_LICENSES.md">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj" />
-    <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Mysql\FluiTec.AppFx.Localization.Dapper.Mysql.csproj" />
-    <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Pgsql\FluiTec.AppFx.Localization.Dapper.Pgsql.csproj" />
-    <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Sqlite\FluiTec.AppFx.Localization.Dapper.Sqlite.csproj" />
-    <ProjectReference Include="..\FluiTec.AppFx.Localization.LiteDb\FluiTec.AppFx.Localization.LiteDb.csproj" />
-    <ProjectReference Include="..\FluiTec.AppFx.Localization.NMemory\FluiTec.AppFx.Localization.NMemory.csproj" />
-    <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj"/>
+        <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Mysql\FluiTec.AppFx.Localization.Dapper.Mysql.csproj"/>
+        <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Pgsql\FluiTec.AppFx.Localization.Dapper.Pgsql.csproj"/>
+        <ProjectReference Include="..\FluiTec.AppFx.Localization.Dapper.Sqlite\FluiTec.AppFx.Localization.Dapper.Sqlite.csproj"/>
+        <ProjectReference Include="..\FluiTec.AppFx.Localization.LiteDb\FluiTec.AppFx.Localization.LiteDb.csproj"/>
+        <ProjectReference Include="..\FluiTec.AppFx.Localization.NMemory\FluiTec.AppFx.Localization.NMemory.csproj"/>
+        <ProjectReference Include="..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='Debug'">
-    <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dynamic\FluiTec.AppFx.Data.Dynamic.csproj" />
-  </ItemGroup>
+    <ItemGroup Condition="'$(Configuration)'=='Debug'">
+        <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dynamic\FluiTec.AppFx.Data.Dynamic.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <PackageReference Include="FluiTec.AppFx.Data.Dynamic" Version="1.1.5"></PackageReference>
-  </ItemGroup>
+    <ItemGroup Condition="'$(Configuration)'=='Release'">
+        <PackageReference Include="FluiTec.AppFx.Data.Dynamic" Version="1.1.7"></PackageReference>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Extensions\"/>
+    </ItemGroup>
 
 </Project>

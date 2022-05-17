@@ -9,13 +9,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FluiTec.AppFx.Localization.Tests.Reflection
 {
     /// <summary>
-    /// (Unit Test Class) a type scanner test.
+    ///     (Unit Test Class) a type scanner test.
     /// </summary>
     [TestClass]
     public class TypeScannerTest
     {
         /// <summary>
-        /// Can find localized class.
+        ///     Can find localized class.
         /// </summary>
         [TestMethod]
         public void CanFindLocalizedClass()
@@ -24,12 +24,12 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
             var helper = new ReflectionHelper();
             var aScanner = new ExclusionFilteringAssemblyScanner(options, helper);
             var tScanner = new LocalizedAttributeFilteringTypeScanner(helper);
-            
+
             Assert.IsTrue(tScanner.GetTypes(aScanner.GetAssemblies()).Contains(typeof(LocalizedModel)));
         }
 
         /// <summary>
-        /// Can omit unlocalized class.
+        ///     Can omit unlocalized class.
         /// </summary>
         [TestMethod]
         public void CanOmitUnlocalizedClass()
@@ -43,7 +43,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can find localized enum.
+        ///     Can find localized enum.
         /// </summary>
         [TestMethod]
         public void CanFindLocalizedEnum()
@@ -57,7 +57,7 @@ namespace FluiTec.AppFx.Localization.Tests.Reflection
         }
 
         /// <summary>
-        /// Can omit unlocalized enum.
+        ///     Can omit unlocalized enum.
         /// </summary>
         [TestMethod]
         public void CanOmitUnlocalizedEnum()

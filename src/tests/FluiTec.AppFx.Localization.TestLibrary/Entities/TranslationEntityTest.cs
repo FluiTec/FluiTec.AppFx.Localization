@@ -75,10 +75,10 @@ public class TranslationEntityTest : DependencyLocalizationDataTest<TranslationE
     {
         return new TranslationEntity
         {
-            LanguageId = Language1.Id, 
-            ResourceId = Resource.Id, 
-            Value = "deusch", 
-            AuthorId = Author.Id, 
+            LanguageId = Language1.Id,
+            ResourceId = Resource.Id,
+            Value = "deusch",
+            AuthorId = Author.Id,
             ModificationDate = DateTimeOffset.UtcNow
         };
     }
@@ -94,9 +94,9 @@ public class TranslationEntityTest : DependencyLocalizationDataTest<TranslationE
         // set not-existent id to prevent successful update
         return new TranslationEntity
         {
-            Id = 100, 
-            LanguageId = Language1.Id, 
-            ResourceId = Resource.Id, 
+            Id = 100,
+            LanguageId = Language1.Id,
+            ResourceId = Resource.Id,
             Value = "NO-UPDATE",
             AuthorId = Author.Id,
             ModificationDate = DateTimeOffset.UtcNow
@@ -115,16 +115,16 @@ public class TranslationEntityTest : DependencyLocalizationDataTest<TranslationE
         {
             new TranslationEntity
             {
-                LanguageId = Language1.Id, 
-                ResourceId = Resource.Id, 
+                LanguageId = Language1.Id,
+                ResourceId = Resource.Id,
                 Value = "deutsch",
                 AuthorId = Author.Id,
                 ModificationDate = DateTimeOffset.UtcNow
             },
             new TranslationEntity
             {
-                LanguageId = Language2.Id, 
-                ResourceId = Resource.Id, 
+                LanguageId = Language2.Id,
+                ResourceId = Resource.Id,
                 Value = "english",
                 AuthorId = Author.Id,
                 ModificationDate = DateTimeOffset.UtcNow

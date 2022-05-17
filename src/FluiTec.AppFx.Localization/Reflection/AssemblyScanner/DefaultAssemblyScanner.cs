@@ -7,23 +7,13 @@ using FluiTec.AppFx.Localization.Reflection.Helpers;
 namespace FluiTec.AppFx.Localization.Reflection.AssemblyScanner
 {
     /// <summary>
-    /// A default assembly scanner.
+    ///     A default assembly scanner.
     /// </summary>
     public class DefaultAssemblyScanner : IAssemblyScanner
     {
         /// <summary>
-        /// Gets the helper.
+        ///     Constructor.
         /// </summary>
-        ///
-        /// <value>
-        /// The helper.
-        /// </value>
-        public ReflectionHelper Helper { get; }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        ///
         /// <param name="helper">   The helper. </param>
         public DefaultAssemblyScanner(ReflectionHelper helper)
         {
@@ -31,11 +21,18 @@ namespace FluiTec.AppFx.Localization.Reflection.AssemblyScanner
         }
 
         /// <summary>
-        /// Gets the assemblies in this collection.
+        ///     Gets the helper.
         /// </summary>
-        ///
+        /// <value>
+        ///     The helper.
+        /// </value>
+        public ReflectionHelper Helper { get; }
+
+        /// <summary>
+        ///     Gets the assemblies in this collection.
+        /// </summary>
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the assemblies in this collection.
+        ///     An enumerator that allows foreach to be used to process the assemblies in this collection.
         /// </returns>
         public virtual IEnumerable<Assembly> GetAssemblies()
         {

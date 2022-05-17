@@ -3,16 +3,15 @@
 namespace FluiTec.AppFx.Localization.Import
 {
     /// <summary>
-    /// Interface for localization source.
+    ///     Interface for localization source.
     /// </summary>
     public interface ILocalizationSource
     {
         /// <summary>
-        /// Finds the resources in this collection.
+        ///     Finds the resources in this collection.
         /// </summary>
-        ///
         /// <returns>
-        /// An enumerator that allows foreach to be used to process the resources in this collection.
+        ///     An enumerator that allows foreach to be used to process the resources in this collection.
         /// </returns>
         IEnumerable<ILocalizationResource> FindResources();
     }

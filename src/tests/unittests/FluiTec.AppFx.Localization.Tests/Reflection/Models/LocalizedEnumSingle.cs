@@ -3,7 +3,7 @@
 namespace FluiTec.AppFx.Localization.Tests.Reflection.Models
 {
     /// <summary>
-    /// Values that represent localized enum singles.
+    ///     Values that represent localized enum singles.
     /// </summary>
     [Localized]
     public enum LocalizedEnumSingle
