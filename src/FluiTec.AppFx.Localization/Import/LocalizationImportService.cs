@@ -37,11 +37,17 @@ namespace FluiTec.AppFx.Localization.Import
             foreach (var a in options.UpdateableAuthors)
                 Logger.LogInformation("Author: '{a}'", a);
             Logger.LogInformation("Files to import:");
-            foreach (var f in options.ImportFiles)
-                Logger.LogInformation("ImportFile: '{f}'", f);
+            if (options.ImportFiles != null && options.ImportFiles.Any())
+                foreach (var f in options.ImportFiles)
+                    Logger.LogInformation("ImportFile: '{f}'", f);
+            else
+                Logger.LogInformation("-> No ImportFiles");
             Logger.LogInformation("Localization-Sources:");
-            foreach (var s in LocalizationSources)
-                Logger.LogInformation("Source: {s}", s.GetType().FullName);
+            if (options.UpdateableAuthors != null && options.UpdateableAuthors.Any())
+                foreach (var s in LocalizationSources)
+                    Logger.LogInformation("Source: {s}", s.GetType().FullName);
+            else
+                Logger.LogInformation("-> No updateable authors");
         }
 
         /// <summary>

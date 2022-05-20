@@ -16,6 +16,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 
 namespace FluiTec.AppFx.Localization.CliTest;
 
@@ -30,8 +31,8 @@ internal class Program
     /// <param name="args"> An array of command-line argument strings. </param>
     private static void Main(string[] args)
     {
-        //TestScanner();
-        //TestStringLocalizer();
+        TestScanner();
+        TestStringLocalizer();
         TestStringImporter();
         System.Console.ReadLine();
     }
@@ -125,7 +126,7 @@ internal class Program
         var services = new ServiceCollection();
 
         services.ConfigureDynamicLocalizationDataProvider(manager);
-        services.AddLogging();
+        services.AddLogging(builder => builder.AddConsole());
 
         services.Configure<ServiceLocalizationOptions>(manager, true);
         services.Configure<ServiceLocalizationImportOptions>(manager, true);
