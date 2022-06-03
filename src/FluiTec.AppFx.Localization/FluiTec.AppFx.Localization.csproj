@@ -38,8 +38,8 @@
 
     <ItemGroup Condition="'$(Configuration)'=='Release'">
         <PackageReference Include="FluiTec.AppFx.Options" Version="1.1.82"/>
-        <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.7"/>
-        <PackageReference Include="FluiTec.AppFx.Data.Migration" Version="1.1.7"/>
+        <PackageReference Include="FluiTec.AppFx.Data" Version="1.1.9"/>
+        <PackageReference Include="FluiTec.AppFx.Data.Migration" Version="1.1.9"/>
     </ItemGroup>
 
     <ItemGroup>
