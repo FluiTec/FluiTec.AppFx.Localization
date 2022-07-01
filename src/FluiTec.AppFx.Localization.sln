@@ -37,6 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.version = ..\.version
 		..\appsettings.integration.json = ..\appsettings.integration.json
 		..\appsettings.integration.secret.json = ..\appsettings.integration.secret.json
+		Directory.Packages.props = Directory.Packages.props
 		..\LICENSE.md = ..\LICENSE.md
 		..\README.md = ..\README.md
 		..\THIRD_PARTY_LICENSES.md = ..\THIRD_PARTY_LICENSES.md
@@ -104,7 +105,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Data.Ef", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluiTec.AppFx.Data.Migration", "..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Migration\FluiTec.AppFx.Data.Migration.csproj", "{7A5996F8-0D0B-43F2-8F6A-2BFD0CFFE65C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli.InteractiveSample", "samples\Cli.InteractiveSample\Cli.InteractiveSample.csproj", "{657B23B0-57DA-4C09-9D66-F41FE7790A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cli.InteractiveSample", "samples\Cli.InteractiveSample\Cli.InteractiveSample.csproj", "{657B23B0-57DA-4C09-9D66-F41FE7790A92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

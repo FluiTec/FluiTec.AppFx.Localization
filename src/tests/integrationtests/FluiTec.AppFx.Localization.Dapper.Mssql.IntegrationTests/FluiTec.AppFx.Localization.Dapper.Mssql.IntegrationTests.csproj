@@ -6,29 +6,28 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0"/>
-        <PackageReference Include="MSTest.TestAdapter" Version="2.2.10"/>
-        <PackageReference Include="MSTest.TestFramework" Version="2.2.10"/>
-        <PackageReference Include="coverlet.collector" Version="3.1.2">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MSTest.TestAdapter" />
+		<PackageReference Include="MSTest.TestFramework" />
+		<PackageReference Include="coverlet.collector" />
+	</ItemGroup>
 
-    <ItemGroup Condition="'$(Configuration)'=='Debug'">
-        <ProjectReference Include="..\..\..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dapper.Mssql\FluiTec.AppFx.Data.Dapper.Mssql.csproj"/>
-        <ProjectReference Include="..\..\..\..\fluitec.appfx.data\src\tests\FluiTec.AppFx.Data.TestLibrary\FluiTec.AppFx.Data.TestLibrary.csproj"/>
-        <ProjectReference Include="..\..\..\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj"/>
-        <ProjectReference Include="..\..\..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj"/>
-        <ProjectReference Include="..\..\FluiTec.AppFx.Localization.TestLibrary\FluiTec.AppFx.Localization.TestLibrary.csproj"/>
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj"/>
+		<ProjectReference Include="..\..\FluiTec.AppFx.Localization.TestLibrary\FluiTec.AppFx.Localization.TestLibrary.csproj"/>
+	</ItemGroup>
 
-    <ItemGroup Condition="'$(Configuration)'=='Release'">
-        <ProjectReference Include="..\..\..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj"/>
-        <ProjectReference Include="..\..\FluiTec.AppFx.Localization.TestLibrary\FluiTec.AppFx.Localization.TestLibrary.csproj"/>
-        <PackageReference Include="FluiTec.AppFx.Options" Version="1.1.82"></PackageReference>
-        <PackageReference Include="FluiTec.AppFx.Data.Dapper.Mssql" Version="1.1.10"></PackageReference>
+	<ItemGroup Condition="'$(Configuration)'=='Debug'">
+		<ProjectReference Include="..\..\..\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Dapper.Mssql\FluiTec.AppFx.Data.Dapper.Mssql.csproj"/>
+		<ProjectReference Include="..\..\..\..\fluitec.appfx.data\src\tests\FluiTec.AppFx.Data.TestLibrary\FluiTec.AppFx.Data.TestLibrary.csproj"/>
+		<ProjectReference Include="..\..\..\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj"/>
+		<ProjectReference Include="..\..\..\FluiTec.AppFx.Localization.Dapper.Mssql\FluiTec.AppFx.Localization.Dapper.Mssql.csproj"/>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)'=='Release'">
+		<PackageReference Include="FluiTec.AppFx.Options" />
+        <PackageReference Include="FluiTec.AppFx.Data.Dapper.Mssql" />
     </ItemGroup>
 
     <ItemGroup>

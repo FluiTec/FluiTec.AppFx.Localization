@@ -24,9 +24,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentMigrator" Version="3.3.2"/>
-        <PackageReference Include="FluentMigrator.Runner" Version="3.3.2"/>
-        <PackageReference Include="FluentMigrator.Runner.Core" Version="3.3.2"/>
+        <PackageReference Include="FluentMigrator" />
+        <PackageReference Include="FluentMigrator.Runner" />
+        <PackageReference Include="FluentMigrator.Runner.Core" />
     </ItemGroup>
 
     <ItemGroup>
@@ -39,8 +39,8 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)'=='Release'">
-        <PackageReference Include="FluiTec.AppFx.Data.Dapper" Version="1.1.10"></PackageReference>
-        <PackageReference Include="FluiTec.AppFx.Data.Migration" Version="1.1.10"></PackageReference>
+        <PackageReference Include="FluiTec.AppFx.Data.Dapper" />
+        <PackageReference Include="FluiTec.AppFx.Data.Migration" />
     </ItemGroup>
 
 </Project>

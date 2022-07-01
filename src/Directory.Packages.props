@@ -1,0 +1,35 @@
+﻿<Project>
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+		<PackageVersion Include="MSTest.TestAdapter" Version="2.2.10" />
+		<PackageVersion Include="MSTest.TestFramework" Version="2.2.10" />
+		<PackageVersion Include="coverlet.collector" Version="3.1.2" />
+		<PackageVersion Include="Microsoft.AspNetCore.Mvc.Localization" Version="2.2.0"/>
+		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1"/>
+		<PackageVersion Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0"/>
+		<PackageVersion Include="System.Linq.Expressions" Version="4.3.0"/>
+		<PackageVersion Include="FluentMigrator" Version="3.3.2"/>
+		<PackageVersion Include="FluentMigrator.Runner" Version="3.3.2"/>
+		<PackageVersion Include="FluentMigrator.Runner.Core" Version="3.3.2"/>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)'=='Release'">
+		<PackageVersion Include="FluiTec.AppFx.Options" Version="1.1.82" />
+		<PackageVersion Include="FluiTec.AppFx.Data" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.Dapper" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.Dapper.Mssql" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.Dapper.Mysql" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.Dapper.Pgsql" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.Dapper.Sqlite" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.Sql" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.Migration" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.Dynamic" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.LiteDb" Version="1.1.11" />
+		<PackageVersion Include="FluiTec.AppFx.Data.NMemory" Version="1.1.11" />
+	</ItemGroup>
+</Project>
