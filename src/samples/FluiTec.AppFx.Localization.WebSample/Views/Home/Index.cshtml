@@ -1,7 +1,9 @@
-﻿@model TestModel
+﻿@using Microsoft.Extensions.Localization
+@model TestModel
 @{
     ViewData["Title"] = "Home Page";
 }
+@inject IStringLocalizer<TestModel> Localizer
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -9,3 +11,12 @@
 </div>
 <label asp-for="Name"></label><br/>
 <label asp-for="Test"></label>
+<table>
+@foreach (var entry in Localizer.GetAllStrings())
+{
+    <tr>
+        <td>@entry.Name</td>
+        <td>@entry.Value</td>
+    </tr>
+}
+</table>

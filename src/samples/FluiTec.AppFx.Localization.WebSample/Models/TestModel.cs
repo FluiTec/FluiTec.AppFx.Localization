@@ -32,4 +32,16 @@ public class TestModel
     [Translation("de", "Deutsch")]
     [Translation("de-DE", "Deutsch (Deutschland)")]
     public string Test { get; set; }
+
+    /// <summary>
+    /// Tests method.
+    /// </summary>
+    [Display(Name = nameof(TestMethod))]
+    [Translation("iv", "Invariant")]
+    [Translation("de", "Deutsch")]
+    [Translation("de-DE", "Deutsch (Deutschland)")]
+    public void TestMethod()
+    {
+
+    }
 }

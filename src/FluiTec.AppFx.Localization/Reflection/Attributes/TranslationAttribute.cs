@@ -5,7 +5,7 @@ namespace FluiTec.AppFx.Localization.Reflection.Attributes
     /// <summary>
     ///     Attribute for translation.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Method, AllowMultiple = true)]
     public class TranslationAttribute : Attribute
     {
         /// <summary>

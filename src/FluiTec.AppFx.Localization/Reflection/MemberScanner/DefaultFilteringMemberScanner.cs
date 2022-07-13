@@ -13,6 +13,11 @@ namespace FluiTec.AppFx.Localization.Reflection.MemberScanner
     public class DefaultFilteringMemberScanner : FilteringMemberScanner
     {
         /// <summary>
+        /// (Immutable) list of types of the valid members.
+        /// </summary>
+        private static readonly IEnumerable<MemberTypes> ValidMemberTypes = new[] {MemberTypes.Property, MemberTypes.Method};
+
+        /// <summary>
         ///     Default constructor.
         /// </summary>
         /// <param name="helper">   The helper. </param>
@@ -92,7 +97,7 @@ namespace FluiTec.AppFx.Localization.Reflection.MemberScanner
         /// </returns>
         protected virtual bool FilterClassMember(Type type, MemberInfo member)
         {
-            return (member.MemberType & MemberTypes.Property) != 0;
+            return ValidMemberTypes.Contains(member.MemberType);
         }
     }
 }
