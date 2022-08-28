@@ -75,7 +75,7 @@ namespace FluiTec.AppFx.Localization.Import
                     .Cast<TranslationAttribute>()
                 select new LocalizationResource
                 {
-                    ResourceKey = MemberInfoCollector.GetResourceKey(member),
+                    ResourceKey = MemberInfoCollector.GetResourceKey(member, translationAttribute.Suffix),
                     Author = CodeAuthor,
                     Language = translationAttribute.LanguageIsoName,
                     Translation = translationAttribute.Value

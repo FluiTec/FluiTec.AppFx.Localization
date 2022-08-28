@@ -15,10 +15,13 @@ public class TestModel
     /// <value>
     ///     The name.
     /// </value>
-    [Display(Name = nameof(Name))]
+    [Display(Name = nameof(Name), Prompt = $"{nameof(Name)}-Prompt")]
     [Translation("iv", "Invariant")]
     [Translation("de", "Deutsch")]
     [Translation("de-DE", "Deutsch (Deutschland)")]
+    [Translation("iv", "Invariant", "Prompt")]
+    [Translation("de", "Deutsch", "Prompt")]
+    [Translation("de-DE", "Deutsch (Deutschland)", "Prompt")]
     public string Name { get; set; }
 
     /// <summary>

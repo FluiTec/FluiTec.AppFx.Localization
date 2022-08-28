@@ -23,7 +23,7 @@ public class Startup
         var builder = new ConfigurationBuilder()
             .SetBasePath(environment.ContentRootPath)
             .AddJsonFile("appsettings.json", false, true)
-            .AddJsonFile("appsettings.secret.json", false, true)
+            .AddJsonFile("appsettings.secret.json", true, true)
             .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true);
 
         builder.AddEnvironmentVariables();

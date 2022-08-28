@@ -24,6 +24,22 @@ namespace FluiTec.AppFx.Localization.Reflection.Attributes
         }
 
         /// <summary>
+        ///     Constructor.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">
+        ///     Thrown when one or more required arguments are
+        ///     null.
+        /// </exception>
+        /// <param name="languageIsoName">  The name of the language ISO. </param>
+        /// <param name="value">            The value. </param>
+        /// <param name="suffix">           The suffix. </param>
+        public TranslationAttribute(string languageIsoName, string value, string suffix = null)
+            : this(languageIsoName, value)
+        {
+            Suffix = suffix;
+        }
+
+        /// <summary>
         ///     Gets or sets the value.
         /// </summary>
         /// <value>
@@ -38,5 +54,13 @@ namespace FluiTec.AppFx.Localization.Reflection.Attributes
         ///     The name of the language ISO.
         /// </value>
         public string LanguageIsoName { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the suffix.
+        /// </summary>
+        /// <value>
+        ///     The suffix.
+        /// </value>
+        public string Suffix { get; set; }
     }
 }

@@ -14,9 +14,11 @@ namespace FluiTec.AppFx.Localization.Reflection
         /// <returns>
         ///     The resource key.
         /// </returns>
-        public static string GetResourceKey(MemberInfo mi)
+        public static string GetResourceKey(MemberInfo mi, string suffix = null)
         {
             var fullName = GetFullName(mi);
+            if (!string.IsNullOrWhiteSpace(suffix))
+                return $"{fullName}-{suffix}";
             return fullName;
         }
 

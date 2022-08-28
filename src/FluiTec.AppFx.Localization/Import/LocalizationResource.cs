@@ -36,5 +36,10 @@
         ///     The translation.
         /// </value>
         public string Translation { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Language}/{ResourceKey}";
+        }
     }
 }

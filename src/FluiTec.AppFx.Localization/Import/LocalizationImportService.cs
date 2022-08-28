@@ -325,7 +325,6 @@ namespace FluiTec.AppFx.Localization.Import
             }
 
             return resources;
-            ;
         }
     }
 }
