@@ -1,6 +1,8 @@
 ﻿using FluiTec.AppFx.Localization.Configuration;
 using FluiTec.AppFx.Localization.Dynamic.Extensions;
 using FluiTec.AppFx.Localization.Import;
+using FluiTec.AppFx.Localization.Localizers;
+using FluiTec.AppFx.Localization.WebSample.Resources;
 using FluiTec.AppFx.Options.Managers;
 
 namespace FluiTec.AppFx.Localization.WebSample;
@@ -57,7 +59,8 @@ public class Startup
         // IMPORTANT
         services
             .AddControllersWithViews()
-            .AddDataAnnotationsLocalization();
+            .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (type, factory) =>
+                new FallbackStringLocalizer(factory.Create(type), factory.Create(typeof(DataAnnotationsResource))));
         // IMPORTANT
 
         services.ConfigureLocalization(manager);

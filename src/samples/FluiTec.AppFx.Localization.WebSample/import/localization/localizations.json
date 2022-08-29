@@ -15,5 +15,18 @@
         "Translation": "de-DE"
       }
     ]
+  },
+  {
+    "ResourceKey": "RequiredMessage",
+    "Translations": [
+      {
+        "Language": "iv",
+        "Translation": "Field is required."
+      },
+      {
+        "Language": "de",
+        "Translation": "Feld ist ein Pflichtfeld." 
+      }
+    ] 
   }
 ]

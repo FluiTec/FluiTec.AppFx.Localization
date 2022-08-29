@@ -16,12 +16,11 @@ public class TestModel
     ///     The name.
     /// </value>
     [Display(Name = nameof(Name), Prompt = $"{nameof(Name)}-Prompt")]
+    [Required(ErrorMessage = "Required")]
     [Translation("iv", "Invariant")]
     [Translation("de", "Deutsch")]
-    [Translation("de-DE", "Deutsch (Deutschland)")]
     [Translation("iv", "Invariant", "Prompt")]
     [Translation("de", "Deutsch", "Prompt")]
-    [Translation("de-DE", "Deutsch (Deutschland)", "Prompt")]
     public string Name { get; set; }
 
     /// <summary>
@@ -33,7 +32,6 @@ public class TestModel
     [Display(Name = nameof(Test))]
     [Translation("iv", "Invariant")]
     [Translation("de", "Deutsch")]
-    [Translation("de-DE", "Deutsch (Deutschland)")]
     public string Test { get; set; }
 
     /// <summary>
@@ -42,7 +40,6 @@ public class TestModel
     [Display(Name = nameof(TestMethod))]
     [Translation("iv", "Invariant")]
     [Translation("de", "Deutsch")]
-    [Translation("de-DE", "Deutsch (Deutschland)")]
     public void TestMethod()
     {
 

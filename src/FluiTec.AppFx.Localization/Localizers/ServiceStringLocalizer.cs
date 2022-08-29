@@ -217,7 +217,7 @@ namespace FluiTec.AppFx.Localization.Localizers
                 }
 
                 var existing = LocalizedStrings[Culture].SingleOrDefault(s => s.Name == fName);
-                return existing ?? LocalizationService.ByNameNotFound(name, Culture);
+                return existing ?? LocalizationService.ByNameNotFound(fName, Culture);
             }
         }
 
