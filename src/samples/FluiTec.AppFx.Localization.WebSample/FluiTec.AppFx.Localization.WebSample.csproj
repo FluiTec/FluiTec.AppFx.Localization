@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\FluiTec.AppFx.Localization.Dynamic\FluiTec.AppFx.Localization.Dynamic.csproj"/>
-        <ProjectReference Include="..\..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj"/>
+        <ProjectReference Include="..\..\FluiTec.AppFx.Localization.Dynamic\FluiTec.AppFx.Localization.Dynamic.csproj" />
+        <ProjectReference Include="..\..\FluiTec.AppFx.Localization\FluiTec.AppFx.Localization.csproj" />
     </ItemGroup>
 
     <ProjectExtensions>
         <VisualStudio>
-            <UserProperties appsettings_1json__JsonSchema=""/>
+            <UserProperties appsettings_1json__JsonSchema="" />
         </VisualStudio>
     </ProjectExtensions>
 
