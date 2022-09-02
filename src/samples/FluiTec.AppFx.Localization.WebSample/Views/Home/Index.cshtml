@@ -1,4 +1,5 @@
 ﻿@using Microsoft.Extensions.Localization
+@using FluiTec.AppFx.Localization.Extensions
 @model TestModel
 @{
     ViewData["Title"] = "Home Page";
@@ -11,6 +12,7 @@
 </div>
 <label asp-for="Name"></label><input asp-for="Name" />
 <label asp-for="Test"></label><input asp-for="Test" />
+<h1>@Localizer.Localize(model => model.Name)</h1>
 <table>
 @foreach (var entry in Localizer.GetAllStrings())
 {
