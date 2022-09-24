@@ -31,7 +31,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)'=='Debug'">
-        <ProjectReference Include="..\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj"/>
+        <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.options\src\FluiTec.AppFx.Options\FluiTec.AppFx.Options.csproj"/>
         <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data\FluiTec.AppFx.Data.csproj"/>
         <ProjectReference Include="$(SolutionDir)\..\fluitec.appfx.data\src\FluiTec.AppFx.Data.Migration\FluiTec.AppFx.Data.Migration.csproj"/>
     </ItemGroup>
